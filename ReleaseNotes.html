@@ -94,6 +94,15 @@ table.idx { border-collapse: collapse; width: 100%; font-size: .95rem; }
 .tab { font: inherit; font-size: .85rem; padding: .15rem .55rem; border: 1px solid var(--line);
   border-radius: 4px; background: transparent; color: var(--fg); cursor: pointer; }
 .tab[aria-selected=true] { border-color: var(--accent); color: var(--accent); font-weight: bold; }
+.tg { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted);
+  align-self: center; margin-right: .1rem; }
+.tsep { width: .8rem; }
+.tab.t-plate { border-color: #c98d5c; background: #f7e7d8; color: #7d431c; }
+.tab.t-image { border-color: #8fae88; background: #e4eee0; color: #3f5a3c; }
+  .tab.t-image { background: #243021; color: #a9c6a1; border-color: #4d6448; } }
+.tab.t-plate[aria-selected=true], .tab.t-image[aria-selected=true] { border-width: 2px; }
+.plate-note { font-size: .85rem; color: var(--muted); font-style: italic; }
+figure.big img { max-height: 85vh; }
 .tab.has-match { background: #fff3a0; color: #000; }
 .hits ~ .tabs, .hits + .art .tabs { top: 2.4rem; }
   .wrap { max-width: 72rem; margin: 0 auto; }

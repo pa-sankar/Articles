@@ -94,6 +94,15 @@ table.idx { border-collapse: collapse; width: 100%; font-size: .95rem; }
 .tab { font: inherit; font-size: .85rem; padding: .15rem .55rem; border: 1px solid var(--line);
   border-radius: 4px; background: transparent; color: var(--fg); cursor: pointer; }
 .tab[aria-selected=true] { border-color: var(--accent); color: var(--accent); font-weight: bold; }
+.tg { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted);
+  align-self: center; margin-right: .1rem; }
+.tsep { width: .8rem; }
+.tab.t-plate { border-color: #c98d5c; background: #f7e7d8; color: #7d431c; }
+.tab.t-image { border-color: #8fae88; background: #e4eee0; color: #3f5a3c; }
+  .tab.t-image { background: #243021; color: #a9c6a1; border-color: #4d6448; } }
+.tab.t-plate[aria-selected=true], .tab.t-image[aria-selected=true] { border-width: 2px; }
+.plate-note { font-size: .85rem; color: var(--muted); font-style: italic; }
+figure.big img { max-height: 85vh; }
 .tab.has-match { background: #fff3a0; color: #000; }
 .hits ~ .tabs, .hits + .art .tabs { top: 2.4rem; }
   .wrap { max-width: 72rem; margin: 0 auto; }
@@ -149,13 +158,12 @@ table.idx { border-collapse: collapse; width: 100%; font-size: .95rem; }
 <div class="wrap narrow">
 <div class="brand">Project InscriptionSearch: Articles</div>
 <div class="titlebar"><h1><a href="../../" class="home-link" title="Home"><img src="../../images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> Epigraphia Indica</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
-<main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a> · Epigraphia Indica XVIII · EpInd XVIII No. 10 · Part II · printed p. 73 · PDF pp. 97-98</p><div class="tabs" role="tablist"><button type="button" class="tab" role="tab" data-i="0">p. 73</button><button type="button" class="tab" role="tab" data-i="1">p. 74</button></div><section class="pg" role="tabpanel" data-i="0"><div class="page">p. 73 · PDF 97</div>
+<main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a> · Epigraphia Indica XVIII · EpInd XVIII No. 10 · Part II · printed p. 73 · PDF pp. 97-98</p><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 73</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 74</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page">p. 73 · PDF 97</div>
 <h1><h4>No. 10.—INSCRIBED BUDDHIST IMAGE FROM GOPALPUR.</h4></h1>
 <p class="byline"><p>BY THE LATE PANDIT V: NATESA AIYAR, B.A., M.R.A.S.</p></p>
 <p>The village of Gōpālpur is situated some three miles to the south-east of Bherāghāt popularly known as ‘The Marble Rocks,’ in the Jubbulpore District: it lies on the right bank of the Narmadā. The village contains only a few scattered houses: owing to its secluded position the place is seldom visited by travellers or tourists. Sir Alexander Cunningham, the pioneer archæologist, however, seems to have visited the spot in the winter of 1874; for in one of his reports he gives an account of an inscribed stone tablet of the Chēdi dynasty which, he says, was discovered there previously by Professor Hall.<sup>3</sup> It was this fact alone which induced me to explore the place while I was encamped at Bherāghāt some eight years ago. Although, unfortunately, the inscription in question could no longer be traced, I was lucky enough to discover within a fortified enclosure, which, I learnt, was then in the occupation of a certain <i>sūdhu</i>, named Vindhya-sūri, five elegantly carved stone images of the mediaeval period. At</p>
-<div class="notes"><p><sup>1</sup> <i>Ibid</i> pp. 73—79., and pp. 58—55; and Mackenzie. p 138. The late Dr. Pope, shortly before his death, expressed his acceptance of the opinion that Māṇikkavāśagar lived not later than the fourth century (<i>Tam. Ant., ut. supra, p. 54</i>).</p><p><sup>2</sup> See my article on the “Age of Māṇikkavāchakar” in the <i>Madras Christian College Magazine</i> for 1905.</p><p><sup>3</sup> <i>A. S. R.</i>, Vol. IX, p. 99.</p></div>
-</section>
-<section class="pg" role="tabpanel" data-i="1"><div class="page">p. 74 · PDF 98</div>
+<div class="notes"><p><sup>1</sup> <i>Ibid</i> pp. 73—79., and pp. 58—55; and Mackenzie. p 138. The late Dr. Pope, shortly before his death, expressed his acceptance of the opinion that Māṇikkavāśagar lived not later than the fourth century (<i>Tam. Ant., ut. supra, p. 54</i>).</p><p><sup>2</sup> See my article on the “Age of Māṇikkavāchakar” in the <i>Madras Christian College Magazine</i> for 1905.</p><p><sup>3</sup> <i>A. S. R.</i>, Vol. IX, p. 99.</p></div></section>
+<section class="pg pg-page" role="tabpanel" data-i="1"><div class="page">p. 74 · PDF 98</div>
 <p>the time when I noticed these images they were almost completely buried under the ground. However, sufficient remained visible to prove that they possessed great archaeological value and were worth acquiring for the Central Museum at Nagpur, which contained scarcely any Buddhist specimens of this period. I, therefore, had them extricated from the earth and carefully cleaned. And my trouble was more than repaid by the discovery of dedicatory records on three of them.</p>
 <p>Four of these images represent the <b>Bōdhisattva Avalōkitēśvara</b>, while the fifth is that of his consort <b>Tārā</b>. They all wear elaborate ornaments and are seated in an easy posture under a richly decorated canopy, consisting of seven umbrellas rising one above the other like the familiar <i>hti</i> on Buddhist stūpas. Numerous attendant figures are ranged on all sides and portrayed as paying devotion to the main deity in the centre. From their technique and the scheme of decoration it appears that they are products of the “Magadha school.”</p>
 <p>As I have already remarked, only three of the sculptures bear dedicatory inscriptions, and of these latter, two contain barely the <b>Buddhist</b> formula “<i>ye dharmā hētuprabhavā</i>,” etc. The remaining one is more detailed and, therefore, more important. The characters are <b>Nāgarī</b> and belong to the 11th or 12th century A.D. Subjoined are a transcript and translation of this record.</p>
@@ -163,8 +171,7 @@ table.idx { border-collapse: collapse; width: 100%; font-size: .95rem; }
 <div class="lines"><p>Line 1 Yē dharmā hētuprabhavā hētu[m] tēshām <b>Tathāga]tō</b> hy=avadat [*]<br/>tēshā[m] cha yō nirō[dha*] ēva[m] vādi <b>Mahāśrava(ma)[na]h</b> ||<br/>[Dē]yadha[r]mōyam pravara-mahājānujāyi[nah]<sup>1</sup></p><p>2 param-ōpāsaka-kāyastha-śri-<b>Subhakta[sya]</b>|suta-śri-Satka(kta)-davvā(dauvā)rīkā(ka)<br/><b>Dēnuvāyā</b> [Ya*]d=atta(ttra) puṇyam[ta]d=bhavatv=ā[ch]āry-ōpā[dhyā]ya-<br/>mātāpitri(tri)-pūrvva[īga]mam [kṛi]-</p><p>3 tvā sakala-satva-rā[śēr]=anu[tta]ra-jñā[n-ā*]vāpta[yē=stu]<sup>2</sup></p></div>
 <h3><h4>TRANSLATION.</h4></h3>
 <p>Line 1. Whichever phenomena are cause-born, of them the cause the <b>Tathāgata</b> (Buddha) alone has said, and what annihilation also there is of them. Such is the lore of the <b>Great Śramaṇa</b> (Buddha).</p>
-<p>Ll. 1-3. This [is] the pious gift of the follower of the renowned Mahāyāna school, the gate-keeper <b>Dēnuvā</b>, devoted to the illustrious <b>Satka</b><sup>3</sup>, son of the great lay-worshipper, the famous <b>Subhakta</b>, a <i>kāyastha</i>. Whatever merit there is herein, let it be for the attainment of supreme wisdom by all classes of sentient beings, particularly, beginning with my spiritual guide, my preceptor and my parents.</p>
-</section></div></main>
+<p>Ll. 1-3. This [is] the pious gift of the follower of the renowned Mahāyāna school, the gate-keeper <b>Dēnuvā</b>, devoted to the illustrious <b>Satka</b><sup>3</sup>, son of the great lay-worshipper, the famous <b>Subhakta</b>, a <i>kāyastha</i>. Whatever merit there is herein, let it be for the attainment of supreme wisdom by all classes of sentient beings, particularly, beginning with my spiritual guide, my preceptor and my parents.</p></section></div></main>
 <footer>Generated 18 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
 Feedback: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">this form</a>.</footer>
 </div>
