@@ -55,13 +55,21 @@
   .home-link { text-decoration: none; color: var(--accent-strong); margin-right: 0.3rem; }
   .home-link:hover { color: var(--accent); }
 
-  --accent:#e0a85a; --note:#262420; --mark:#7a6420; --mark-on:#b07a10; } }
 mark { background: var(--mark); color: inherit; border-radius: 2px; }
 mark.on { background: var(--mark-on); }
 .meta { color: var(--muted); font-size: .9rem; }
 h1 { font-size: 1.5rem; line-height: 1.3; margin: .2rem 0; }
 h3 { font-size: 1.05rem; margin: 1.4rem 0 .4rem; letter-spacing: .02em; }
 .byline { font-variant: small-caps; color: var(--muted); }
+.art-head { margin: .6rem 0 1.2rem; padding-bottom: .9rem; border-bottom: 1px solid var(--line); }
+.ah-corpus { font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); font-weight: 600; }
+.ah-vol { font-size: 1rem; font-weight: 600; margin-top: .25rem; }
+.ah-part { font-weight: 400; color: var(--muted); }
+h1.ah-title { font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem; font-weight: 600;
+              line-height: 1.25; margin: .45rem 0 .3rem; }
+.ah-author { font-variant: small-caps; font-size: 1.05rem; }
+.ah-ref { color: var(--muted); font-size: .82rem; margin-top: .35rem; }
+h2.printed-title { font-size: 1.1rem; line-height: 1.35; margin: .4rem 0; }
 .page { display:flex; gap:.5rem; align-items:center; color:var(--muted); font-size:.8rem; margin:1.6rem 0 .6rem; }
 .page::before, .page::after { content:""; flex:1; border-top:1px solid var(--line); }
 .lines { font-size: .95rem; }
@@ -73,18 +81,107 @@ figcaption, .caption { color: var(--muted); font-size: .85rem; }
 .art table { border-collapse: collapse; font-size: .9rem; margin: .8rem 0; display:block; overflow-x:auto; }
 .art td, .art th { border: 1px solid var(--line); padding: .2rem .4rem; vertical-align: top; }
 .warn { border-left: 3px solid var(--accent); padding-left: .7rem; }
-input, select { font: inherit; padding: .35rem .5rem; box-sizing: border-box; }
-.search { display:flex; gap:.5rem; flex-wrap: wrap; margin: .8rem 0; }
-.search input { flex: 1 1 16rem; }
-.scroll { overflow-x: auto; }
-table.idx { border-collapse: collapse; width: 100%; font-size: .95rem; }
-.idx th { text-align: left; border-bottom: 2px solid var(--line); padding: .3rem .4rem; white-space: nowrap;
-  cursor: pointer; user-select: none; }
+/* the index's controls, table and row pop-up: the Inscriptions corpus pages' own look
+   (scripts/inscriptions_table_html.py), on the site's tokens (user, 2026-11-18) */
+.search, .dd-bar { margin-bottom: .75rem; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+input[type=search] { padding: 8px 13px; width: 20rem; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; box-sizing: border-box; }
+select { padding: 8px 10px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; }
+input[type=search]:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  box-shadow: var(--shadow); }
+table.idx { border-collapse: collapse; width: 100%; font-size: 14px; font-family: 'Segoe UI', system-ui, sans-serif; }
+.idx th, .idx td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);
+  padding: 10px 12px; text-align: left; vertical-align: top; overflow-wrap: break-word; }
+.idx th:last-child, .idx td:last-child { border-right: none; }
+.idx th { background: var(--surface-2); color: var(--text-dim); position: sticky; top: 0; z-index: 1;
+  text-transform: uppercase; letter-spacing: .04em; font-size: 11.5px; white-space: nowrap; cursor: pointer; user-select: none; }
 .idx th[aria-sort=ascending]::after { content: " ▲"; } .idx th[aria-sort=descending]::after { content: " ▼"; }
-.idx tr.filters th { cursor: default; border-bottom: 1px solid var(--line); }
-.idx tr.filters input { width: 100%; min-width: 4rem; font-size: .85rem; }
-.idx td { border-bottom: 1px solid var(--line); padding: .35rem .4rem; vertical-align: top; }
+.idx tbody tr:nth-child(even) { background: var(--surface-2); }
+.idx tbody tr:last-child td { border-bottom: none; }
+.idx tbody tr { cursor: pointer; }
+.idx tbody tr:hover { background: var(--surface-2); }
 .idx td.num { text-align: right; white-space: nowrap; }
+.idx td.attr { font-size: .85rem; }
+.idx th.ai::after { content: " AI"; font-size: .65rem; color: var(--accent-copper-strong); vertical-align: super; }
+.filter-dd { position: relative; display: inline-block; }
+.filter-dd-btn { padding: 8px 14px; cursor: pointer; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; text-align: left;
+  min-width: 8rem; max-width: 14rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filter-dd-btn:hover { border-color: var(--accent); }
+.filter-dd.active .filter-dd-btn { border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
+.filter-dd-panel { position: absolute; top: calc(100% + 4px); left: 0; z-index: 50; width: 16rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  box-shadow: var(--shadow); padding: .6rem; display: flex; flex-direction: column; gap: .5rem; }
+.filter-dd-panel[hidden] { display: none; }
+.filter-dd-mode { display: flex; gap: .9rem; font-size: .82rem; color: var(--text-dim); }
+.filter-dd-mode label { display: flex; align-items: center; gap: .3rem; cursor: pointer; }
+.filter-dd-search { padding: 5px 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+  color: var(--text); font-family: inherit; font-size: 13px; width: 100%; box-sizing: border-box; }
+.filter-dd-hint { font-size: 11px; color: var(--text-dim); margin: -2px 2px 2px; }
+.filter-dd-options { max-height: 14rem; overflow-y: auto; display: flex; flex-direction: column; }
+.filter-dd-opt { display: flex; align-items: center; gap: .5rem; padding: 3px 4px; border-radius: 4px;
+  font-size: .85rem; cursor: pointer; }
+.filter-dd-opt:hover { background: var(--surface-2); }
+.filter-dd-opt[hidden] { display: none; }
+.filter-dd-opt span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filter-dd-opt .n { font-style: normal; font-size: .75rem; color: var(--text-dim); }
+.filter-dd-opt-unavailable { opacity: .4; cursor: not-allowed; }
+.filter-dd-opt-unavailable:hover { background: none; }
+.filter-dd-actions { display: flex; justify-content: flex-end; }
+.filter-dd-clear { padding: 4px 10px; cursor: pointer; background: none; border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text-dim); font-family: inherit; font-size: 12.5px; }
+.filter-dd-clear:hover { color: var(--text); border-color: var(--accent); }
+.active-filters-summary { background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+  padding: .5rem .9rem; margin-bottom: .75rem; font-size: .85rem; color: var(--text); line-height: 1.6; }
+.active-filters-summary[hidden] { display: none; }
+.active-filters-summary strong { color: var(--text-dim); font-weight: 600; }
+.row-hint { font-style: italic; }
+body.noscroll { overflow: hidden; }
+.remarks-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center;
+  justify-content: center; z-index: 1000; padding: 1.5rem; }
+.remarks-modal-overlay[hidden] { display: none; }
+.remarks-modal-box { background: var(--surface); color: var(--text); border-radius: 10px; max-width: 44rem; width: 100%;
+  max-height: 80vh; overflow-y: auto; padding: 1.5rem; position: relative; box-shadow: var(--shadow);
+  font-family: 'Segoe UI', system-ui, sans-serif; box-sizing: border-box; }
+.remarks-modal-close { position: absolute; top: .5rem; right: .7rem; font-size: 1.3rem; line-height: 1;
+  background: none; border: none; cursor: pointer; color: var(--text-dim); }
+.remarks-modal-close:hover { color: var(--text); }
+.row-detail-box { max-width: 56rem; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
+.row-detail-box .remarks-modal-close { top: .5rem; right: .7rem; z-index: 2; }
+.row-detail-header { flex: none; padding: 1.5rem 3rem .7rem 1.5rem; margin-bottom: .4rem; border-bottom: 1px solid var(--border); }
+.row-detail-title { font-size: 1.1rem; font-weight: 600; line-height: 1.35; margin-bottom: .3rem; }
+.row-detail-idline { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.row-detail-id-text { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9rem; color: var(--text); }
+.row-detail-cite { color: var(--text-dim); font-size: .85rem; }
+.row-detail-read { margin-left: auto; font-size: .85rem; }
+.row-detail-body { flex: 1 1 auto; overflow-y: auto; padding: 0 1.5rem 1.5rem; }
+.row-detail-field { display: grid; grid-template-columns: 9rem 1fr; gap: .4rem .75rem; padding: .3rem 0;
+  border-bottom: 1px solid var(--border); align-items: baseline; }
+.row-detail-field:last-child { border-bottom: none; }
+.row-detail-label { color: var(--text-dim); font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; font-weight: 600; }
+.row-detail-value { line-height: 1.5; overflow-wrap: break-word; }
+.row-detail-na { color: var(--text-dim); font-style: italic; }
+.row-detail-quote { color: var(--text-dim); font-size: .85rem; margin-top: .15rem; }
+.v-derived { color: var(--accent-copper-strong); font-style: italic; }
+.row-detail-tabs { margin-top: 1.1rem; }
+.row-detail-tab-bar { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .6rem; }
+.row-detail-tab-btn { font: inherit; font-size: .85rem; padding: .35rem .8rem; border: 1px solid var(--border);
+  border-radius: 999px; background: var(--surface-2); color: var(--text-dim); cursor: pointer; }
+.row-detail-tab-btn.active { border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
+.row-detail-tab-btn.has-match { background: #fff3a0; color: #000; }
+.match-nav { margin-left: auto; display: flex; align-items: center; gap: .4rem; font-size: .82rem; color: var(--text-dim); }
+.match-nav[hidden], .match-nav button[hidden] { display: none; }
+.match-nav button { font: inherit; font-size: .82rem; padding: .25rem .7rem; border: 1px solid var(--border);
+  border-radius: 999px; background: var(--surface); color: var(--text); cursor: pointer; }
+.match-nav button:hover { border-color: var(--accent); }
+mark.current { background: #ffb347; outline: 2px solid #e08a00; }
+.row-detail-tab-content { line-height: 1.6; font-size: .95rem; background: var(--surface-2); border-radius: 6px;
+  padding: .8rem 1rem; }
+.ai-badge { font-size: .65rem; color: var(--accent-copper-strong); border: 1px solid var(--accent-copper);
+  border-radius: 3px; padding: 0 .25rem; vertical-align: middle; cursor: help; text-transform: none; letter-spacing: 0; }
+  @media (max-width: 640px) { input[type=search] { width: 100%; } .row-detail-field { grid-template-columns: 1fr; } }
 .snip { color: var(--muted); font-size: .85rem; margin-top: .2rem; }
 .hits { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: .4rem 0;
   font-size: .9rem; z-index: 1; }
@@ -104,6 +201,11 @@ table.idx { border-collapse: collapse; width: 100%; font-size: .95rem; }
 .plate-note { font-size: .85rem; color: var(--muted); font-style: italic; }
 figure.big img { max-height: 85vh; }
 .tab.has-match { background: #fff3a0; color: #000; }
+sup.fn a { text-decoration: none; padding: 0 .15em; }
+.fn-pop { position: absolute; z-index: 20; max-width: min(28rem, 90vw); background: var(--note);
+  border: 1px solid var(--line); border-radius: 4px; padding: .3rem .7rem; font-size: .85rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2); }
+.fn-pop p { margin: .2rem 0; }
 .hits ~ .tabs, .hits + .art .tabs { top: 2.4rem; }
   .wrap { max-width: 72rem; margin: 0 auto; }
   .wrap.narrow { max-width: 50rem; }
@@ -159,7 +261,7 @@ figure.big img { max-height: 85vh; }
 <div class="brand">Project InscriptionSearch: Articles</div>
 <div class="titlebar"><h1><a href="./" class="home-link" title="Home"><img src="images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> Evolution</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
 <main><p class="about">What has changed on the Articles site, newest first.</p><h2>Coming soon</h2><div class="card soon"><h3>Mysore Archaeological Reports <span class="badge">Coming soon</span></h3><p>The yearly reports of the Mysore Archaeological Department: monuments, numismatics, manuscripts and the copper-plate grants discussed each year. Being added to the site.</p></div>
-<div class="card soon"><h3>Corpus Inscriptionum Indicarum <span class="badge">Coming soon</span></h3><p>The Archaeological Survey of India's corpus series: Aśoka, the Kharoshthi and Bhārhut inscriptions, the Guptas, the Kalachuri-Chedi era and more, each volume with its editor's introduction and every inscription edited in full. Being added to the site.</p></div><h2>18 November 2026</h2><p>The Articles site opens, as the twin of Project InscriptionSearch.</p><ul><li><strong>Epigraphia Indica, Vol. XVIII</strong> (1925): 41 articles in full text, with their plates and figures, each printed page on its own tab with its footnotes.</li><li>Full-text search with three match widths, accents and capitals optional, and the Inscriptions site's categories (hero-stones, Bhairava, Rāmānuja and others) as a filter.</li></ul></main>
+<div class="card soon"><h3>Corpus Inscriptionum Indicarum <span class="badge">Coming soon</span></h3><p>The Archaeological Survey of India's corpus series: Aśoka, the Kharoshthi and Bhārhut inscriptions, the Guptas, the Kalachuri-Chedi era and more, each volume with its editor's introduction and every inscription edited in full. Being added to the site.</p></div><h2>18 November 2026: Vols. III and V added</h2><ul><li><strong>Epigraphia Indica, Vol. III</strong> (1894-95): 48 articles, and <strong>Vol. V</strong> (1898-99): 26 articles, in full text with their plates and figures, searchable together with Vol. XVIII.</li><li>Their details pop-ups carry the dynasty, king, date, place, language and script picked out by AI from each article's introduction, with the editor's own words.</li><li>Vol. III No. 13 begins on printed p. 76: pp. 74-75 are missing from our scan.</li></ul><h2>18 November 2026: Vol. XVIII completed</h2><ul><li><strong>Footnotes open where they are marked</strong>: click a footnote number in the text to read the note beside it.</li><li><strong>Click a row for the article's details</strong>: pages, plates, images, categories, and the dynasty, king, date, place, language and script picked out by AI from its introduction, each with the editor's own words. The table keeps the main columns only.</li><li><strong>Filter lists</strong> for volume, author, dynasty, king, century, place, language and script, as on the Inscriptions site: include or exclude, narrowing each other, with a line saying what is applied. A filter adds its column to the table.</li><li>No. 28 now opens on its first page, printed pp. 260-261, which our scan lacks; it was read from another copy of the volume. The same leaf completes No. 27.</li><li>Nine plates that had been shown as text pages are now shown as plates, and every page carries its printed number.</li></ul><h2>18 November 2026</h2><p>The Articles site opens, as the twin of Project InscriptionSearch.</p><ul><li><strong>Epigraphia Indica, Vol. XVIII</strong> (1925): 115 articles in full text, with their plates and figures, each printed page on its own tab with its footnotes.</li><li>Full-text search with three match widths, accents and capitals optional, and the Inscriptions site's categories (hero-stones, Bhairava, Rāmānuja and others) as a filter.</li></ul></main>
 <footer>Generated 18 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
 Feedback: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">this form</a>.</footer>
 </div>

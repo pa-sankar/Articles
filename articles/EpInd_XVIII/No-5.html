@@ -55,13 +55,21 @@
   .home-link { text-decoration: none; color: var(--accent-strong); margin-right: 0.3rem; }
   .home-link:hover { color: var(--accent); }
 
-  --accent:#e0a85a; --note:#262420; --mark:#7a6420; --mark-on:#b07a10; } }
 mark { background: var(--mark); color: inherit; border-radius: 2px; }
 mark.on { background: var(--mark-on); }
 .meta { color: var(--muted); font-size: .9rem; }
 h1 { font-size: 1.5rem; line-height: 1.3; margin: .2rem 0; }
 h3 { font-size: 1.05rem; margin: 1.4rem 0 .4rem; letter-spacing: .02em; }
 .byline { font-variant: small-caps; color: var(--muted); }
+.art-head { margin: .6rem 0 1.2rem; padding-bottom: .9rem; border-bottom: 1px solid var(--line); }
+.ah-corpus { font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); font-weight: 600; }
+.ah-vol { font-size: 1rem; font-weight: 600; margin-top: .25rem; }
+.ah-part { font-weight: 400; color: var(--muted); }
+h1.ah-title { font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem; font-weight: 600;
+              line-height: 1.25; margin: .45rem 0 .3rem; }
+.ah-author { font-variant: small-caps; font-size: 1.05rem; }
+.ah-ref { color: var(--muted); font-size: .82rem; margin-top: .35rem; }
+h2.printed-title { font-size: 1.1rem; line-height: 1.35; margin: .4rem 0; }
 .page { display:flex; gap:.5rem; align-items:center; color:var(--muted); font-size:.8rem; margin:1.6rem 0 .6rem; }
 .page::before, .page::after { content:""; flex:1; border-top:1px solid var(--line); }
 .lines { font-size: .95rem; }
@@ -73,18 +81,107 @@ figcaption, .caption { color: var(--muted); font-size: .85rem; }
 .art table { border-collapse: collapse; font-size: .9rem; margin: .8rem 0; display:block; overflow-x:auto; }
 .art td, .art th { border: 1px solid var(--line); padding: .2rem .4rem; vertical-align: top; }
 .warn { border-left: 3px solid var(--accent); padding-left: .7rem; }
-input, select { font: inherit; padding: .35rem .5rem; box-sizing: border-box; }
-.search { display:flex; gap:.5rem; flex-wrap: wrap; margin: .8rem 0; }
-.search input { flex: 1 1 16rem; }
-.scroll { overflow-x: auto; }
-table.idx { border-collapse: collapse; width: 100%; font-size: .95rem; }
-.idx th { text-align: left; border-bottom: 2px solid var(--line); padding: .3rem .4rem; white-space: nowrap;
-  cursor: pointer; user-select: none; }
+/* the index's controls, table and row pop-up: the Inscriptions corpus pages' own look
+   (scripts/inscriptions_table_html.py), on the site's tokens (user, 2026-11-18) */
+.search, .dd-bar { margin-bottom: .75rem; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+input[type=search] { padding: 8px 13px; width: 20rem; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; box-sizing: border-box; }
+select { padding: 8px 10px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; }
+input[type=search]:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  box-shadow: var(--shadow); }
+table.idx { border-collapse: collapse; width: 100%; font-size: 14px; font-family: 'Segoe UI', system-ui, sans-serif; }
+.idx th, .idx td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);
+  padding: 10px 12px; text-align: left; vertical-align: top; overflow-wrap: break-word; }
+.idx th:last-child, .idx td:last-child { border-right: none; }
+.idx th { background: var(--surface-2); color: var(--text-dim); position: sticky; top: 0; z-index: 1;
+  text-transform: uppercase; letter-spacing: .04em; font-size: 11.5px; white-space: nowrap; cursor: pointer; user-select: none; }
 .idx th[aria-sort=ascending]::after { content: " ▲"; } .idx th[aria-sort=descending]::after { content: " ▼"; }
-.idx tr.filters th { cursor: default; border-bottom: 1px solid var(--line); }
-.idx tr.filters input { width: 100%; min-width: 4rem; font-size: .85rem; }
-.idx td { border-bottom: 1px solid var(--line); padding: .35rem .4rem; vertical-align: top; }
+.idx tbody tr:nth-child(even) { background: var(--surface-2); }
+.idx tbody tr:last-child td { border-bottom: none; }
+.idx tbody tr { cursor: pointer; }
+.idx tbody tr:hover { background: var(--surface-2); }
 .idx td.num { text-align: right; white-space: nowrap; }
+.idx td.attr { font-size: .85rem; }
+.idx th.ai::after { content: " AI"; font-size: .65rem; color: var(--accent-copper-strong); vertical-align: super; }
+.filter-dd { position: relative; display: inline-block; }
+.filter-dd-btn { padding: 8px 14px; cursor: pointer; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; text-align: left;
+  min-width: 8rem; max-width: 14rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filter-dd-btn:hover { border-color: var(--accent); }
+.filter-dd.active .filter-dd-btn { border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
+.filter-dd-panel { position: absolute; top: calc(100% + 4px); left: 0; z-index: 50; width: 16rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  box-shadow: var(--shadow); padding: .6rem; display: flex; flex-direction: column; gap: .5rem; }
+.filter-dd-panel[hidden] { display: none; }
+.filter-dd-mode { display: flex; gap: .9rem; font-size: .82rem; color: var(--text-dim); }
+.filter-dd-mode label { display: flex; align-items: center; gap: .3rem; cursor: pointer; }
+.filter-dd-search { padding: 5px 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+  color: var(--text); font-family: inherit; font-size: 13px; width: 100%; box-sizing: border-box; }
+.filter-dd-hint { font-size: 11px; color: var(--text-dim); margin: -2px 2px 2px; }
+.filter-dd-options { max-height: 14rem; overflow-y: auto; display: flex; flex-direction: column; }
+.filter-dd-opt { display: flex; align-items: center; gap: .5rem; padding: 3px 4px; border-radius: 4px;
+  font-size: .85rem; cursor: pointer; }
+.filter-dd-opt:hover { background: var(--surface-2); }
+.filter-dd-opt[hidden] { display: none; }
+.filter-dd-opt span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filter-dd-opt .n { font-style: normal; font-size: .75rem; color: var(--text-dim); }
+.filter-dd-opt-unavailable { opacity: .4; cursor: not-allowed; }
+.filter-dd-opt-unavailable:hover { background: none; }
+.filter-dd-actions { display: flex; justify-content: flex-end; }
+.filter-dd-clear { padding: 4px 10px; cursor: pointer; background: none; border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text-dim); font-family: inherit; font-size: 12.5px; }
+.filter-dd-clear:hover { color: var(--text); border-color: var(--accent); }
+.active-filters-summary { background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+  padding: .5rem .9rem; margin-bottom: .75rem; font-size: .85rem; color: var(--text); line-height: 1.6; }
+.active-filters-summary[hidden] { display: none; }
+.active-filters-summary strong { color: var(--text-dim); font-weight: 600; }
+.row-hint { font-style: italic; }
+body.noscroll { overflow: hidden; }
+.remarks-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center;
+  justify-content: center; z-index: 1000; padding: 1.5rem; }
+.remarks-modal-overlay[hidden] { display: none; }
+.remarks-modal-box { background: var(--surface); color: var(--text); border-radius: 10px; max-width: 44rem; width: 100%;
+  max-height: 80vh; overflow-y: auto; padding: 1.5rem; position: relative; box-shadow: var(--shadow);
+  font-family: 'Segoe UI', system-ui, sans-serif; box-sizing: border-box; }
+.remarks-modal-close { position: absolute; top: .5rem; right: .7rem; font-size: 1.3rem; line-height: 1;
+  background: none; border: none; cursor: pointer; color: var(--text-dim); }
+.remarks-modal-close:hover { color: var(--text); }
+.row-detail-box { max-width: 56rem; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
+.row-detail-box .remarks-modal-close { top: .5rem; right: .7rem; z-index: 2; }
+.row-detail-header { flex: none; padding: 1.5rem 3rem .7rem 1.5rem; margin-bottom: .4rem; border-bottom: 1px solid var(--border); }
+.row-detail-title { font-size: 1.1rem; font-weight: 600; line-height: 1.35; margin-bottom: .3rem; }
+.row-detail-idline { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.row-detail-id-text { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9rem; color: var(--text); }
+.row-detail-cite { color: var(--text-dim); font-size: .85rem; }
+.row-detail-read { margin-left: auto; font-size: .85rem; }
+.row-detail-body { flex: 1 1 auto; overflow-y: auto; padding: 0 1.5rem 1.5rem; }
+.row-detail-field { display: grid; grid-template-columns: 9rem 1fr; gap: .4rem .75rem; padding: .3rem 0;
+  border-bottom: 1px solid var(--border); align-items: baseline; }
+.row-detail-field:last-child { border-bottom: none; }
+.row-detail-label { color: var(--text-dim); font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; font-weight: 600; }
+.row-detail-value { line-height: 1.5; overflow-wrap: break-word; }
+.row-detail-na { color: var(--text-dim); font-style: italic; }
+.row-detail-quote { color: var(--text-dim); font-size: .85rem; margin-top: .15rem; }
+.v-derived { color: var(--accent-copper-strong); font-style: italic; }
+.row-detail-tabs { margin-top: 1.1rem; }
+.row-detail-tab-bar { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .6rem; }
+.row-detail-tab-btn { font: inherit; font-size: .85rem; padding: .35rem .8rem; border: 1px solid var(--border);
+  border-radius: 999px; background: var(--surface-2); color: var(--text-dim); cursor: pointer; }
+.row-detail-tab-btn.active { border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
+.row-detail-tab-btn.has-match { background: #fff3a0; color: #000; }
+.match-nav { margin-left: auto; display: flex; align-items: center; gap: .4rem; font-size: .82rem; color: var(--text-dim); }
+.match-nav[hidden], .match-nav button[hidden] { display: none; }
+.match-nav button { font: inherit; font-size: .82rem; padding: .25rem .7rem; border: 1px solid var(--border);
+  border-radius: 999px; background: var(--surface); color: var(--text); cursor: pointer; }
+.match-nav button:hover { border-color: var(--accent); }
+mark.current { background: #ffb347; outline: 2px solid #e08a00; }
+.row-detail-tab-content { line-height: 1.6; font-size: .95rem; background: var(--surface-2); border-radius: 6px;
+  padding: .8rem 1rem; }
+.ai-badge { font-size: .65rem; color: var(--accent-copper-strong); border: 1px solid var(--accent-copper);
+  border-radius: 3px; padding: 0 .25rem; vertical-align: middle; cursor: help; text-transform: none; letter-spacing: 0; }
+  @media (max-width: 640px) { input[type=search] { width: 100%; } .row-detail-field { grid-template-columns: 1fr; } }
 .snip { color: var(--muted); font-size: .85rem; margin-top: .2rem; }
 .hits { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: .4rem 0;
   font-size: .9rem; z-index: 1; }
@@ -104,6 +201,11 @@ table.idx { border-collapse: collapse; width: 100%; font-size: .95rem; }
 .plate-note { font-size: .85rem; color: var(--muted); font-style: italic; }
 figure.big img { max-height: 85vh; }
 .tab.has-match { background: #fff3a0; color: #000; }
+sup.fn a { text-decoration: none; padding: 0 .15em; }
+.fn-pop { position: absolute; z-index: 20; max-width: min(28rem, 90vw); background: var(--note);
+  border: 1px solid var(--line); border-radius: 4px; padding: .3rem .7rem; font-size: .85rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2); }
+.fn-pop p { margin: .2rem 0; }
 .hits ~ .tabs, .hits + .art .tabs { top: 2.4rem; }
   .wrap { max-width: 72rem; margin: 0 auto; }
   .wrap.narrow { max-width: 50rem; }
@@ -158,36 +260,38 @@ figure.big img { max-height: 85vh; }
 <div class="wrap narrow">
 <div class="brand">Project InscriptionSearch: Articles</div>
 <div class="titlebar"><h1><a href="../../" class="home-link" title="Home"><img src="../../images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> Epigraphia Indica</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
-<main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a> · Epigraphia Indica XVIII · EpInd XVIII No. 5 · Part II · printed p. 55 · PDF pp. 73-78</p><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 55</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 56</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 57</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 58</button><span class=tsep></span><span class="tg">Plates</span><button type="button" class="tab t-plate" role="tab" data-i="4">Plate 1</button><button type="button" class="tab t-plate" role="tab" data-i="5">Plate 2</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page">p. 55 · PDF 73</div>
-<h1>No. 5.—NIDUPARU GRANT OF JAYASIMHA I.</h1>
+<main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a></p>
+<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. XVIII · No. 5<span class=ah-part> · Part II</span></div><h1 class="ah-title">Niduparu grant of Jayasimha I</h1><div class="ah-author">E. Hultzsch</div><div class="ah-ref">Printed p. 55 · PDF pp. 73–78</div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 55</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 56</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 57</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 58</button><span class=tsep></span><span class="tg">Plates</span><button type="button" class="tab t-plate" role="tab" data-i="4">Plate 1</button><button type="button" class="tab t-plate" role="tab" data-i="5">Plate 2</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page">p. 55 · PDF 73</div>
+<h2 class="printed-title">No. 5.—NIDUPARU GRANT OF JAYASIMHA I.</h2>
 <p class="byline"><p>BY PROFESSOR E. HULTZSCH, PH.D.; HALLE (SAALE).</p></p>
-<p>A set of ink-impressions of this inscription was sent to me by Rao Bahadur H. Krishna Sastri, who had received the original plates for examination<sup>2</sup> from Mr. M. Ramakrishnakavi, M.A., Oriental Manuscripts Library, Madras. The inscription is engraved on <b>three</b> oblong <b>copper-plates</b>, the second of which bears writing on both sides. The margins of the four inscribed sides are only very slightly raised into rims. The plates measure 2" in height. The two first are 7" in breadth, while the third is cut on the right margin and hence measures only 6 3/2". The plates are strung on a <b>ring</b> which is 2 8/9" in diameter, and which is passed through a hole of about 8" in diameter. The two ends of the ring are fixed in the base of a circular seal of about 1 1/2" in diameter which bears, in relief, the legend <i>Śrī-Sarvvasiddhi</i>, with a crescent at the top and an expanded lotus-flower of nine petals at the bottom. The weight of the plates, with ring and seal, is 70 tolas.</p>
+<p>A set of ink-impressions of this inscription was sent to me by Rao Bahadur H. Krishna Sastri, who had received the original plates for examination<sup class="fn"><a href="#fn-1-2">2</a></sup> from Mr. M. Ramakrishnakavi, M.A., Oriental Manuscripts Library, Madras. The inscription is engraved on <b>three</b> oblong <b>copper-plates</b>, the second of which bears writing on both sides. The margins of the four inscribed sides are only very slightly raised into rims. The plates measure 2" in height. The two first are 7" in breadth, while the third is cut on the right margin and hence measures only 6 3/2". The plates are strung on a <b>ring</b> which is 2 8/9" in diameter, and which is passed through a hole of about 8" in diameter. The two ends of the ring are fixed in the base of a circular seal of about 1 1/2" in diameter which bears, in relief, the legend <i>Śrī-Sarvvasiddhi</i>, with a crescent at the top and an expanded lotus-flower of nine petals at the bottom. The weight of the plates, with ring and seal, is 70 tolas.</p>
 <p>The writing is in a tolerably good state of preservation; but some <i>aksharus</i>, <i>anusvāras</i>, and vowel-marks are indistinct, and at the end of the first five lines of the third plate, two or three letters are lost. The <b>alphabet</b> resembles that of other early Eastern Chalukya grants. A final form of <i>t</i> occurs in <i>-vāsakāt</i> (l. 1) and <i>vasēt</i> (l. 24). The syllable <i>ru</i> is used in the Telugu proper names <i>Gaṇdēru</i> (ll. 9 f. and 10), <i>Vannēru</i> (l. 10), <i>Niḍuparu</i> (l. 18 f.) and <i>Niḍubaru</i> (l. 11).</p>
 <p>The language is Sanskrit prose as far as line 19. The last plate contains four Sanskrit verses. Consonants are not doubled after <i>r</i>, except in <i>-ātti</i>- (for <i>-ārtti</i>-, l. 3), <i>pravarddha°</i> (l. 6) <i>-mantrārthi°</i> (for <i>-mantrārtthe°</i>, l. 16), <i>=āryya</i>- (l. 19), <i>°bhir=vvasudhā</i> (l. 22). As the notes on the text will show, the rules of Sandhi are frequently neglected. For <i>-kalāpa</i> (l. 8) the sense requires the instrumental <i>-kalāpēna</i>.</p>
-<p>The inscription records the grant of the village of <b>Niḍuperu</b> or <b>Niḍubaru</b> to the learned Brāhmaṇa Kāṭiśarman (read Kōṭiśarman ?) by <b>Jayasimha (I) Vallabha</b>, son of <b>Vishṇuvardhara (I)</b> and grandson of <b>Kīrtivarman (I)</b> of the <b>Chalukya</b> family. Vishṇuvardhana I bore the surname <b>Makaradhvaja</b>, <i>i.e.</i>, Cupid, whom he is stated to have surpassed in beauty (l. 5). The donor, Jayasimha I, had the surname <b>Sarvvasiddhi</b>,<sup>3</sup> by which he is designated on the seals of his two grants.<sup>4</sup></p>
-<p>The king's order was issued from <b>Asanapura</b> (l. 1), and the donee's grandfather was an inhabitant of the same town (l. 12).<sup>5</sup> The village granted was included in <b>Gaṇdēruvāṭi</b> and</p>
-<div class="notes"><p><sup>1</sup> [Mr. K. V. S. Aiyar reads in l. 426 <i>mummadi</i> and translates: ' who saw the back of Āhavavalla three times —Ed.]</p><p><sup>2</sup> See <i>Ep. Rep.</i> for 1917, App. A., No. 7 and p. 113.</p><p><sup>3</sup> See <i>Ind. Ant.</i>, Vol. XX, p. 97.</p><p><sup>4</sup> See the first paragraph of this article, and <i>Ind. Ant.</i>, Vol. XIII, p. 137.</p><p><sup>5</sup> The grandfather of the donee of a grant of Vishṇuvardhana II also resided in <b>Asanapura</b>; <i>Ind. Ant.</i>, Vol. VII, p. 192.</p></div></section>
+<p>The inscription records the grant of the village of <b>Niḍuperu</b> or <b>Niḍubaru</b> to the learned Brāhmaṇa Kāṭiśarman (read Kōṭiśarman ?) by <b>Jayasimha (I) Vallabha</b>, son of <b>Vishṇuvardhara (I)</b> and grandson of <b>Kīrtivarman (I)</b> of the <b>Chalukya</b> family. Vishṇuvardhana I bore the surname <b>Makaradhvaja</b>, <i>i.e.</i>, Cupid, whom he is stated to have surpassed in beauty (l. 5). The donor, Jayasimha I, had the surname <b>Sarvvasiddhi</b>,<sup class="fn"><a href="#fn-1-3">3</a></sup> by which he is designated on the seals of his two grants.<sup class="fn"><a href="#fn-1-4">4</a></sup></p>
+<p>The king's order was issued from <b>Asanapura</b> (l. 1), and the donee's grandfather was an inhabitant of the same town (l. 12).<sup class="fn"><a href="#fn-1-5">5</a></sup> The village granted was included in <b>Gaṇdēruvāṭi</b> and</p>
+<div class="notes"><p><sup id="fn-1-1">1</sup> [Mr. K. V. S. Aiyar reads in l. 426 <i>mummadi</i> and translates: ' who saw the back of Āhavavalla three times —Ed.]</p><p><sup id="fn-1-2">2</sup> See <i>Ep. Rep.</i> for 1917, App. A., No. 7 and p. 113.</p><p><sup id="fn-1-3">3</sup> See <i>Ind. Ant.</i>, Vol. XX, p. 97.</p><p><sup id="fn-1-4">4</sup> See the first paragraph of this article, and <i>Ind. Ant.</i>, Vol. XIII, p. 137.</p><p><sup id="fn-1-5">5</sup> The grandfather of the donee of a grant of Vishṇuvardhana II also resided in <b>Asanapura</b>; <i>Ind. Ant.</i>, Vol. VII, p. 192.</p></div></section>
 <section class="pg pg-page" role="tabpanel" data-i="1"><div class="page">p. 56 · PDF 74</div>
-<p>was situated on the river Vannēru, north of the Vyaghra river, and two <i>gavyūtis</i> east of the royal residence of Gaṇdēru. The district of Gaṇdēguvāti is evidently the same as Kaṇdēruvāđi or Kaṇdravāđi in other inscriptions from the Telugu country.<sup>1</sup> Rao Bahadur Krishna Sastri has identified Gaṇdēru, the chief town of this district and the residence of Jayasimha I, with the village of Kantēru in the Guṇṭūr Tāluk of the Guṇṭūr District, and the village granted, Niđuparu or Niđubaru, with the modern Nidamarru 'which is actually about two <i>gavyūtis</i> (i.e., eight miles) to the east of Kantēru.'<sup>2</sup> Mr. Sewell informs me that Kantēru is a few miles N. E. of Guṇṭūr near the main road leading to Bezvāda, and that Nidamarru is a few miles N. N. E. of it. He is unable to trace the Vyāghra and Vannēru rivers, and the town of Asanapura.</p>
-<h3><h3>TEXT.<sup>3</sup></h3></h3>
+<p>was situated on the river Vannēru, north of the Vyaghra river, and two <i>gavyūtis</i> east of the royal residence of Gaṇdēru. The district of Gaṇdēguvāti is evidently the same as Kaṇdēruvāđi or Kaṇdravāđi in other inscriptions from the Telugu country.<sup class="fn"><a href="#fn-2-1">1</a></sup> Rao Bahadur Krishna Sastri has identified Gaṇdēru, the chief town of this district and the residence of Jayasimha I, with the village of Kantēru in the Guṇṭūr Tāluk of the Guṇṭūr District, and the village granted, Niđuparu or Niđubaru, with the modern Nidamarru 'which is actually about two <i>gavyūtis</i> (i.e., eight miles) to the east of Kantēru.'<sup class="fn"><a href="#fn-2-2">2</a></sup> Mr. Sewell informs me that Kantēru is a few miles N. E. of Guṇṭūr near the main road leading to Bezvāda, and that Nidamarru is a few miles N. N. E. of it. He is unable to trace the Vyāghra and Vannēru rivers, and the town of Asanapura.</p>
+<h3><h3>TEXT.<sup class="fn"><a href="#fn-2-3">3</a></sup></h3></h3>
 <h3><h4><i>First Plate; Second Side.</i></h4></h3>
-<div class="lines"><ol style="list-style-type: none;"><li>1 Svasti [||*] Śrīmad-Asanapura-vāsakāt svāmi-Mahāsēna-pād-ānudhyātānām Hāriti-putrāṇā[m] Mānavya-</li><li>2 sugōt[r]āṇām Mātri-gaṇa-paripālitānām<sup>4</sup> aśvamēdha-yājinām Chalukyānām vi[ś]uddha-vam[ś]-ōda-</li><li>3 yagiri-śikhar-ōdita-kshitipaty-ahimadidhitēḥ sakala-jagad-ā[r*]tti-hara-karmaṇa[h]</li><li>4 Sri-Kirtivarmaṇah priya-naptā śaśalāṇchhanasy=ēva sakala-jagan-ma[n]ō-nayan-āna-</li><li>5 ndana-karasya sva-rūpa-lāvaṇy-āvajita-Makarathva(dhva)jasya Makaradhvaj-āpara-nāmnah śrīmad-aida[m*]yugīna-</li><li>6 Vishṇōḥ<sup>5</sup> Vishṇuvardhana-mahārājasya<sup>6</sup> priya-tanayah pravarddhamān ōdaya-pratāp-ōpanata-sama-</li></ol></div>
+<div class="lines"><ol style="list-style-type: none;"><li>1 Svasti [||*] Śrīmad-Asanapura-vāsakāt svāmi-Mahāsēna-pād-ānudhyātānām Hāriti-putrāṇā[m] Mānavya-</li><li>2 sugōt[r]āṇām Mātri-gaṇa-paripālitānām<sup class="fn"><a href="#fn-2-4">4</a></sup> aśvamēdha-yājinām Chalukyānām vi[ś]uddha-vam[ś]-ōda-</li><li>3 yagiri-śikhar-ōdita-kshitipaty-ahimadidhitēḥ sakala-jagad-ā[r*]tti-hara-karmaṇa[h]</li><li>4 Sri-Kirtivarmaṇah priya-naptā śaśalāṇchhanasy=ēva sakala-jagan-ma[n]ō-nayan-āna-</li><li>5 ndana-karasya sva-rūpa-lāvaṇy-āvajita-Makarathva(dhva)jasya Makaradhvaj-āpara-nāmnah śrīmad-aida[m*]yugīna-</li><li>6 Vishṇōḥ<sup class="fn"><a href="#fn-2-5">5</a></sup> Vishṇuvardhana-mahārājasya<sup class="fn"><a href="#fn-2-6">6</a></sup> priya-tanayah pravarddhamān ōdaya-pratāp-ōpanata-sama-</li></ol></div>
 <h3><h4><i>Second Plate; First Side.</i></h4></h3>
-<div class="lines"><ol style="list-style-type: none;"><li>7 sta-sāmanta-makuṭa-taṭa-ghaṭita-maṇi-mayūkha-maṇjari-punija-pimjarita-charaṇ-āravinda-yugalaḥ(lō) nija-</li><li>8 guṇa-didhiti-kalāpa<sup>7</sup> Kaliyuga-dhvāntam nirākarishṇuh<sup>8</sup> Ākhaṇdala iv=ākhaṇdita-paura(ru)shah pa-</li><li>9 rama-brahmaṇyō mātāpitri-pāt-ānudhyātaḥ<sup>9</sup> śrī-Jayasimha-Vallabha-mahārājaḥ(jō) Gaṇdē-</li><li>10 ṛuvāṭyā[m] Vyāghra-nadyāś-ch=ōttaratah(tō) Vannēru-nadyāś=cha tirē Gaṇdēru-rājadhāṇyāḥ</li><li>11 pūrva-dig-vibhāgē gavyūta(ti)-dvayē Niđubaru-nāma-grāmam=adhivasataḥ kuđurī(ṭuī)binaḥ samavētā-</li><li>12 n=ājñāpayati [||*] Viditam=astu vō yath=Āsanapura-sthāna-nivāsinō ghaṭikā-sāmāṇya-</li></ol></div>
-<div class="notes"><p><sup>1</sup> See above, Vol. VI, p. 148, and Vol. XII, p. 62.</p><p><sup>2</sup> <i>Annual Report on Epigraphy</i> for 1916-17, p. 115. According to Mr. Sewell's <i>Lists</i>, Vol. I, pp. 37 and 39, there is a pair of other villages of the same name (Kaṇtēru and Niđamarru) in the Tanuku and Bhīmavaram Tāluks of the Gōdāvari District. At my request Mr. Sewell has kindly looked up the Tāluk maps in the British Museum, and he quite agrees with Mr. Krishna Sastri's identification, because the village of Kantēru in the Guṇṭūr District 'is a far more important place than the little out-of-the-way village of the same name in the Tanuku Tāluk of the Gōdāvari District,' and because the two villages of Kantēru and Niđamarru in this last district are 'not very close together; and seemingly quite small places.'</p><p><sup>3</sup> From the ink-impressions.</p><p><sup>4</sup> Read 'tānām=.</p><p><sup>5</sup> Read <i>Vishṇōḥ=</i>.</p><p><sup>6</sup> As there was no room for the group <i>shṇu</i> of <i>Vishṇu</i><sup>0</sup> at the bottom of the plate, the engraver placed a dash (<i>virāma</i>) above <i>sh</i> and added <i>ny</i> after it;</p><p><sup>7</sup> Read-<i>kalāpēna</i>.</p><p><sup>8</sup> Read 'rīshṇur=.</p><p><sup>9</sup> Read -pād-ānudhyātaḥ.</p></div>
+<div class="lines"><ol style="list-style-type: none;"><li>7 sta-sāmanta-makuṭa-taṭa-ghaṭita-maṇi-mayūkha-maṇjari-punija-pimjarita-charaṇ-āravinda-yugalaḥ(lō) nija-</li><li>8 guṇa-didhiti-kalāpa<sup class="fn"><a href="#fn-2-7">7</a></sup> Kaliyuga-dhvāntam nirākarishṇuh<sup class="fn"><a href="#fn-2-8">8</a></sup> Ākhaṇdala iv=ākhaṇdita-paura(ru)shah pa-</li><li>9 rama-brahmaṇyō mātāpitri-pāt-ānudhyātaḥ<sup class="fn"><a href="#fn-2-9">9</a></sup> śrī-Jayasimha-Vallabha-mahārājaḥ(jō) Gaṇdē-</li><li>10 ṛuvāṭyā[m] Vyāghra-nadyāś-ch=ōttaratah(tō) Vannēru-nadyāś=cha tirē Gaṇdēru-rājadhāṇyāḥ</li><li>11 pūrva-dig-vibhāgē gavyūta(ti)-dvayē Niđubaru-nāma-grāmam=adhivasataḥ kuđurī(ṭuī)binaḥ samavētā-</li><li>12 n=ājñāpayati [||*] Viditam=astu vō yath=Āsanapura-sthāna-nivāsinō ghaṭikā-sāmāṇya-</li></ol></div>
+<div class="notes"><p><sup id="fn-2-1">1</sup> See above, Vol. VI, p. 148, and Vol. XII, p. 62.</p><p><sup id="fn-2-2">2</sup> <i>Annual Report on Epigraphy</i> for 1916-17, p. 115. According to Mr. Sewell's <i>Lists</i>, Vol. I, pp. 37 and 39, there is a pair of other villages of the same name (Kaṇtēru and Niđamarru) in the Tanuku and Bhīmavaram Tāluks of the Gōdāvari District. At my request Mr. Sewell has kindly looked up the Tāluk maps in the British Museum, and he quite agrees with Mr. Krishna Sastri's identification, because the village of Kantēru in the Guṇṭūr District 'is a far more important place than the little out-of-the-way village of the same name in the Tanuku Tāluk of the Gōdāvari District,' and because the two villages of Kantēru and Niđamarru in this last district are 'not very close together; and seemingly quite small places.'</p><p><sup id="fn-2-3">3</sup> From the ink-impressions.</p><p><sup id="fn-2-4">4</sup> Read 'tānām=.</p><p><sup id="fn-2-5">5</sup> Read <i>Vishṇōḥ=</i>.</p><p><sup id="fn-2-6">6</sup> As there was no room for the group <i>shṇu</i> of <i>Vishṇu</i><sup id="fn-2-0">0</sup> at the bottom of the plate, the engraver placed a dash (<i>virāma</i>) above <i>sh</i> and added <i>ny</i> after it;</p><p><sup id="fn-2-7">7</sup> Read-<i>kalāpēna</i>.</p><p><sup id="fn-2-8">8</sup> Read 'rīshṇur=.</p><p><sup id="fn-2-9">9</sup> Read -pād-ānudhyātaḥ.</p></div>
 <p class="plate-note"><a href="#plate-1">Plate 1</a> is bound after this page.</p>
 <p class="plate-note"><a href="#plate-2">Plate 2</a> is bound after this page.</p></section>
 <section class="pg pg-page" role="tabpanel" data-i="2"><div class="page">p. 57 · PDF 77</div>
 <h3><i>Second Plate; Second Side.</i></h3>
-<div class="lines"><p>13 sya sa-[pa]da-kram-ānukram-ādhita-vēda-dvayasya sa-kalp-ōpanishat-purāp-ētihās-ānēka-dharmaśāstra-<br/>14 Vidah(dō) Maṇ[da]śarmaṇah pautrāya sva-pitur=adhika-guṇa-sampad-gaṇ-ā(ō)pāi ji'a-nirmala-yaśō-viśō-<br/>15 shē[na]<sup>1</sup> [ā]tmanō=nvayam=alam=alam'karishṇōh<sup>2</sup> agnishṭōma-yājinah Śivarudraśarmaṇa[h]<br/>16 putrāya dvi-v[ē]d-ādhyāyinē yajñāgam ōpanishan-mantrārtth-i(ō)tihāsa-purāṇa-dharma-śāstra-vimalikrita-vina(n!)ta-matayē Hārita-sagōtrāya Taittiriya-sabrahmachāra(ri)pē Kāṭiśarmaṇē<br/>18 Kārtika-purnṇamāsyām mātāpitrōr=ātmanas-cha yaśah-puṇy-ābhivirdhayē<sup>3</sup> samprattō=yam Niḍupa-</p></div>
+<div class="lines"><p>13 sya sa-[pa]da-kram-ānukram-ādhita-vēda-dvayasya sa-kalp-ōpanishat-purāp-ētihās-ānēka-dharmaśāstra-<br/>14 Vidah(dō) Maṇ[da]śarmaṇah pautrāya sva-pitur=adhika-guṇa-sampad-gaṇ-ā(ō)pāi ji'a-nirmala-yaśō-viśō-<br/>15 shē[na]<sup class="fn"><a href="#fn-3-1">1</a></sup> [ā]tmanō=nvayam=alam=alam'karishṇōh<sup class="fn"><a href="#fn-3-2">2</a></sup> agnishṭōma-yājinah Śivarudraśarmaṇa[h]<br/>16 putrāya dvi-v[ē]d-ādhyāyinē yajñāgam ōpanishan-mantrārtth-i(ō)tihāsa-purāṇa-dharma-śāstra-vimalikrita-vina(n!)ta-matayē Hārita-sagōtrāya Taittiriya-sabrahmachāra(ri)pē Kāṭiśarmaṇē<br/>18 Kārtika-purnṇamāsyām mātāpitrōr=ātmanas-cha yaśah-puṇy-ābhivirdhayē<sup class="fn"><a href="#fn-3-3">3</a></sup> samprattō=yam Niḍupa-</p></div>
 <h3><i>Third Plate; First Side.</i></h3>
-<div class="lines"><p>19 ṣu-nāma-grāmah [|*] N=āsya bādhā karaṇiyā [||*] Ājñaptir=atr=āryya-manō-bhirāmuh śri-vīrya-[m]ā[tsa] . . . .<br/>20 nāśrayō=yam<sup>4</sup> [|*] bhūpēndra-niti-pravibhāga-dakshah(kshō) [vē]dāṅga-vit=sarva-kal-āntaraṇñah(jñah) [|| 1 ||*] Atrā Vyāsa-gitāh . [||*] [Sva][dattām pa*]-ra-dattām vā yatnād=raksha Yudhis'bhhira [|*] [mahīm mahī][ma*]tām śrēshṭha dānāch=chh[r*]ṣyō=nu[p]āla[nam] [|| 2 || Bahu*]-<br/>22 bhir=vvasudhā [da]ttā bahubhiś=ch=ānu[pāli]tā [|*] yasya yasya yathā(dā) bhūmi . . . [sya] [tasya*]<sup>5</sup><br/>23 tadā phalam [|| 3 ||*] Shashṭi[m*] varsha-sahasrāṇi svarga(rgē) mōdati bhūmi-dah [|*] ākshēpta ch=ānu[ma][ntā cha*]<br/>24 tāny=ē[va] narakē vasēt [|| 4 ||*]</p></div>
+<div class="lines"><p>19 ṣu-nāma-grāmah [|*] N=āsya bādhā karaṇiyā [||*] Ājñaptir=atr=āryya-manō-bhirāmuh śri-vīrya-[m]ā[tsa] . . . .<br/>20 nāśrayō=yam<sup class="fn"><a href="#fn-3-4">4</a></sup> [|*] bhūpēndra-niti-pravibhāga-dakshah(kshō) [vē]dāṅga-vit=sarva-kal-āntaraṇñah(jñah) [|| 1 ||*] Atrā Vyāsa-gitāh . [||*] [Sva][dattām pa*]-ra-dattām vā yatnād=raksha Yudhis'bhhira [|*] [mahīm mahī][ma*]tām śrēshṭha dānāch=chh[r*]ṣyō=nu[p]āla[nam] [|| 2 || Bahu*]-<br/>22 bhir=vvasudhā [da]ttā bahubhiś=ch=ānu[pāli]tā [|*] yasya yasya yathā(dā) bhūmi . . . [sya] [tasya*]<sup class="fn"><a href="#fn-3-5">5</a></sup><br/>23 tadā phalam [|| 3 ||*] Shashṭi[m*] varsha-sahasrāṇi svarga(rgē) mōdati bhūmi-dah [|*] ākshēpta ch=ānu[ma][ntā cha*]<br/>24 tāny=ē[va] narakē vasēt [|| 4 ||*]</p></div>
 <h3>ABSTRACT OF CONTENTS.</h3>
 <p>Hail! From (his) residence in the prosperous Asanapura (l. 1), Jayasimha-Vallabhe-Mahārāja (l. 9),—the dear son of Vishṇuvardhana-Mahārāja' (l. 6) whose other name was Makaradhvaja (l. 5), and the dear grandson of Kīrtivarman (l. 4) of the family of the Chalukyas (l. 2),—commands (as follows) the assembled ryots inhabiting the village named Niḍubaṣru (which lay in (the district of) Gaṇdēruyāṭi, north of the Vyāghra river and on the bank of the Vannēṣru river, at (a distance of) two <i>gavyūtis</i> on the eastern side of the royal residence (<i>rājadhāni</i>) of Gaṇdēru (ll. 9-12):</p>
-<p>'Be it known to you that, on the full-moon (tithi) of Kārttike, (I have) given this village named Niḍupaṣru (l. 18 f.) to Kāṭiśarman of the Hārita <i>gōtra</i> and of the Taittiriya (<i>charaṇa</i>) (l. 17), son of Śivarudraśarman (l. 15), and grandson of Maṇ[da]śarman (l. 14) who resided in the town (<i>sthāna</i>) of Asanapura and was a member of (its) college<sup>6</sup> (l. 12).' Maṇ[da]śarman is stated to have 'studied two Vēdas together with their Pada, Krama, and Anukrama' and to have 'known many law-books, together with Kalpa, Upanishad, Purāṇa, and Itihāsa;' Śivarudraśarman, to have performed Agnishṭomas; and Kāṭiśarman, to have 'studied two Vēdas' and to have 'purified and trained his mind by sacrificial lore, Upanishad, the meaning of Mantras, Itihāsa, Purāṇa, and Dharmaśāstra.'</p>
-<div class="notes"><sup>1</sup> Read <i>shēṇ=ātmanō</i><sup>2</sup> Read <i>'rishṇōr=agni</i>.<sup>3</sup> Read <i>-ābhivyīddhayē</i>.<sup>4</sup> Read perhaps <i>tri-vīryavān=Sarvajanātrayō=yam</i>.<sup>5</sup> Read <i>bhūmis=tasya-tasya</i>.<sup>6</sup> For <i>ghaṭikā</i> see above, Vol. VIII, p. 26 and n. 1; <i>South-Ind. Inser.</i>, Vol. II, pp. 502, 510 f.</div></section>
+<p>'Be it known to you that, on the full-moon (tithi) of Kārttike, (I have) given this village named Niḍupaṣru (l. 18 f.) to Kāṭiśarman of the Hārita <i>gōtra</i> and of the Taittiriya (<i>charaṇa</i>) (l. 17), son of Śivarudraśarman (l. 15), and grandson of Maṇ[da]śarman (l. 14) who resided in the town (<i>sthāna</i>) of Asanapura and was a member of (its) college<sup class="fn"><a href="#fn-3-6">6</a></sup> (l. 12).' Maṇ[da]śarman is stated to have 'studied two Vēdas together with their Pada, Krama, and Anukrama' and to have 'known many law-books, together with Kalpa, Upanishad, Purāṇa, and Itihāsa;' Śivarudraśarman, to have performed Agnishṭomas; and Kāṭiśarman, to have 'studied two Vēdas' and to have 'purified and trained his mind by sacrificial lore, Upanishad, the meaning of Mantras, Itihāsa, Purāṇa, and Dharmaśāstra.'</p>
+<div class="notes"><sup id="fn-3-1">1</sup> Read <i>shēṇ=ātmanō</i><sup id="fn-3-2">2</sup> Read <i>'rishṇōr=agni</i>.<sup id="fn-3-3">3</sup> Read <i>-ābhivyīddhayē</i>.<sup id="fn-3-4">4</sup> Read perhaps <i>tri-vīryavān=Sarvajanātrayō=yam</i>.<sup id="fn-3-5">5</sup> Read <i>bhūmis=tasya-tasya</i>.<sup id="fn-3-6">6</sup> For <i>ghaṭikā</i> see above, Vol. VIII, p. 26 and n. 1; <i>South-Ind. Inser.</i>, Vol. II, pp. 502, 510 f.</div></section>
 <section class="pg pg-page" role="tabpanel" data-i="3"><div class="page">p. 58 · PDF 78</div>
-<p>The executor (<i>ājñapti</i>) of this (grant) was . . . . . who knew royal politics, the Vēdāngus, and all arts<sup>1</sup> (verse 1, l. 19 f.). The record ends with three verses 'sung by <b>Vyāsa</b>' (l. 20).</p></section>
+<p>The executor (<i>ājñapti</i>) of this (grant) was . . . . . who knew royal politics, the Vēdāngus, and all arts<sup class="fn"><a href="#fn-4-1">1</a></sup> (verse 1, l. 19 f.). The record ends with three verses 'sung by <b>Vyāsa</b>' (l. 20).</p>
+<div class="notes"><p><sup id="fn-4-1">1</sup> Perhaps he was a Brāhmaṇa minister of the king. His proper name is uncertain because of the break at the end of line 19 of the text. It may have been <b>Sarvajanāśraya</b>.</p></div></section>
 <section class="pg pg-plate" role="tabpanel" data-i="4"><div class="page" id="plate-1">Plate 1 · PDF page 75, bound after p. 56</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p75.webp" alt="Plate 1"></figure></section>
 <section class="pg pg-plate" role="tabpanel" data-i="5"><div class="page" id="plate-2">Plate 2 · PDF page 76, bound after p. 56</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p76.webp" alt="Plate 2"></figure></section></div></main>
 <footer>Generated 18 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
@@ -239,6 +343,28 @@ function toHash(){ if (location.hash){ var el=document.getElementById(location.h
   if (el){ showFor(el); el.scrollIntoView({block:'start'}); } } }
 window.addEventListener('hashchange', toHash);
 toHash();
+// footnote pop-ups: a mark opens its note beside it; a click elsewhere or Esc closes it
+var pop=null;
+function closePop(){ if (pop){ pop.remove(); pop=null; } }
+document.addEventListener('click', function(e){
+  var a=e.target.closest('sup.fn a');
+  if (!a){ if (pop && !pop.contains(e.target)) closePop(); return; }
+  e.preventDefault(); closePop();
+  var note=document.getElementById(a.getAttribute('href').slice(1)); if (!note) return;
+  // the note runs from its mark to the next note's mark (notes may share one paragraph)
+  var box=note.closest('.notes'), r0=document.createRange(); r0.setStartBefore(note);
+  var nxt=Array.prototype.filter.call(box.querySelectorAll('sup[id]'), function(x){
+    return note.compareDocumentPosition(x) & Node.DOCUMENT_POSITION_FOLLOWING; })[0];
+  if (nxt) r0.setEndBefore(nxt); else r0.setEndAfter(box.lastChild);
+  pop=document.createElement('div'); pop.className='fn-pop'; pop.appendChild(r0.cloneContents());
+  pop.querySelectorAll('[id]').forEach(function(x){ x.removeAttribute('id'); });
+  pop.querySelectorAll('hr').forEach(function(x){ x.remove(); });
+  document.body.appendChild(pop);
+  var r=a.getBoundingClientRect(), w=pop.offsetWidth;
+  pop.style.left=Math.max(8, Math.min(r.left+window.scrollX, window.scrollX+document.documentElement.clientWidth-w-8))+'px';
+  pop.style.top=(r.bottom+window.scrollY+4)+'px';
+});
+document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop(); });
 (function(){
   var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat');
   // what to mark: the search term, and the chosen category's matched words (CAT_TERMS)

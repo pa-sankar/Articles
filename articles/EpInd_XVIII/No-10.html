@@ -55,13 +55,21 @@
   .home-link { text-decoration: none; color: var(--accent-strong); margin-right: 0.3rem; }
   .home-link:hover { color: var(--accent); }
 
-  --accent:#e0a85a; --note:#262420; --mark:#7a6420; --mark-on:#b07a10; } }
 mark { background: var(--mark); color: inherit; border-radius: 2px; }
 mark.on { background: var(--mark-on); }
 .meta { color: var(--muted); font-size: .9rem; }
 h1 { font-size: 1.5rem; line-height: 1.3; margin: .2rem 0; }
 h3 { font-size: 1.05rem; margin: 1.4rem 0 .4rem; letter-spacing: .02em; }
 .byline { font-variant: small-caps; color: var(--muted); }
+.art-head { margin: .6rem 0 1.2rem; padding-bottom: .9rem; border-bottom: 1px solid var(--line); }
+.ah-corpus { font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); font-weight: 600; }
+.ah-vol { font-size: 1rem; font-weight: 600; margin-top: .25rem; }
+.ah-part { font-weight: 400; color: var(--muted); }
+h1.ah-title { font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem; font-weight: 600;
+              line-height: 1.25; margin: .45rem 0 .3rem; }
+.ah-author { font-variant: small-caps; font-size: 1.05rem; }
+.ah-ref { color: var(--muted); font-size: .82rem; margin-top: .35rem; }
+h2.printed-title { font-size: 1.1rem; line-height: 1.35; margin: .4rem 0; }
 .page { display:flex; gap:.5rem; align-items:center; color:var(--muted); font-size:.8rem; margin:1.6rem 0 .6rem; }
 .page::before, .page::after { content:""; flex:1; border-top:1px solid var(--line); }
 .lines { font-size: .95rem; }
@@ -73,18 +81,107 @@ figcaption, .caption { color: var(--muted); font-size: .85rem; }
 .art table { border-collapse: collapse; font-size: .9rem; margin: .8rem 0; display:block; overflow-x:auto; }
 .art td, .art th { border: 1px solid var(--line); padding: .2rem .4rem; vertical-align: top; }
 .warn { border-left: 3px solid var(--accent); padding-left: .7rem; }
-input, select { font: inherit; padding: .35rem .5rem; box-sizing: border-box; }
-.search { display:flex; gap:.5rem; flex-wrap: wrap; margin: .8rem 0; }
-.search input { flex: 1 1 16rem; }
-.scroll { overflow-x: auto; }
-table.idx { border-collapse: collapse; width: 100%; font-size: .95rem; }
-.idx th { text-align: left; border-bottom: 2px solid var(--line); padding: .3rem .4rem; white-space: nowrap;
-  cursor: pointer; user-select: none; }
+/* the index's controls, table and row pop-up: the Inscriptions corpus pages' own look
+   (scripts/inscriptions_table_html.py), on the site's tokens (user, 2026-11-18) */
+.search, .dd-bar { margin-bottom: .75rem; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+input[type=search] { padding: 8px 13px; width: 20rem; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; box-sizing: border-box; }
+select { padding: 8px 10px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; }
+input[type=search]:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  box-shadow: var(--shadow); }
+table.idx { border-collapse: collapse; width: 100%; font-size: 14px; font-family: 'Segoe UI', system-ui, sans-serif; }
+.idx th, .idx td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);
+  padding: 10px 12px; text-align: left; vertical-align: top; overflow-wrap: break-word; }
+.idx th:last-child, .idx td:last-child { border-right: none; }
+.idx th { background: var(--surface-2); color: var(--text-dim); position: sticky; top: 0; z-index: 1;
+  text-transform: uppercase; letter-spacing: .04em; font-size: 11.5px; white-space: nowrap; cursor: pointer; user-select: none; }
 .idx th[aria-sort=ascending]::after { content: " ▲"; } .idx th[aria-sort=descending]::after { content: " ▼"; }
-.idx tr.filters th { cursor: default; border-bottom: 1px solid var(--line); }
-.idx tr.filters input { width: 100%; min-width: 4rem; font-size: .85rem; }
-.idx td { border-bottom: 1px solid var(--line); padding: .35rem .4rem; vertical-align: top; }
+.idx tbody tr:nth-child(even) { background: var(--surface-2); }
+.idx tbody tr:last-child td { border-bottom: none; }
+.idx tbody tr { cursor: pointer; }
+.idx tbody tr:hover { background: var(--surface-2); }
 .idx td.num { text-align: right; white-space: nowrap; }
+.idx td.attr { font-size: .85rem; }
+.idx th.ai::after { content: " AI"; font-size: .65rem; color: var(--accent-copper-strong); vertical-align: super; }
+.filter-dd { position: relative; display: inline-block; }
+.filter-dd-btn { padding: 8px 14px; cursor: pointer; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; text-align: left;
+  min-width: 8rem; max-width: 14rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filter-dd-btn:hover { border-color: var(--accent); }
+.filter-dd.active .filter-dd-btn { border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
+.filter-dd-panel { position: absolute; top: calc(100% + 4px); left: 0; z-index: 50; width: 16rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  box-shadow: var(--shadow); padding: .6rem; display: flex; flex-direction: column; gap: .5rem; }
+.filter-dd-panel[hidden] { display: none; }
+.filter-dd-mode { display: flex; gap: .9rem; font-size: .82rem; color: var(--text-dim); }
+.filter-dd-mode label { display: flex; align-items: center; gap: .3rem; cursor: pointer; }
+.filter-dd-search { padding: 5px 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+  color: var(--text); font-family: inherit; font-size: 13px; width: 100%; box-sizing: border-box; }
+.filter-dd-hint { font-size: 11px; color: var(--text-dim); margin: -2px 2px 2px; }
+.filter-dd-options { max-height: 14rem; overflow-y: auto; display: flex; flex-direction: column; }
+.filter-dd-opt { display: flex; align-items: center; gap: .5rem; padding: 3px 4px; border-radius: 4px;
+  font-size: .85rem; cursor: pointer; }
+.filter-dd-opt:hover { background: var(--surface-2); }
+.filter-dd-opt[hidden] { display: none; }
+.filter-dd-opt span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filter-dd-opt .n { font-style: normal; font-size: .75rem; color: var(--text-dim); }
+.filter-dd-opt-unavailable { opacity: .4; cursor: not-allowed; }
+.filter-dd-opt-unavailable:hover { background: none; }
+.filter-dd-actions { display: flex; justify-content: flex-end; }
+.filter-dd-clear { padding: 4px 10px; cursor: pointer; background: none; border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text-dim); font-family: inherit; font-size: 12.5px; }
+.filter-dd-clear:hover { color: var(--text); border-color: var(--accent); }
+.active-filters-summary { background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+  padding: .5rem .9rem; margin-bottom: .75rem; font-size: .85rem; color: var(--text); line-height: 1.6; }
+.active-filters-summary[hidden] { display: none; }
+.active-filters-summary strong { color: var(--text-dim); font-weight: 600; }
+.row-hint { font-style: italic; }
+body.noscroll { overflow: hidden; }
+.remarks-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center;
+  justify-content: center; z-index: 1000; padding: 1.5rem; }
+.remarks-modal-overlay[hidden] { display: none; }
+.remarks-modal-box { background: var(--surface); color: var(--text); border-radius: 10px; max-width: 44rem; width: 100%;
+  max-height: 80vh; overflow-y: auto; padding: 1.5rem; position: relative; box-shadow: var(--shadow);
+  font-family: 'Segoe UI', system-ui, sans-serif; box-sizing: border-box; }
+.remarks-modal-close { position: absolute; top: .5rem; right: .7rem; font-size: 1.3rem; line-height: 1;
+  background: none; border: none; cursor: pointer; color: var(--text-dim); }
+.remarks-modal-close:hover { color: var(--text); }
+.row-detail-box { max-width: 56rem; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
+.row-detail-box .remarks-modal-close { top: .5rem; right: .7rem; z-index: 2; }
+.row-detail-header { flex: none; padding: 1.5rem 3rem .7rem 1.5rem; margin-bottom: .4rem; border-bottom: 1px solid var(--border); }
+.row-detail-title { font-size: 1.1rem; font-weight: 600; line-height: 1.35; margin-bottom: .3rem; }
+.row-detail-idline { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.row-detail-id-text { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9rem; color: var(--text); }
+.row-detail-cite { color: var(--text-dim); font-size: .85rem; }
+.row-detail-read { margin-left: auto; font-size: .85rem; }
+.row-detail-body { flex: 1 1 auto; overflow-y: auto; padding: 0 1.5rem 1.5rem; }
+.row-detail-field { display: grid; grid-template-columns: 9rem 1fr; gap: .4rem .75rem; padding: .3rem 0;
+  border-bottom: 1px solid var(--border); align-items: baseline; }
+.row-detail-field:last-child { border-bottom: none; }
+.row-detail-label { color: var(--text-dim); font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; font-weight: 600; }
+.row-detail-value { line-height: 1.5; overflow-wrap: break-word; }
+.row-detail-na { color: var(--text-dim); font-style: italic; }
+.row-detail-quote { color: var(--text-dim); font-size: .85rem; margin-top: .15rem; }
+.v-derived { color: var(--accent-copper-strong); font-style: italic; }
+.row-detail-tabs { margin-top: 1.1rem; }
+.row-detail-tab-bar { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .6rem; }
+.row-detail-tab-btn { font: inherit; font-size: .85rem; padding: .35rem .8rem; border: 1px solid var(--border);
+  border-radius: 999px; background: var(--surface-2); color: var(--text-dim); cursor: pointer; }
+.row-detail-tab-btn.active { border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
+.row-detail-tab-btn.has-match { background: #fff3a0; color: #000; }
+.match-nav { margin-left: auto; display: flex; align-items: center; gap: .4rem; font-size: .82rem; color: var(--text-dim); }
+.match-nav[hidden], .match-nav button[hidden] { display: none; }
+.match-nav button { font: inherit; font-size: .82rem; padding: .25rem .7rem; border: 1px solid var(--border);
+  border-radius: 999px; background: var(--surface); color: var(--text); cursor: pointer; }
+.match-nav button:hover { border-color: var(--accent); }
+mark.current { background: #ffb347; outline: 2px solid #e08a00; }
+.row-detail-tab-content { line-height: 1.6; font-size: .95rem; background: var(--surface-2); border-radius: 6px;
+  padding: .8rem 1rem; }
+.ai-badge { font-size: .65rem; color: var(--accent-copper-strong); border: 1px solid var(--accent-copper);
+  border-radius: 3px; padding: 0 .25rem; vertical-align: middle; cursor: help; text-transform: none; letter-spacing: 0; }
+  @media (max-width: 640px) { input[type=search] { width: 100%; } .row-detail-field { grid-template-columns: 1fr; } }
 .snip { color: var(--muted); font-size: .85rem; margin-top: .2rem; }
 .hits { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: .4rem 0;
   font-size: .9rem; z-index: 1; }
@@ -104,6 +201,11 @@ table.idx { border-collapse: collapse; width: 100%; font-size: .95rem; }
 .plate-note { font-size: .85rem; color: var(--muted); font-style: italic; }
 figure.big img { max-height: 85vh; }
 .tab.has-match { background: #fff3a0; color: #000; }
+sup.fn a { text-decoration: none; padding: 0 .15em; }
+.fn-pop { position: absolute; z-index: 20; max-width: min(28rem, 90vw); background: var(--note);
+  border: 1px solid var(--line); border-radius: 4px; padding: .3rem .7rem; font-size: .85rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2); }
+.fn-pop p { margin: .2rem 0; }
 .hits ~ .tabs, .hits + .art .tabs { top: 2.4rem; }
   .wrap { max-width: 72rem; margin: 0 auto; }
   .wrap.narrow { max-width: 50rem; }
@@ -158,20 +260,22 @@ figure.big img { max-height: 85vh; }
 <div class="wrap narrow">
 <div class="brand">Project InscriptionSearch: Articles</div>
 <div class="titlebar"><h1><a href="../../" class="home-link" title="Home"><img src="../../images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> Epigraphia Indica</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
-<main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a> · Epigraphia Indica XVIII · EpInd XVIII No. 10 · Part II · printed p. 73 · PDF pp. 97-98</p><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 73</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 74</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page">p. 73 · PDF 97</div>
-<h1><h4>No. 10.—INSCRIBED BUDDHIST IMAGE FROM GOPALPUR.</h4></h1>
+<main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a></p>
+<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. XVIII · No. 10<span class=ah-part> · Part II</span></div><h1 class="ah-title">Inscribed Buddhist Image from Gopalpur</h1><div class="ah-author">V. Natesa Aiyar</div><div class="ah-ref">Printed p. 73 · PDF pp. 97–98</div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 73</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 74</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page">p. 73 · PDF 97</div>
+<h2 class="printed-title"><h4>No. 10.—INSCRIBED BUDDHIST IMAGE FROM GOPALPUR.</h4></h2>
 <p class="byline"><p>BY THE LATE PANDIT V: NATESA AIYAR, B.A., M.R.A.S.</p></p>
-<p>The village of Gōpālpur is situated some three miles to the south-east of Bherāghāt popularly known as ‘The Marble Rocks,’ in the Jubbulpore District: it lies on the right bank of the Narmadā. The village contains only a few scattered houses: owing to its secluded position the place is seldom visited by travellers or tourists. Sir Alexander Cunningham, the pioneer archæologist, however, seems to have visited the spot in the winter of 1874; for in one of his reports he gives an account of an inscribed stone tablet of the Chēdi dynasty which, he says, was discovered there previously by Professor Hall.<sup>3</sup> It was this fact alone which induced me to explore the place while I was encamped at Bherāghāt some eight years ago. Although, unfortunately, the inscription in question could no longer be traced, I was lucky enough to discover within a fortified enclosure, which, I learnt, was then in the occupation of a certain <i>sūdhu</i>, named Vindhya-sūri, five elegantly carved stone images of the mediaeval period. At</p>
-<div class="notes"><p><sup>1</sup> <i>Ibid</i> pp. 73—79., and pp. 58—55; and Mackenzie. p 138. The late Dr. Pope, shortly before his death, expressed his acceptance of the opinion that Māṇikkavāśagar lived not later than the fourth century (<i>Tam. Ant., ut. supra, p. 54</i>).</p><p><sup>2</sup> See my article on the “Age of Māṇikkavāchakar” in the <i>Madras Christian College Magazine</i> for 1905.</p><p><sup>3</sup> <i>A. S. R.</i>, Vol. IX, p. 99.</p></div></section>
+<p>The village of Gōpālpur is situated some three miles to the south-east of Bherāghāt popularly known as ‘The Marble Rocks,’ in the Jubbulpore District: it lies on the right bank of the Narmadā. The village contains only a few scattered houses: owing to its secluded position the place is seldom visited by travellers or tourists. Sir Alexander Cunningham, the pioneer archæologist, however, seems to have visited the spot in the winter of 1874; for in one of his reports he gives an account of an inscribed stone tablet of the Chēdi dynasty which, he says, was discovered there previously by Professor Hall.<sup class="fn"><a href="#fn-1-3">3</a></sup> It was this fact alone which induced me to explore the place while I was encamped at Bherāghāt some eight years ago. Although, unfortunately, the inscription in question could no longer be traced, I was lucky enough to discover within a fortified enclosure, which, I learnt, was then in the occupation of a certain <i>sūdhu</i>, named Vindhya-sūri, five elegantly carved stone images of the mediaeval period. At</p>
+<div class="notes"><p><sup id="fn-1-1">1</sup> <i>Ibid</i> pp. 73—79., and pp. 58—55; and Mackenzie. p 138. The late Dr. Pope, shortly before his death, expressed his acceptance of the opinion that Māṇikkavāśagar lived not later than the fourth century (<i>Tam. Ant., ut. supra, p. 54</i>).</p><p><sup id="fn-1-2">2</sup> See my article on the “Age of Māṇikkavāchakar” in the <i>Madras Christian College Magazine</i> for 1905.</p><p><sup id="fn-1-3">3</sup> <i>A. S. R.</i>, Vol. IX, p. 99.</p></div></section>
 <section class="pg pg-page" role="tabpanel" data-i="1"><div class="page">p. 74 · PDF 98</div>
 <p>the time when I noticed these images they were almost completely buried under the ground. However, sufficient remained visible to prove that they possessed great archaeological value and were worth acquiring for the Central Museum at Nagpur, which contained scarcely any Buddhist specimens of this period. I, therefore, had them extricated from the earth and carefully cleaned. And my trouble was more than repaid by the discovery of dedicatory records on three of them.</p>
 <p>Four of these images represent the <b>Bōdhisattva Avalōkitēśvara</b>, while the fifth is that of his consort <b>Tārā</b>. They all wear elaborate ornaments and are seated in an easy posture under a richly decorated canopy, consisting of seven umbrellas rising one above the other like the familiar <i>hti</i> on Buddhist stūpas. Numerous attendant figures are ranged on all sides and portrayed as paying devotion to the main deity in the centre. From their technique and the scheme of decoration it appears that they are products of the “Magadha school.”</p>
 <p>As I have already remarked, only three of the sculptures bear dedicatory inscriptions, and of these latter, two contain barely the <b>Buddhist</b> formula “<i>ye dharmā hētuprabhavā</i>,” etc. The remaining one is more detailed and, therefore, more important. The characters are <b>Nāgarī</b> and belong to the 11th or 12th century A.D. Subjoined are a transcript and translation of this record.</p>
 <h3><h4>TEXT.</h4></h3>
-<div class="lines"><p>Line 1 Yē dharmā hētuprabhavā hētu[m] tēshām <b>Tathāga]tō</b> hy=avadat [*]<br/>tēshā[m] cha yō nirō[dha*] ēva[m] vādi <b>Mahāśrava(ma)[na]h</b> ||<br/>[Dē]yadha[r]mōyam pravara-mahājānujāyi[nah]<sup>1</sup></p><p>2 param-ōpāsaka-kāyastha-śri-<b>Subhakta[sya]</b>|suta-śri-Satka(kta)-davvā(dauvā)rīkā(ka)<br/><b>Dēnuvāyā</b> [Ya*]d=atta(ttra) puṇyam[ta]d=bhavatv=ā[ch]āry-ōpā[dhyā]ya-<br/>mātāpitri(tri)-pūrvva[īga]mam [kṛi]-</p><p>3 tvā sakala-satva-rā[śēr]=anu[tta]ra-jñā[n-ā*]vāpta[yē=stu]<sup>2</sup></p></div>
+<div class="lines"><p>Line 1 Yē dharmā hētuprabhavā hētu[m] tēshām <b>Tathāga]tō</b> hy=avadat [*]<br/>tēshā[m] cha yō nirō[dha*] ēva[m] vādi <b>Mahāśrava(ma)[na]h</b> ||<br/>[Dē]yadha[r]mōyam pravara-mahājānujāyi[nah]<sup class="fn"><a href="#fn-2-1">1</a></sup></p><p>2 param-ōpāsaka-kāyastha-śri-<b>Subhakta[sya]</b>|suta-śri-Satka(kta)-davvā(dauvā)rīkā(ka)<br/><b>Dēnuvāyā</b> [Ya*]d=atta(ttra) puṇyam[ta]d=bhavatv=ā[ch]āry-ōpā[dhyā]ya-<br/>mātāpitri(tri)-pūrvva[īga]mam [kṛi]-</p><p>3 tvā sakala-satva-rā[śēr]=anu[tta]ra-jñā[n-ā*]vāpta[yē=stu]<sup class="fn"><a href="#fn-2-2">2</a></sup></p></div>
 <h3><h4>TRANSLATION.</h4></h3>
 <p>Line 1. Whichever phenomena are cause-born, of them the cause the <b>Tathāgata</b> (Buddha) alone has said, and what annihilation also there is of them. Such is the lore of the <b>Great Śramaṇa</b> (Buddha).</p>
-<p>Ll. 1-3. This [is] the pious gift of the follower of the renowned Mahāyāna school, the gate-keeper <b>Dēnuvā</b>, devoted to the illustrious <b>Satka</b><sup>3</sup>, son of the great lay-worshipper, the famous <b>Subhakta</b>, a <i>kāyastha</i>. Whatever merit there is herein, let it be for the attainment of supreme wisdom by all classes of sentient beings, particularly, beginning with my spiritual guide, my preceptor and my parents.</p></section></div></main>
+<p>Ll. 1-3. This [is] the pious gift of the follower of the renowned Mahāyāna school, the gate-keeper <b>Dēnuvā</b>, devoted to the illustrious <b>Satka</b><sup class="fn"><a href="#fn-2-3">3</a></sup>, son of the great lay-worshipper, the famous <b>Subhakta</b>, a <i>kāyastha</i>. Whatever merit there is herein, let it be for the attainment of supreme wisdom by all classes of sentient beings, particularly, beginning with my spiritual guide, my preceptor and my parents.</p>
+<div class="notes"><p><sup id="fn-2-1">1</sup> Read “<i>yān-ānuyāyinah</i>.</p><p><sup id="fn-2-2">2</sup> One of the two verbs <i>astu</i> or <i>bhavatu</i> (1. 2) must be cancelled.</p><p><sup id="fn-2-3">3</sup> Possibly Satka or Śrī-Satka was the name of the master under whom Dēnuvā served as a gate-keeper.</p></div></section></div></main>
 <footer>Generated 18 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
 Feedback: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">this form</a>.</footer>
 </div>
@@ -221,6 +325,28 @@ function toHash(){ if (location.hash){ var el=document.getElementById(location.h
   if (el){ showFor(el); el.scrollIntoView({block:'start'}); } } }
 window.addEventListener('hashchange', toHash);
 toHash();
+// footnote pop-ups: a mark opens its note beside it; a click elsewhere or Esc closes it
+var pop=null;
+function closePop(){ if (pop){ pop.remove(); pop=null; } }
+document.addEventListener('click', function(e){
+  var a=e.target.closest('sup.fn a');
+  if (!a){ if (pop && !pop.contains(e.target)) closePop(); return; }
+  e.preventDefault(); closePop();
+  var note=document.getElementById(a.getAttribute('href').slice(1)); if (!note) return;
+  // the note runs from its mark to the next note's mark (notes may share one paragraph)
+  var box=note.closest('.notes'), r0=document.createRange(); r0.setStartBefore(note);
+  var nxt=Array.prototype.filter.call(box.querySelectorAll('sup[id]'), function(x){
+    return note.compareDocumentPosition(x) & Node.DOCUMENT_POSITION_FOLLOWING; })[0];
+  if (nxt) r0.setEndBefore(nxt); else r0.setEndAfter(box.lastChild);
+  pop=document.createElement('div'); pop.className='fn-pop'; pop.appendChild(r0.cloneContents());
+  pop.querySelectorAll('[id]').forEach(function(x){ x.removeAttribute('id'); });
+  pop.querySelectorAll('hr').forEach(function(x){ x.remove(); });
+  document.body.appendChild(pop);
+  var r=a.getBoundingClientRect(), w=pop.offsetWidth;
+  pop.style.left=Math.max(8, Math.min(r.left+window.scrollX, window.scrollX+document.documentElement.clientWidth-w-8))+'px';
+  pop.style.top=(r.bottom+window.scrollY+4)+'px';
+});
+document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop(); });
 (function(){
   var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat');
   // what to mark: the search term, and the chosen category's matched words (CAT_TERMS)

@@ -55,13 +55,21 @@
   .home-link { text-decoration: none; color: var(--accent-strong); margin-right: 0.3rem; }
   .home-link:hover { color: var(--accent); }
 
-  --accent:#e0a85a; --note:#262420; --mark:#7a6420; --mark-on:#b07a10; } }
 mark { background: var(--mark); color: inherit; border-radius: 2px; }
 mark.on { background: var(--mark-on); }
 .meta { color: var(--muted); font-size: .9rem; }
 h1 { font-size: 1.5rem; line-height: 1.3; margin: .2rem 0; }
 h3 { font-size: 1.05rem; margin: 1.4rem 0 .4rem; letter-spacing: .02em; }
 .byline { font-variant: small-caps; color: var(--muted); }
+.art-head { margin: .6rem 0 1.2rem; padding-bottom: .9rem; border-bottom: 1px solid var(--line); }
+.ah-corpus { font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); font-weight: 600; }
+.ah-vol { font-size: 1rem; font-weight: 600; margin-top: .25rem; }
+.ah-part { font-weight: 400; color: var(--muted); }
+h1.ah-title { font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem; font-weight: 600;
+              line-height: 1.25; margin: .45rem 0 .3rem; }
+.ah-author { font-variant: small-caps; font-size: 1.05rem; }
+.ah-ref { color: var(--muted); font-size: .82rem; margin-top: .35rem; }
+h2.printed-title { font-size: 1.1rem; line-height: 1.35; margin: .4rem 0; }
 .page { display:flex; gap:.5rem; align-items:center; color:var(--muted); font-size:.8rem; margin:1.6rem 0 .6rem; }
 .page::before, .page::after { content:""; flex:1; border-top:1px solid var(--line); }
 .lines { font-size: .95rem; }
@@ -73,18 +81,107 @@ figcaption, .caption { color: var(--muted); font-size: .85rem; }
 .art table { border-collapse: collapse; font-size: .9rem; margin: .8rem 0; display:block; overflow-x:auto; }
 .art td, .art th { border: 1px solid var(--line); padding: .2rem .4rem; vertical-align: top; }
 .warn { border-left: 3px solid var(--accent); padding-left: .7rem; }
-input, select { font: inherit; padding: .35rem .5rem; box-sizing: border-box; }
-.search { display:flex; gap:.5rem; flex-wrap: wrap; margin: .8rem 0; }
-.search input { flex: 1 1 16rem; }
-.scroll { overflow-x: auto; }
-table.idx { border-collapse: collapse; width: 100%; font-size: .95rem; }
-.idx th { text-align: left; border-bottom: 2px solid var(--line); padding: .3rem .4rem; white-space: nowrap;
-  cursor: pointer; user-select: none; }
+/* the index's controls, table and row pop-up: the Inscriptions corpus pages' own look
+   (scripts/inscriptions_table_html.py), on the site's tokens (user, 2026-11-18) */
+.search, .dd-bar { margin-bottom: .75rem; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+input[type=search] { padding: 8px 13px; width: 20rem; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; box-sizing: border-box; }
+select { padding: 8px 10px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; }
+input[type=search]:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  box-shadow: var(--shadow); }
+table.idx { border-collapse: collapse; width: 100%; font-size: 14px; font-family: 'Segoe UI', system-ui, sans-serif; }
+.idx th, .idx td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);
+  padding: 10px 12px; text-align: left; vertical-align: top; overflow-wrap: break-word; }
+.idx th:last-child, .idx td:last-child { border-right: none; }
+.idx th { background: var(--surface-2); color: var(--text-dim); position: sticky; top: 0; z-index: 1;
+  text-transform: uppercase; letter-spacing: .04em; font-size: 11.5px; white-space: nowrap; cursor: pointer; user-select: none; }
 .idx th[aria-sort=ascending]::after { content: " ▲"; } .idx th[aria-sort=descending]::after { content: " ▼"; }
-.idx tr.filters th { cursor: default; border-bottom: 1px solid var(--line); }
-.idx tr.filters input { width: 100%; min-width: 4rem; font-size: .85rem; }
-.idx td { border-bottom: 1px solid var(--line); padding: .35rem .4rem; vertical-align: top; }
+.idx tbody tr:nth-child(even) { background: var(--surface-2); }
+.idx tbody tr:last-child td { border-bottom: none; }
+.idx tbody tr { cursor: pointer; }
+.idx tbody tr:hover { background: var(--surface-2); }
 .idx td.num { text-align: right; white-space: nowrap; }
+.idx td.attr { font-size: .85rem; }
+.idx th.ai::after { content: " AI"; font-size: .65rem; color: var(--accent-copper-strong); vertical-align: super; }
+.filter-dd { position: relative; display: inline-block; }
+.filter-dd-btn { padding: 8px 14px; cursor: pointer; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; text-align: left;
+  min-width: 8rem; max-width: 14rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filter-dd-btn:hover { border-color: var(--accent); }
+.filter-dd.active .filter-dd-btn { border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
+.filter-dd-panel { position: absolute; top: calc(100% + 4px); left: 0; z-index: 50; width: 16rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  box-shadow: var(--shadow); padding: .6rem; display: flex; flex-direction: column; gap: .5rem; }
+.filter-dd-panel[hidden] { display: none; }
+.filter-dd-mode { display: flex; gap: .9rem; font-size: .82rem; color: var(--text-dim); }
+.filter-dd-mode label { display: flex; align-items: center; gap: .3rem; cursor: pointer; }
+.filter-dd-search { padding: 5px 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+  color: var(--text); font-family: inherit; font-size: 13px; width: 100%; box-sizing: border-box; }
+.filter-dd-hint { font-size: 11px; color: var(--text-dim); margin: -2px 2px 2px; }
+.filter-dd-options { max-height: 14rem; overflow-y: auto; display: flex; flex-direction: column; }
+.filter-dd-opt { display: flex; align-items: center; gap: .5rem; padding: 3px 4px; border-radius: 4px;
+  font-size: .85rem; cursor: pointer; }
+.filter-dd-opt:hover { background: var(--surface-2); }
+.filter-dd-opt[hidden] { display: none; }
+.filter-dd-opt span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filter-dd-opt .n { font-style: normal; font-size: .75rem; color: var(--text-dim); }
+.filter-dd-opt-unavailable { opacity: .4; cursor: not-allowed; }
+.filter-dd-opt-unavailable:hover { background: none; }
+.filter-dd-actions { display: flex; justify-content: flex-end; }
+.filter-dd-clear { padding: 4px 10px; cursor: pointer; background: none; border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text-dim); font-family: inherit; font-size: 12.5px; }
+.filter-dd-clear:hover { color: var(--text); border-color: var(--accent); }
+.active-filters-summary { background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+  padding: .5rem .9rem; margin-bottom: .75rem; font-size: .85rem; color: var(--text); line-height: 1.6; }
+.active-filters-summary[hidden] { display: none; }
+.active-filters-summary strong { color: var(--text-dim); font-weight: 600; }
+.row-hint { font-style: italic; }
+body.noscroll { overflow: hidden; }
+.remarks-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center;
+  justify-content: center; z-index: 1000; padding: 1.5rem; }
+.remarks-modal-overlay[hidden] { display: none; }
+.remarks-modal-box { background: var(--surface); color: var(--text); border-radius: 10px; max-width: 44rem; width: 100%;
+  max-height: 80vh; overflow-y: auto; padding: 1.5rem; position: relative; box-shadow: var(--shadow);
+  font-family: 'Segoe UI', system-ui, sans-serif; box-sizing: border-box; }
+.remarks-modal-close { position: absolute; top: .5rem; right: .7rem; font-size: 1.3rem; line-height: 1;
+  background: none; border: none; cursor: pointer; color: var(--text-dim); }
+.remarks-modal-close:hover { color: var(--text); }
+.row-detail-box { max-width: 56rem; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
+.row-detail-box .remarks-modal-close { top: .5rem; right: .7rem; z-index: 2; }
+.row-detail-header { flex: none; padding: 1.5rem 3rem .7rem 1.5rem; margin-bottom: .4rem; border-bottom: 1px solid var(--border); }
+.row-detail-title { font-size: 1.1rem; font-weight: 600; line-height: 1.35; margin-bottom: .3rem; }
+.row-detail-idline { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.row-detail-id-text { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9rem; color: var(--text); }
+.row-detail-cite { color: var(--text-dim); font-size: .85rem; }
+.row-detail-read { margin-left: auto; font-size: .85rem; }
+.row-detail-body { flex: 1 1 auto; overflow-y: auto; padding: 0 1.5rem 1.5rem; }
+.row-detail-field { display: grid; grid-template-columns: 9rem 1fr; gap: .4rem .75rem; padding: .3rem 0;
+  border-bottom: 1px solid var(--border); align-items: baseline; }
+.row-detail-field:last-child { border-bottom: none; }
+.row-detail-label { color: var(--text-dim); font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; font-weight: 600; }
+.row-detail-value { line-height: 1.5; overflow-wrap: break-word; }
+.row-detail-na { color: var(--text-dim); font-style: italic; }
+.row-detail-quote { color: var(--text-dim); font-size: .85rem; margin-top: .15rem; }
+.v-derived { color: var(--accent-copper-strong); font-style: italic; }
+.row-detail-tabs { margin-top: 1.1rem; }
+.row-detail-tab-bar { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .6rem; }
+.row-detail-tab-btn { font: inherit; font-size: .85rem; padding: .35rem .8rem; border: 1px solid var(--border);
+  border-radius: 999px; background: var(--surface-2); color: var(--text-dim); cursor: pointer; }
+.row-detail-tab-btn.active { border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
+.row-detail-tab-btn.has-match { background: #fff3a0; color: #000; }
+.match-nav { margin-left: auto; display: flex; align-items: center; gap: .4rem; font-size: .82rem; color: var(--text-dim); }
+.match-nav[hidden], .match-nav button[hidden] { display: none; }
+.match-nav button { font: inherit; font-size: .82rem; padding: .25rem .7rem; border: 1px solid var(--border);
+  border-radius: 999px; background: var(--surface); color: var(--text); cursor: pointer; }
+.match-nav button:hover { border-color: var(--accent); }
+mark.current { background: #ffb347; outline: 2px solid #e08a00; }
+.row-detail-tab-content { line-height: 1.6; font-size: .95rem; background: var(--surface-2); border-radius: 6px;
+  padding: .8rem 1rem; }
+.ai-badge { font-size: .65rem; color: var(--accent-copper-strong); border: 1px solid var(--accent-copper);
+  border-radius: 3px; padding: 0 .25rem; vertical-align: middle; cursor: help; text-transform: none; letter-spacing: 0; }
+  @media (max-width: 640px) { input[type=search] { width: 100%; } .row-detail-field { grid-template-columns: 1fr; } }
 .snip { color: var(--muted); font-size: .85rem; margin-top: .2rem; }
 .hits { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: .4rem 0;
   font-size: .9rem; z-index: 1; }
@@ -104,6 +201,11 @@ table.idx { border-collapse: collapse; width: 100%; font-size: .95rem; }
 .plate-note { font-size: .85rem; color: var(--muted); font-style: italic; }
 figure.big img { max-height: 85vh; }
 .tab.has-match { background: #fff3a0; color: #000; }
+sup.fn a { text-decoration: none; padding: 0 .15em; }
+.fn-pop { position: absolute; z-index: 20; max-width: min(28rem, 90vw); background: var(--note);
+  border: 1px solid var(--line); border-radius: 4px; padding: .3rem .7rem; font-size: .85rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2); }
+.fn-pop p { margin: .2rem 0; }
 .hits ~ .tabs, .hits + .art .tabs { top: 2.4rem; }
   .wrap { max-width: 72rem; margin: 0 auto; }
   .wrap.narrow { max-width: 50rem; }
@@ -158,32 +260,34 @@ figure.big img { max-height: 85vh; }
 <div class="wrap narrow">
 <div class="brand">Project InscriptionSearch: Articles</div>
 <div class="titlebar"><h1><a href="../../" class="home-link" title="Home"><img src="../../images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> Epigraphia Indica</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
-<main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a> · Epigraphia Indica XVIII · EpInd XVIII No. 32 · Part VII · printed p. 311 · PDF pp. 403-407</p><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0" title="page number not read from the scan; counted from the pages around it">p. 311</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 312</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 313</button><span class=tsep></span><span class="tg">Plates</span><button type="button" class="tab t-plate" role="tab" data-i="3">Plate 1</button><button type="button" class="tab t-plate" role="tab" data-i="4">Plate 2</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page">p. 311 · PDF 403</div>
-<h1>No. 32.—TEKKALI PLATES OF RAJENDRAVARMAN'S SON DEVENDRAVARMAN.</h1>
+<main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a></p>
+<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. XVIII · No. 32<span class=ah-part> · Part VII</span></div><h1 class="ah-title">Tekkali plates of Rajendravarman&#x27;s son Devendravarman</h1><div class="ah-author">E. Hultzsch</div><div class="ah-ref">Printed p. 311 · PDF pp. 403–407</div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0" title="page number not read from the scan; counted from the pages around it">p. 311</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 312</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 313</button><span class=tsep></span><span class="tg">Plates</span><button type="button" class="tab t-plate" role="tab" data-i="3">Plate 1</button><button type="button" class="tab t-plate" role="tab" data-i="4">Plate 2</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page">p. 311 · PDF 403</div>
+<h2 class="printed-title">No. 32.—TEKKALI PLATES OF RAJENDRAVARMAN'S SON DEVENDRAVARMAN.</h2>
 <p class="byline"><p>By E. HULTZSCH, PH.D.; HALLE (SAALE).</p></p>
 <p>These plates belong to Sri Gopinath Deb, Esq., Second Prince of <b>Tekkali</b> in the Ganjām District of the Madras Presidency. Ink-impressions of them were kindly forwarded to me by Rao Bahadur H. Krishna Sastri. These are “<b>three copper-plates</b>, each measuring about 6<math>\frac{1}{4}</math>” high and 2<math>\frac{3}{4}</math>” broad, and strung on a <b>ring</b> of the same metal. The first plate bears writing only on the inner face. All the inscribed faces appear to have had raised rims, which are now worn out. The ring is about 3<math>\frac{1}{2}</math>” in diameter and is fixed in a circular <b>seal</b> measuring 1<math>\frac{1}{4}</math>” in diameter. The seal is much damaged and broken on one side. It bears the figure of a seated <b>bull</b>, facing the proper left. Below the bull is a lotus, of which only three petals are now visible. The three plates, with ring and seal, weigh 85 tolas.”</p>
-<p>The writing on the plates is fairly well preserved and distinct, except where it has been wilfully tampered with by some person who erased and changed certain topographical and personal names which the inscription must have contained originally. The <b>alphabet</b> closely resembles that of the Alamaṇda plates of the year 304.<sup>3</sup> The language is very barbarous <b>Sanskrit</b> prose, with two equally faulty verses 'sung by <b>Vyāsa</b>', which are quoted in lines 24-27.</p>
-<p>The inscription<sup>4</sup> records the grant of a village by the worshipper of the god <b>Gōkarṇa-svāmin</b> (l. 5) on the <b>Mahēndra mountain</b> (l. 2 f.) and the <b>ornament of the spotless family of the Gaṅgas</b>,—the <i>Mahārāja</i> <b>Dēvēndravarman</b>, who was the son of the <i>Mahārāja</i> <b>Rājēndravarman</b> (ll. 12-14). He addressed this edict from his residence of <b>Kaliṅganagara</b> (l. 2) to the ryots inhabiting a village whose name has been later on erased and replaced by the word <i>Ni[y]ino</i> in <b>Nāgarī</b> characters (l. 14). The name of the district in which this village was included has also been tampered with, but may have been originally [<b>Rū]pavarttani</b>.<sup>5</sup> The name of the <b>Brāhmaṇa</b> donee seems to have been erased, but he was apparently a 'good poet' (<i>su-kavi</i>) and the son of a 'great doorkeeper' (<i>mahāpratīhāra</i>, l. 17). The description of the boundaries of the village granted (ll. 20-23) has also been tampered with and cannot be restored in full.</p>
-<div class="notes"><p><sup>1</sup> Cf. above, Vol. III, p. 134, note 1, and Vol. XIV, p. 363, <i>passim</i>.</p><p><sup>2</sup> This name was spelled <i>Tuṅgannā</i> in line 11.</p><p><sup>3</sup> Above, Vol. III, p. 18.</p><p><sup>4</sup> See <i>Ep. Rep.</i> for 1924, p. 10; App. A, No. 2, and p. 97, para. 2.</p><p><sup>5</sup> Cf. above, p. 309.</p></div></section>
+<p>The writing on the plates is fairly well preserved and distinct, except where it has been wilfully tampered with by some person who erased and changed certain topographical and personal names which the inscription must have contained originally. The <b>alphabet</b> closely resembles that of the Alamaṇda plates of the year 304.<sup class="fn"><a href="#fn-1-3">3</a></sup> The language is very barbarous <b>Sanskrit</b> prose, with two equally faulty verses 'sung by <b>Vyāsa</b>', which are quoted in lines 24-27.</p>
+<p>The inscription<sup class="fn"><a href="#fn-1-4">4</a></sup> records the grant of a village by the worshipper of the god <b>Gōkarṇa-svāmin</b> (l. 5) on the <b>Mahēndra mountain</b> (l. 2 f.) and the <b>ornament of the spotless family of the Gaṅgas</b>,—the <i>Mahārāja</i> <b>Dēvēndravarman</b>, who was the son of the <i>Mahārāja</i> <b>Rājēndravarman</b> (ll. 12-14). He addressed this edict from his residence of <b>Kaliṅganagara</b> (l. 2) to the ryots inhabiting a village whose name has been later on erased and replaced by the word <i>Ni[y]ino</i> in <b>Nāgarī</b> characters (l. 14). The name of the district in which this village was included has also been tampered with, but may have been originally [<b>Rū]pavarttani</b>.<sup class="fn"><a href="#fn-1-5">5</a></sup> The name of the <b>Brāhmaṇa</b> donee seems to have been erased, but he was apparently a 'good poet' (<i>su-kavi</i>) and the son of a 'great doorkeeper' (<i>mahāpratīhāra</i>, l. 17). The description of the boundaries of the village granted (ll. 20-23) has also been tampered with and cannot be restored in full.</p>
+<div class="notes"><p><sup id="fn-1-1">1</sup> Cf. above, Vol. III, p. 134, note 1, and Vol. XIV, p. 363, <i>passim</i>.</p><p><sup id="fn-1-2">2</sup> This name was spelled <i>Tuṅgannā</i> in line 11.</p><p><sup id="fn-1-3">3</sup> Above, Vol. III, p. 18.</p><p><sup id="fn-1-4">4</sup> See <i>Ep. Rep.</i> for 1924, p. 10; App. A, No. 2, and p. 97, para. 2.</p><p><sup id="fn-1-5">5</sup> Cf. above, p. 309.</p></div></section>
 <section class="pg pg-page" role="tabpanel" data-i="1"><div class="page">p. 312 · PDF 404</div>
-<p>Line 28 f. contains the <b>date</b> of the inscription. If the compound [<i>šata</i>]-<i>mayē</i> is explained as a clerical error for <i>šata-trayē</i>, it may be translated by: “<b>In the year three-hundred and ten of the kingdom of growing victory of the Gaṅga race.</b>” Dēvēndravarman, whose subjoined grant is dated in the year 310, might then have been a second son and successor of that Rājēndravarman whose first son, Anantavarman, issued the Alamaṇda plates of the year 304.<sup>1</sup> The two names of the writer (l. 30) and of the goldsmith (<i>akshaśālin</i>) who engraved the edict (l. 31) remain doubtful and suspicious.</p>
+<p>Line 28 f. contains the <b>date</b> of the inscription. If the compound [<i>šata</i>]-<i>mayē</i> is explained as a clerical error for <i>šata-trayē</i>, it may be translated by: “<b>In the year three-hundred and ten of the kingdom of growing victory of the Gaṅga race.</b>” Dēvēndravarman, whose subjoined grant is dated in the year 310, might then have been a second son and successor of that Rājēndravarman whose first son, Anantavarman, issued the Alamaṇda plates of the year 304.<sup class="fn"><a href="#fn-2-1">1</a></sup> The two names of the writer (l. 30) and of the goldsmith (<i>akshaśālin</i>) who engraved the edict (l. 31) remain doubtful and suspicious.</p>
 <p>It will be seen that at present this whole document is of very small practical value. But I am publishing it with the hope that, in the light of future discoveries, it may still prove of some use in unravelling the tangled web of the Gāṅga genealogy and chronology.</p>
-<h3><h3>TEXT.<sup>2</sup></h3></h3>
+<h3><h3>TEXT.<sup class="fn"><a href="#fn-2-2">2</a></sup></h3></h3>
 <h3><h4><i>First Plate.</i></h4></h3>
 <div class="lines"><ol style="list-style-type: none;"><li>1 ³[Ōm] [¹*] Svasy=Amara-pur-ānukāriṇa[h*] sarva-rtu-sukha-ra]-⁴</li><li>2 maṇi(ṇ)yād=vijayā(ya)vata[h*] Kaliṅganagara-vāsakān=Mahē-</li><li>3 ndrāchal-āmala-śikhara-pratishthitasya sa-char-āchara-gurō[h*] sa-</li><li>4 kala-bhuvana-nirmāṇ-aika-su(sū)tradhārasya śaśānka-chu(chū)-</li><li>5 dāmaṇēr=bhagavatō Gōkarna(rṇa)-sv[ā]minaś=charaṇa-kamala-</li><li>6 yugala-praṇāmād=vigata-Kaliṅkalaṅkō=⁵nō(nē)k-ā-</li></ol></div>
 <h3><h4><i>Second Plate ; First Side.</i></h4></h3>
 <div class="lines"><ol style="list-style-type: none;"><li>7 hava-sa[m*]kshōbha-janita-jaya-śavdā(bdah) pratāp-āvanata-sama-</li><li>8 sta-sāmanta-chakra-chu(chū)dāmaṇi-prabhā-mañjari(rī)-puñja-rañja(ñji)ta-</li><li>9 vara-charaṇa[h*] sita-kumuda-ku[m*]d-ēndēdvāvadāta-⁶di-</li><li>10 [dgē]śa-⁷vinirggata-yashō(śō)-dhvast-ārāti-kulāchalō naya-</li><li>11 vinaya-dayā-dāna-dākshanya⁸-śaury-audārya-satya-tyā-</li><li>12 g-ādi-guṇa-sa[m*]pad-ādhāra-bhu(bhū)tō Gaṅg-āmala-kula-ti-</li></ol></div>
 <h3><h4><i>Second Plate ; Second Side.</i></h4></h3>
 <div class="lines"><ol style="list-style-type: none;"><li>13 laka(kō) mahārāja-śri(śrī)-Rājēndrava[r]mma-su(sū)nu[r]=mahārāja-</li><li>14 śri(śrī)-Dēvēndrava[r]m[ā*] kuśali(lī) . . pavarttany[ām]⁹ Ni[y]ino-¹⁰grā-</li><li>15 ma-nivāsina[h*] kuṭu[miṁna][h*]¹¹ samājñāpayati [||*] Vidi-</li><li>16 tam=astu vō [bhavatām]¹² grāma . . . .</li></ol></div>
-<div class="notes"><p><sup>1</sup> Above, Vol. III, p. 18. [See also <i>Ep. Rep.</i> for 1924, p. 97, para. 2, and the genealogical table on p. 98.—Ed.]</p><p><sup>2</sup> From ink-impressions supplied by Rao Bahadur Krishna Sastri.</p><p><sup>3</sup> Expressed by a symbol. For <i>svasy</i>= read <i>svasty</i>=.</p><p><sup>4</sup> The tops of the letters of this line are cut away.</p><p><sup>5</sup> Read -<i>Kali-kalaṅkō</i>=.</p><p><sup>6</sup> Read -<i>ēndv-avadāta</i>=.</p><p><sup>7</sup> Read -<i>dig-dēśa</i>- and cf. above, Vol. III, p. 223, text line 7.</p><p><sup>8</sup> Read -<i>dākshiṇya</i>=.</p><p><sup>9</sup> One or two letters at the beginning of this word have been erased and corrected. The original reading may have been <i>Rūpa</i>°.</p><p><sup>10</sup> The name <i>Ni[y]ino</i> has been substituted by a second hand. The vowel of the first and second syllables is a Nāgarī <i>i</i>, while this vowel is in every other instance expressed by a curve above the consonant.</p><p><sup>11</sup> Read <i>kuṭuṁbinaḥ</i>.</p><p><sup>12</sup> The bracketed word is engraved on an erasure.</p></div>
+<div class="notes"><p><sup id="fn-2-1">1</sup> Above, Vol. III, p. 18. [See also <i>Ep. Rep.</i> for 1924, p. 97, para. 2, and the genealogical table on p. 98.—Ed.]</p><p><sup id="fn-2-2">2</sup> From ink-impressions supplied by Rao Bahadur Krishna Sastri.</p><p><sup id="fn-2-3">3</sup> Expressed by a symbol. For <i>svasy</i>= read <i>svasty</i>=.</p><p><sup id="fn-2-4">4</sup> The tops of the letters of this line are cut away.</p><p><sup id="fn-2-5">5</sup> Read -<i>Kali-kalaṅkō</i>=.</p><p><sup id="fn-2-6">6</sup> Read -<i>ēndv-avadāta</i>=.</p><p><sup id="fn-2-7">7</sup> Read -<i>dig-dēśa</i>- and cf. above, Vol. III, p. 223, text line 7.</p><p><sup id="fn-2-8">8</sup> Read -<i>dākshiṇya</i>=.</p><p><sup id="fn-2-9">9</sup> One or two letters at the beginning of this word have been erased and corrected. The original reading may have been <i>Rūpa</i>°.</p><p><sup id="fn-2-10">10</sup> The name <i>Ni[y]ino</i> has been substituted by a second hand. The vowel of the first and second syllables is a Nāgarī <i>i</i>, while this vowel is in every other instance expressed by a curve above the consonant.</p><p><sup id="fn-2-11">11</sup> Read <i>kuṭuṁbinaḥ</i>.</p><p><sup id="fn-2-12">12</sup> The bracketed word is engraved on an erasure.</p></div>
 <p class="plate-note"><a href="#plate-1">Plate 1</a> is bound after this page.</p>
 <p class="plate-note"><a href="#plate-2">Plate 2</a> is bound after this page.</p></section>
 <section class="pg pg-page" role="tabpanel" data-i="2"><div class="page">p. 313 · PDF 407</div>
-<div class="lines"><p>17 su(sū)nu-mahāpratihāra<sup>1</sup> . . [śarmaṇa][h*] . sutāya su-kavi<sup>2</sup> mātā-<br/>18 pitrōr=ātmānaś=cha puny(ny)-ābhivrīddhayē t[ā]mv[ra]-śāsana<sup>3</sup> sakala-</p></div>
+<div class="lines"><p>17 su(sū)nu-mahāpratihāra<sup class="fn"><a href="#fn-3-1">1</a></sup> . . [śarmaṇa][h*] . sutāya su-kavi<sup class="fn"><a href="#fn-3-2">2</a></sup> mātā-<br/>18 pitrōr=ātmānaś=cha puny(ny)-ābhivrīddhayē t[ā]mv[ra]-śāsana<sup class="fn"><a href="#fn-3-3">3</a></sup> sakala-</p></div>
 <h3><p><i>Third Plate ; First Side.</i></p></h3>
-<div class="lines"><p>19 kara-bharai(ra)-parityāgēna chandr-āditya-paryanta[m*] prada-<br/>20 tō(ttō) mayā [||*] Atra si(si)mā-ling[ā*]ni likhyantē [||*] Grāmasya pūrvva-di-<br/>21 śā(śi) vyāghra[h*]<sup>4</sup> tatō [gartā<sup>5</sup> nyag-gatā ?] dakshiṇēna vāpyā [va]na-rāji[h*]<br/>ga[rtā]<br/>22 tatō dakshiṇa-paśchima-[kō] . . . . [ga]rtā tatō(ta) uta(tta)rē-<br/>23 ṇa tintalikā-<sup>6</sup>vri[ksha][h*] [va]na-[rāji]kā [||*] Atra <b>Vyāsa-</b><br/>24 gi(gi)tā[h*] [ślō]kā bhavanti [||*] , Va(Ba)hubhir=vvasudhā datā(ttā) r[ā*]jabhi[h*]<br/>Sagar-ā-<br/>25 di[bh]i[h*] ] yasya-yasya yadā bhūmi[s=*]tasya-tasya tath[ā](dā) phala[m !! l*]</p></div>
+<div class="lines"><p>19 kara-bharai(ra)-parityāgēna chandr-āditya-paryanta[m*] prada-<br/>20 tō(ttō) mayā [||*] Atra si(si)mā-ling[ā*]ni likhyantē [||*] Grāmasya pūrvva-di-<br/>21 śā(śi) vyāghra[h*]<sup class="fn"><a href="#fn-3-4">4</a></sup> tatō [gartā<sup class="fn"><a href="#fn-3-5">5</a></sup> nyag-gatā ?] dakshiṇēna vāpyā [va]na-rāji[h*]<br/>ga[rtā]<br/>22 tatō dakshiṇa-paśchima-[kō] . . . . [ga]rtā tatō(ta) uta(tta)rē-<br/>23 ṇa tintalikā-<sup class="fn"><a href="#fn-3-6">6</a></sup>vri[ksha][h*] [va]na-[rāji]kā [||*] Atra <b>Vyāsa-</b><br/>24 gi(gi)tā[h*] [ślō]kā bhavanti [||*] , Va(Ba)hubhir=vvasudhā datā(ttā) r[ā*]jabhi[h*]<br/>Sagar-ā-<br/>25 di[bh]i[h*] ] yasya-yasya yadā bhūmi[s=*]tasya-tasya tath[ā](dā) phala[m !! l*]</p></div>
 <h3><p><i>Third Plate ; Second Side.</i></p></h3>
-<div class="lines"><p>26 Sva-dattā[m*] para-dātām=vā<sup>7</sup> yō harēti(ta) vasundharā[m *] sa vi-<br/>27 shthāyām kṛimir=bhu(bhū)tvā pachyatē pitrībhi[h*] saha [|| 2*]<br/>28 <b>Gaṅga-va[ṇśa]-<sup>8</sup>[pra]varddham[ā*]na-vijaya-rāja(jya)-</b><br/>29 <b>samvatsarā-<sup>9</sup>[śata]-mayē<sup>10</sup> daś-ōttarē [*] Li[khi*]tam=i-</b><br/>30 damśāsana[m*] ra..[s]in[ām]<sup>11</sup> śri(śrī)-s[ā*]manta-Sarvva[chandrē]na(ṇa) (?) [*]<br/>31 Utki(tkī)rṇa[m*] ch=ākshaś[ā]][i]n[ā] śri(śrī)-s[ā*]manta-Khaṇḍi[malēpā]<sup>12</sup> [||*]</p></div></section>
+<div class="lines"><p>26 Sva-dattā[m*] para-dātām=vā<sup class="fn"><a href="#fn-3-7">7</a></sup> yō harēti(ta) vasundharā[m *] sa vi-<br/>27 shthāyām kṛimir=bhu(bhū)tvā pachyatē pitrībhi[h*] saha [|| 2*]<br/>28 <b>Gaṅga-va[ṇśa]-<sup class="fn"><a href="#fn-3-8">8</a></sup>[pra]varddham[ā*]na-vijaya-rāja(jya)-</b><br/>29 <b>samvatsarā-<sup class="fn"><a href="#fn-3-9">9</a></sup>[śata]-mayē<sup class="fn"><a href="#fn-3-10">10</a></sup> daś-ōttarē [*] Li[khi*]tam=i-</b><br/>30 damśāsana[m*] ra..[s]in[ām]<sup class="fn"><a href="#fn-3-11">11</a></sup> śri(śrī)-s[ā*]manta-Sarvva[chandrē]na(ṇa) (?) [*]<br/>31 Utki(tkī)rṇa[m*] ch=ākshaś[ā]][i]n[ā] śri(śrī)-s[ā*]manta-Khaṇḍi[malēpā]<sup class="fn"><a href="#fn-3-12">12</a></sup> [||*]</p></div>
+<div class="notes"><p><sup id="fn-3-1">1</sup> The syllable <i>tī</i> looks like <i>dhī</i>.</p><p><sup id="fn-3-2">2</sup> Read perhaps <i>su-kavyē</i>.</p><p><sup id="fn-3-3">3</sup> Read <i>tāvva-śāsanēna</i>.</p><p><sup id="fn-3-4">4</sup> This might be the name of some tree.</p><p><sup id="fn-3-5">5</sup> Cf. above, Vol. III, p. 134, and note 2.</p><p><sup id="fn-3-6">6</sup> Cf. above, Vol. III, p. 20, note 6.</p><p><sup id="fn-3-7">7</sup> Read <i>-dattām vā</i>.</p><p><sup id="fn-3-8">8</sup> Read <i>-vaṇśa-</i>.</p><p><sup id="fn-3-9">9</sup> Read <i>-saṇvatsara-</i>.</p><p><sup id="fn-3-10">10</sup> Read perhaps <i>-bata-trayē</i>, as suggested in my introductory remarks, and cf. <i>-sata-drayē</i>, <i>Ind. Ant.</i>, Vol. XVIII, p. 145, text line 27.</p><p><sup id="fn-3-11">11</sup> Read <i>rahasyēna</i> and cf. above, Vol. III, p. 21, note 1.</p><p><sup id="fn-3-12">12</sup> Read perhaps <i>mallēna</i>. <i>Khaṇḍi-trī-sāmanta</i> occurs in <i>Ind. Ant.</i>, Vol. XVIII, p. 145. text line 26 f.</p></div></section>
 <section class="pg pg-plate" role="tabpanel" data-i="3"><div class="page" id="plate-1">Plate 1 · PDF page 405, bound after p. 312</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p405.webp" alt="Plate 1"></figure></section>
 <section class="pg pg-plate" role="tabpanel" data-i="4"><div class="page" id="plate-2">Plate 2 · PDF page 406, bound after p. 312</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p406.webp" alt="Plate 2"></figure></section></div></main>
 <footer>Generated 18 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
@@ -235,6 +339,28 @@ function toHash(){ if (location.hash){ var el=document.getElementById(location.h
   if (el){ showFor(el); el.scrollIntoView({block:'start'}); } } }
 window.addEventListener('hashchange', toHash);
 toHash();
+// footnote pop-ups: a mark opens its note beside it; a click elsewhere or Esc closes it
+var pop=null;
+function closePop(){ if (pop){ pop.remove(); pop=null; } }
+document.addEventListener('click', function(e){
+  var a=e.target.closest('sup.fn a');
+  if (!a){ if (pop && !pop.contains(e.target)) closePop(); return; }
+  e.preventDefault(); closePop();
+  var note=document.getElementById(a.getAttribute('href').slice(1)); if (!note) return;
+  // the note runs from its mark to the next note's mark (notes may share one paragraph)
+  var box=note.closest('.notes'), r0=document.createRange(); r0.setStartBefore(note);
+  var nxt=Array.prototype.filter.call(box.querySelectorAll('sup[id]'), function(x){
+    return note.compareDocumentPosition(x) & Node.DOCUMENT_POSITION_FOLLOWING; })[0];
+  if (nxt) r0.setEndBefore(nxt); else r0.setEndAfter(box.lastChild);
+  pop=document.createElement('div'); pop.className='fn-pop'; pop.appendChild(r0.cloneContents());
+  pop.querySelectorAll('[id]').forEach(function(x){ x.removeAttribute('id'); });
+  pop.querySelectorAll('hr').forEach(function(x){ x.remove(); });
+  document.body.appendChild(pop);
+  var r=a.getBoundingClientRect(), w=pop.offsetWidth;
+  pop.style.left=Math.max(8, Math.min(r.left+window.scrollX, window.scrollX+document.documentElement.clientWidth-w-8))+'px';
+  pop.style.top=(r.bottom+window.scrollY+4)+'px';
+});
+document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop(); });
 (function(){
   var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat');
   // what to mark: the search term, and the chosen category's matched words (CAT_TERMS)

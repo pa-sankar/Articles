@@ -55,13 +55,21 @@
   .home-link { text-decoration: none; color: var(--accent-strong); margin-right: 0.3rem; }
   .home-link:hover { color: var(--accent); }
 
-  --accent:#e0a85a; --note:#262420; --mark:#7a6420; --mark-on:#b07a10; } }
 mark { background: var(--mark); color: inherit; border-radius: 2px; }
 mark.on { background: var(--mark-on); }
 .meta { color: var(--muted); font-size: .9rem; }
 h1 { font-size: 1.5rem; line-height: 1.3; margin: .2rem 0; }
 h3 { font-size: 1.05rem; margin: 1.4rem 0 .4rem; letter-spacing: .02em; }
 .byline { font-variant: small-caps; color: var(--muted); }
+.art-head { margin: .6rem 0 1.2rem; padding-bottom: .9rem; border-bottom: 1px solid var(--line); }
+.ah-corpus { font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); font-weight: 600; }
+.ah-vol { font-size: 1rem; font-weight: 600; margin-top: .25rem; }
+.ah-part { font-weight: 400; color: var(--muted); }
+h1.ah-title { font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem; font-weight: 600;
+              line-height: 1.25; margin: .45rem 0 .3rem; }
+.ah-author { font-variant: small-caps; font-size: 1.05rem; }
+.ah-ref { color: var(--muted); font-size: .82rem; margin-top: .35rem; }
+h2.printed-title { font-size: 1.1rem; line-height: 1.35; margin: .4rem 0; }
 .page { display:flex; gap:.5rem; align-items:center; color:var(--muted); font-size:.8rem; margin:1.6rem 0 .6rem; }
 .page::before, .page::after { content:""; flex:1; border-top:1px solid var(--line); }
 .lines { font-size: .95rem; }
@@ -73,18 +81,107 @@ figcaption, .caption { color: var(--muted); font-size: .85rem; }
 .art table { border-collapse: collapse; font-size: .9rem; margin: .8rem 0; display:block; overflow-x:auto; }
 .art td, .art th { border: 1px solid var(--line); padding: .2rem .4rem; vertical-align: top; }
 .warn { border-left: 3px solid var(--accent); padding-left: .7rem; }
-input, select { font: inherit; padding: .35rem .5rem; box-sizing: border-box; }
-.search { display:flex; gap:.5rem; flex-wrap: wrap; margin: .8rem 0; }
-.search input { flex: 1 1 16rem; }
-.scroll { overflow-x: auto; }
-table.idx { border-collapse: collapse; width: 100%; font-size: .95rem; }
-.idx th { text-align: left; border-bottom: 2px solid var(--line); padding: .3rem .4rem; white-space: nowrap;
-  cursor: pointer; user-select: none; }
+/* the index's controls, table and row pop-up: the Inscriptions corpus pages' own look
+   (scripts/inscriptions_table_html.py), on the site's tokens (user, 2026-11-18) */
+.search, .dd-bar { margin-bottom: .75rem; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+input[type=search] { padding: 8px 13px; width: 20rem; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; box-sizing: border-box; }
+select { padding: 8px 10px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; }
+input[type=search]:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  box-shadow: var(--shadow); }
+table.idx { border-collapse: collapse; width: 100%; font-size: 14px; font-family: 'Segoe UI', system-ui, sans-serif; }
+.idx th, .idx td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);
+  padding: 10px 12px; text-align: left; vertical-align: top; overflow-wrap: break-word; }
+.idx th:last-child, .idx td:last-child { border-right: none; }
+.idx th { background: var(--surface-2); color: var(--text-dim); position: sticky; top: 0; z-index: 1;
+  text-transform: uppercase; letter-spacing: .04em; font-size: 11.5px; white-space: nowrap; cursor: pointer; user-select: none; }
 .idx th[aria-sort=ascending]::after { content: " ▲"; } .idx th[aria-sort=descending]::after { content: " ▼"; }
-.idx tr.filters th { cursor: default; border-bottom: 1px solid var(--line); }
-.idx tr.filters input { width: 100%; min-width: 4rem; font-size: .85rem; }
-.idx td { border-bottom: 1px solid var(--line); padding: .35rem .4rem; vertical-align: top; }
+.idx tbody tr:nth-child(even) { background: var(--surface-2); }
+.idx tbody tr:last-child td { border-bottom: none; }
+.idx tbody tr { cursor: pointer; }
+.idx tbody tr:hover { background: var(--surface-2); }
 .idx td.num { text-align: right; white-space: nowrap; }
+.idx td.attr { font-size: .85rem; }
+.idx th.ai::after { content: " AI"; font-size: .65rem; color: var(--accent-copper-strong); vertical-align: super; }
+.filter-dd { position: relative; display: inline-block; }
+.filter-dd-btn { padding: 8px 14px; cursor: pointer; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; text-align: left;
+  min-width: 8rem; max-width: 14rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filter-dd-btn:hover { border-color: var(--accent); }
+.filter-dd.active .filter-dd-btn { border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
+.filter-dd-panel { position: absolute; top: calc(100% + 4px); left: 0; z-index: 50; width: 16rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  box-shadow: var(--shadow); padding: .6rem; display: flex; flex-direction: column; gap: .5rem; }
+.filter-dd-panel[hidden] { display: none; }
+.filter-dd-mode { display: flex; gap: .9rem; font-size: .82rem; color: var(--text-dim); }
+.filter-dd-mode label { display: flex; align-items: center; gap: .3rem; cursor: pointer; }
+.filter-dd-search { padding: 5px 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+  color: var(--text); font-family: inherit; font-size: 13px; width: 100%; box-sizing: border-box; }
+.filter-dd-hint { font-size: 11px; color: var(--text-dim); margin: -2px 2px 2px; }
+.filter-dd-options { max-height: 14rem; overflow-y: auto; display: flex; flex-direction: column; }
+.filter-dd-opt { display: flex; align-items: center; gap: .5rem; padding: 3px 4px; border-radius: 4px;
+  font-size: .85rem; cursor: pointer; }
+.filter-dd-opt:hover { background: var(--surface-2); }
+.filter-dd-opt[hidden] { display: none; }
+.filter-dd-opt span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filter-dd-opt .n { font-style: normal; font-size: .75rem; color: var(--text-dim); }
+.filter-dd-opt-unavailable { opacity: .4; cursor: not-allowed; }
+.filter-dd-opt-unavailable:hover { background: none; }
+.filter-dd-actions { display: flex; justify-content: flex-end; }
+.filter-dd-clear { padding: 4px 10px; cursor: pointer; background: none; border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text-dim); font-family: inherit; font-size: 12.5px; }
+.filter-dd-clear:hover { color: var(--text); border-color: var(--accent); }
+.active-filters-summary { background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+  padding: .5rem .9rem; margin-bottom: .75rem; font-size: .85rem; color: var(--text); line-height: 1.6; }
+.active-filters-summary[hidden] { display: none; }
+.active-filters-summary strong { color: var(--text-dim); font-weight: 600; }
+.row-hint { font-style: italic; }
+body.noscroll { overflow: hidden; }
+.remarks-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center;
+  justify-content: center; z-index: 1000; padding: 1.5rem; }
+.remarks-modal-overlay[hidden] { display: none; }
+.remarks-modal-box { background: var(--surface); color: var(--text); border-radius: 10px; max-width: 44rem; width: 100%;
+  max-height: 80vh; overflow-y: auto; padding: 1.5rem; position: relative; box-shadow: var(--shadow);
+  font-family: 'Segoe UI', system-ui, sans-serif; box-sizing: border-box; }
+.remarks-modal-close { position: absolute; top: .5rem; right: .7rem; font-size: 1.3rem; line-height: 1;
+  background: none; border: none; cursor: pointer; color: var(--text-dim); }
+.remarks-modal-close:hover { color: var(--text); }
+.row-detail-box { max-width: 56rem; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
+.row-detail-box .remarks-modal-close { top: .5rem; right: .7rem; z-index: 2; }
+.row-detail-header { flex: none; padding: 1.5rem 3rem .7rem 1.5rem; margin-bottom: .4rem; border-bottom: 1px solid var(--border); }
+.row-detail-title { font-size: 1.1rem; font-weight: 600; line-height: 1.35; margin-bottom: .3rem; }
+.row-detail-idline { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.row-detail-id-text { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9rem; color: var(--text); }
+.row-detail-cite { color: var(--text-dim); font-size: .85rem; }
+.row-detail-read { margin-left: auto; font-size: .85rem; }
+.row-detail-body { flex: 1 1 auto; overflow-y: auto; padding: 0 1.5rem 1.5rem; }
+.row-detail-field { display: grid; grid-template-columns: 9rem 1fr; gap: .4rem .75rem; padding: .3rem 0;
+  border-bottom: 1px solid var(--border); align-items: baseline; }
+.row-detail-field:last-child { border-bottom: none; }
+.row-detail-label { color: var(--text-dim); font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; font-weight: 600; }
+.row-detail-value { line-height: 1.5; overflow-wrap: break-word; }
+.row-detail-na { color: var(--text-dim); font-style: italic; }
+.row-detail-quote { color: var(--text-dim); font-size: .85rem; margin-top: .15rem; }
+.v-derived { color: var(--accent-copper-strong); font-style: italic; }
+.row-detail-tabs { margin-top: 1.1rem; }
+.row-detail-tab-bar { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .6rem; }
+.row-detail-tab-btn { font: inherit; font-size: .85rem; padding: .35rem .8rem; border: 1px solid var(--border);
+  border-radius: 999px; background: var(--surface-2); color: var(--text-dim); cursor: pointer; }
+.row-detail-tab-btn.active { border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
+.row-detail-tab-btn.has-match { background: #fff3a0; color: #000; }
+.match-nav { margin-left: auto; display: flex; align-items: center; gap: .4rem; font-size: .82rem; color: var(--text-dim); }
+.match-nav[hidden], .match-nav button[hidden] { display: none; }
+.match-nav button { font: inherit; font-size: .82rem; padding: .25rem .7rem; border: 1px solid var(--border);
+  border-radius: 999px; background: var(--surface); color: var(--text); cursor: pointer; }
+.match-nav button:hover { border-color: var(--accent); }
+mark.current { background: #ffb347; outline: 2px solid #e08a00; }
+.row-detail-tab-content { line-height: 1.6; font-size: .95rem; background: var(--surface-2); border-radius: 6px;
+  padding: .8rem 1rem; }
+.ai-badge { font-size: .65rem; color: var(--accent-copper-strong); border: 1px solid var(--accent-copper);
+  border-radius: 3px; padding: 0 .25rem; vertical-align: middle; cursor: help; text-transform: none; letter-spacing: 0; }
+  @media (max-width: 640px) { input[type=search] { width: 100%; } .row-detail-field { grid-template-columns: 1fr; } }
 .snip { color: var(--muted); font-size: .85rem; margin-top: .2rem; }
 .hits { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: .4rem 0;
   font-size: .9rem; z-index: 1; }
@@ -104,6 +201,11 @@ table.idx { border-collapse: collapse; width: 100%; font-size: .95rem; }
 .plate-note { font-size: .85rem; color: var(--muted); font-style: italic; }
 figure.big img { max-height: 85vh; }
 .tab.has-match { background: #fff3a0; color: #000; }
+sup.fn a { text-decoration: none; padding: 0 .15em; }
+.fn-pop { position: absolute; z-index: 20; max-width: min(28rem, 90vw); background: var(--note);
+  border: 1px solid var(--line); border-radius: 4px; padding: .3rem .7rem; font-size: .85rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2); }
+.fn-pop p { margin: .2rem 0; }
 .hits ~ .tabs, .hits + .art .tabs { top: 2.4rem; }
   .wrap { max-width: 72rem; margin: 0 auto; }
   .wrap.narrow { max-width: 50rem; }
@@ -158,30 +260,31 @@ figure.big img { max-height: 85vh; }
 <div class="wrap narrow">
 <div class="brand">Project InscriptionSearch: Articles</div>
 <div class="titlebar"><h1><a href="../../" class="home-link" title="Home"><img src="../../images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> Epigraphia Indica</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
-<main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a> · Epigraphia Indica XVIII · EpInd XVIII No. 34 · Part VII · printed p. 316 · PDF pp. 410-418</p><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 316</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 317</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 318</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 319</button><span class=tsep></span><span class="tg">Plates</span><button type="button" class="tab t-plate" role="tab" data-i="4">Plate 1</button><button type="button" class="tab t-plate" role="tab" data-i="5">Plate 2</button><button type="button" class="tab t-plate" role="tab" data-i="6">Plate 3</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page">p. 316 · PDF 410</div>
-<h1><b>No. 34.—THE KODAVALI ROCK-INSCRIPTION OF CHANDASATI ; THE SECOND<br/>YEAR OF REIGN.</b></h1>
+<main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a></p>
+<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. XVIII · No. 34<span class=ah-part> · Part VII</span></div><h1 class="ah-title">The Kodavali rock inscription of Chandasati : the second year of reign</h1><div class="ah-author">H. Krishna Sastri</div><div class="ah-ref">Printed p. 316 · PDF pp. 410–418</div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 316</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 317</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 318</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 319</button><span class=tsep></span><span class="tg">Plates</span><button type="button" class="tab t-plate" role="tab" data-i="4">Plate 1</button><button type="button" class="tab t-plate" role="tab" data-i="5">Plate 2</button><button type="button" class="tab t-plate" role="tab" data-i="6">Plate 3</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page">p. 316 · PDF 410</div>
+<h2 class="printed-title"><b>No. 34.—THE KODAVALI ROCK-INSCRIPTION OF CHANDASATI ; THE SECOND<br/>YEAR OF REIGN.</b></h2>
 <p class="byline">BY H. KRISHNA SASTRI, B.A., OOTACAMUND.</p>
 <p>Going in a north-westerly direction from <b>Piṭhāpuram</b>, a station on the East Coast Railway, for a distance of about 9 miles along the Sāmalkōṭa-Kattipūđi road, the village of <b>Kođavali</b> is sighted. It is situated not very far from the right side of the road. Proceeding thence for nearly two miles again in a north-westerly direction one reaches the foot of a range of hills</p>
-<div class="notes"><sup>1</sup> Read perhaps <i>gyy-avakāśam</i>.<sup>2</sup> Read <i>Ētaōk-chatur</i>.<sup>3</sup> Read <i>kshētran</i>.<sup>4</sup> The writer had originally written =<i>ukađaka</i>; but he has himself cancelled the first <i>ka</i> by adding a horizontal line at the top of it.<sup>5</sup> Read <i>sa</i>.<sup>6</sup> Cancel this syllable.</div>
+<div class="notes"><sup id="fn-1-1">1</sup> Read perhaps <i>gyy-avakāśam</i>.<sup id="fn-1-2">2</sup> Read <i>Ētaōk-chatur</i>.<sup id="fn-1-3">3</sup> Read <i>kshētran</i>.<sup id="fn-1-4">4</sup> The writer had originally written =<i>ukađaka</i>; but he has himself cancelled the first <i>ka</i> by adding a horizontal line at the top of it.<sup id="fn-1-5">5</sup> Read <i>sa</i>.<sup id="fn-1-6">6</sup> Cancel this syllable.</div>
 <p class="plate-note"><a href="#plate-1">Plate 1</a> is bound after this page.</p>
 <p class="plate-note"><a href="#plate-2">Plate 2</a> is bound after this page.</p></section>
 <section class="pg pg-page" role="tabpanel" data-i="1"><div class="page">p. 317 · PDF 413</div>
-<p>covered with thin forest vegetation. From here the place called “ <b>Dhanam-dibbā</b> ”<sup>1</sup>—‘the treasure-mound’—is reached by a gravelly foot-path running along the slope of the hill, which appears to have been once provided with steps of rubble stone. Struggling two or three furlongs along this unwelcome path we come to the crown of the hillock and to the mound ‘Dhanam-dibbā’ on it. Here are found the remains of what looks like a <b>Buddhist</b> <i>stūpa</i> consisting mostly of large-sized bricks and sometimes unhewn stone.<sup>2</sup> On the southern side of the mound are seen also portions of a structure built of cut and dressed stone. The four <b>rock cut wells</b> on the south and west sides of the mound, 4 to 5 feet square and 6 to 7 feet deep, are of peculiar interest and seem to have been used once for storing water for the use of the occupants of the Buddhist monastery, as the mound may prove to be when excavations are properly carried out.</p>
-<p>On the north wall of one of the wells on the western side of the mound measuring 5' 8½' long by 5' 5¼' broad and 7' 2' deep, is engraved in 6 lines the <b>Āndhra</b> inscription, edited below, in <b>Brāhmī</b> characters of about the 3rd century A.D. This inscription which was published in 1908 by Dr. Konow in <i>Z. D. M. G.</i>, Vol. LXII, p. 591 f. has been noticed as No. 1341 by Dr. Lüders in his <i>List of Brāhmī Inscriptions</i> in Vol. X, above. As remarked by Dr. Sten Konow in the Director-General of Archæology's <i>Annual Survey Report</i> for 1907-08, p. 225, this is the only lithic record hitherto discovered of the <b>Āndhra</b> king <b>Chaḍasāta</b>, who is already known to us from a number of coins found in the Kistna and the Godavari districts. My friend Mr. C. R. Krishnama Aeharlu, B.A., of the Madras Epigraphical Department has also spent some hours with me in reading the inscription directly from the stone; and the text given below is the joint production of both of us. The accompanying facsimile plate is reproduced from an inked estampage prepared under my direct supervision. The inscription thus deciphered will be seen to differ much from the published text of Dr. Sten Konow. The object of the record, for instance, was not the establishment of the earth-dwelling (<i>bhumī vesa</i>) of an unnamed minister (<i>āmacha</i>), but was the establishment of the gift (<i>dhama</i>) of a <i>khaṅgu</i> (rock-cut well ?) by the minister <b>Sasa</b> of <b>Khaḍdavali</b>—the ancient form of the present village name Koḍavali.<sup>3</sup></p>
-<p>The name of the king occurs in l. 3 as <b>Chaṅdasāti</b>, the lingual <i>d</i> being possibly also read as a dental <i>d</i>. But, it is to be noted that the long vertical stem which is required to distinguish a dental <i>d</i> (cf. <i>di</i> in l. 4) is missing here; again <i>da</i> may be compared with <i>Khaḍda</i> in l. 4. The form <i>Chadasātisa</i><sup>4</sup> occurs clearly on one of the coins published by Rapson. So also on the Koḍavali rock the <i>i</i> of <i>ti</i> is faintly seen and is practically certain. Possibly <i>sāti</i> is a Prākrit form of <i>Svāti</i> and <i>Chaṅdasāti</i> has accordingly to be interpreted as <i>Chaṅdasvāti</i>. In the table of later Āndhra kings given opposite p. 218 of his <i>Early History of India</i> (third edition) by V. A. Smith, the name-ending <i>sāti</i> occurs only in the case of No. 22 Śiva-svāti. But the <i>Matsya-Purāṇa</i> gives many other names ending in <i>svāti</i> or <i>svātikarṇa</i>, such as Mēghasvāti, Kuntalasvāti, Sundar-asvātikarṇa, etc.<sup>5</sup> It may be incidentally noted also that the name-ending <i>svātikarṇa</i> is more</p>
-<div class="notes"><p><sup>1</sup> Compare Dhana Bādu near Jaggayyapāta; Burgess's “<i>Buddhist Stupas of Amaravati</i>,” p. 107.</p><p><sup>2</sup> Mr. Rea who discovered it for the first time has referred to it in his report for 1907-08, p. 8. He says that at the foot of the hills are the remains of a fort which, however, I was not able to identify.</p><p><sup>3</sup> If, however, the reading <b>भूमिवेस(भूमिवेश्म)</b> of the learned Doctor is accepted, I would observe a striking coincidence in the term <b>सुमिग्रह</b> which occurs twice in the Sundarakāṇda of the <i>Rāmāṇa</i> (T. R. K.'s Edition, Chapters XII, 14 and XV, 4) where, in both instances, the commentator Gövindarāja explains the term as <b>भूमौविलग्रहा</b>:. The context also shows that these underground cellars of Rāvaṇa's Palace and Pleasure-garden were primarily meant for hiding objects from the view of the enemy. The same may have been the case with these so-called Rock-cut Wells of the Pithāpuram forest which surely must have formed part of the Daṇdaka-forest and as such must have been once haunted by wicked Rākshasas.</p><p><sup>4</sup> On a second coin figured as G. P. I. in Pl. VI of the Coins of the Āndhra dynasty by Rapson, the reading is <i>Chaṅdasāt[a]sa</i> with an <i>anusvāra</i> marked to the left of <i>eha</i> as in the Koḍavali rock inscription.</p><p><sup>5</sup> Dr. R. G. Bhandarkar's <i>Early History of the Dekkan</i>, p. 16<sup>4</sup>.</p></div></section>
+<p>covered with thin forest vegetation. From here the place called “ <b>Dhanam-dibbā</b> ”<sup class="fn"><a href="#fn-2-1">1</a></sup>—‘the treasure-mound’—is reached by a gravelly foot-path running along the slope of the hill, which appears to have been once provided with steps of rubble stone. Struggling two or three furlongs along this unwelcome path we come to the crown of the hillock and to the mound ‘Dhanam-dibbā’ on it. Here are found the remains of what looks like a <b>Buddhist</b> <i>stūpa</i> consisting mostly of large-sized bricks and sometimes unhewn stone.<sup class="fn"><a href="#fn-2-2">2</a></sup> On the southern side of the mound are seen also portions of a structure built of cut and dressed stone. The four <b>rock cut wells</b> on the south and west sides of the mound, 4 to 5 feet square and 6 to 7 feet deep, are of peculiar interest and seem to have been used once for storing water for the use of the occupants of the Buddhist monastery, as the mound may prove to be when excavations are properly carried out.</p>
+<p>On the north wall of one of the wells on the western side of the mound measuring 5' 8½' long by 5' 5¼' broad and 7' 2' deep, is engraved in 6 lines the <b>Āndhra</b> inscription, edited below, in <b>Brāhmī</b> characters of about the 3rd century A.D. This inscription which was published in 1908 by Dr. Konow in <i>Z. D. M. G.</i>, Vol. LXII, p. 591 f. has been noticed as No. 1341 by Dr. Lüders in his <i>List of Brāhmī Inscriptions</i> in Vol. X, above. As remarked by Dr. Sten Konow in the Director-General of Archæology's <i>Annual Survey Report</i> for 1907-08, p. 225, this is the only lithic record hitherto discovered of the <b>Āndhra</b> king <b>Chaḍasāta</b>, who is already known to us from a number of coins found in the Kistna and the Godavari districts. My friend Mr. C. R. Krishnama Aeharlu, B.A., of the Madras Epigraphical Department has also spent some hours with me in reading the inscription directly from the stone; and the text given below is the joint production of both of us. The accompanying facsimile plate is reproduced from an inked estampage prepared under my direct supervision. The inscription thus deciphered will be seen to differ much from the published text of Dr. Sten Konow. The object of the record, for instance, was not the establishment of the earth-dwelling (<i>bhumī vesa</i>) of an unnamed minister (<i>āmacha</i>), but was the establishment of the gift (<i>dhama</i>) of a <i>khaṅgu</i> (rock-cut well ?) by the minister <b>Sasa</b> of <b>Khaḍdavali</b>—the ancient form of the present village name Koḍavali.<sup class="fn"><a href="#fn-2-3">3</a></sup></p>
+<p>The name of the king occurs in l. 3 as <b>Chaṅdasāti</b>, the lingual <i>d</i> being possibly also read as a dental <i>d</i>. But, it is to be noted that the long vertical stem which is required to distinguish a dental <i>d</i> (cf. <i>di</i> in l. 4) is missing here; again <i>da</i> may be compared with <i>Khaḍda</i> in l. 4. The form <i>Chadasātisa</i><sup class="fn"><a href="#fn-2-4">4</a></sup> occurs clearly on one of the coins published by Rapson. So also on the Koḍavali rock the <i>i</i> of <i>ti</i> is faintly seen and is practically certain. Possibly <i>sāti</i> is a Prākrit form of <i>Svāti</i> and <i>Chaṅdasāti</i> has accordingly to be interpreted as <i>Chaṅdasvāti</i>. In the table of later Āndhra kings given opposite p. 218 of his <i>Early History of India</i> (third edition) by V. A. Smith, the name-ending <i>sāti</i> occurs only in the case of No. 22 Śiva-svāti. But the <i>Matsya-Purāṇa</i> gives many other names ending in <i>svāti</i> or <i>svātikarṇa</i>, such as Mēghasvāti, Kuntalasvāti, Sundar-asvātikarṇa, etc.<sup class="fn"><a href="#fn-2-5">5</a></sup> It may be incidentally noted also that the name-ending <i>svātikarṇa</i> is more</p>
+<div class="notes"><p><sup id="fn-2-1">1</sup> Compare Dhana Bādu near Jaggayyapāta; Burgess's “<i>Buddhist Stupas of Amaravati</i>,” p. 107.</p><p><sup id="fn-2-2">2</sup> Mr. Rea who discovered it for the first time has referred to it in his report for 1907-08, p. 8. He says that at the foot of the hills are the remains of a fort which, however, I was not able to identify.</p><p><sup id="fn-2-3">3</sup> If, however, the reading <b>भूमिवेस(भूमिवेश्म)</b> of the learned Doctor is accepted, I would observe a striking coincidence in the term <b>सुमिग्रह</b> which occurs twice in the Sundarakāṇda of the <i>Rāmāṇa</i> (T. R. K.'s Edition, Chapters XII, 14 and XV, 4) where, in both instances, the commentator Gövindarāja explains the term as <b>भूमौविलग्रहा</b>:. The context also shows that these underground cellars of Rāvaṇa's Palace and Pleasure-garden were primarily meant for hiding objects from the view of the enemy. The same may have been the case with these so-called Rock-cut Wells of the Pithāpuram forest which surely must have formed part of the Daṇdaka-forest and as such must have been once haunted by wicked Rākshasas.</p><p><sup id="fn-2-4">4</sup> On a second coin figured as G. P. I. in Pl. VI of the Coins of the Āndhra dynasty by Rapson, the reading is <i>Chaṅdasāt[a]sa</i> with an <i>anusvāra</i> marked to the left of <i>eha</i> as in the Koḍavali rock inscription.</p><p><sup id="fn-2-5">5</sup> Dr. R. G. Bhandarkar's <i>Early History of the Dekkan</i>, p. 16<sup>4</sup>.</p></div></section>
 <section class="pg pg-page" role="tabpanel" data-i="2"><div class="page">p. 318 · PDF 414</div>
-<p>likely to have been the origin of the later Śātakarṇi than the fanciful <i>sata-karṇa</i> 'the hundred-eared.'<sup>1</sup> But Dr. Konow neither accepts <i>sāta</i> as an abbreviation of <i>Śātakarṇi</i> nor does he read <i>sāti</i> (=<i>svāti</i>). He prefers to have the name Chaḍasāta (=Chamḍasāta) without explaining the name-ending <i>sāta</i>.</p>
+<p>likely to have been the origin of the later Śātakarṇi than the fanciful <i>sata-karṇa</i> 'the hundred-eared.'<sup class="fn"><a href="#fn-3-1">1</a></sup> But Dr. Konow neither accepts <i>sāta</i> as an abbreviation of <i>Śātakarṇi</i> nor does he read <i>sāti</i> (=<i>svāti</i>). He prefers to have the name Chaḍasāta (=Chamḍasāta) without explaining the name-ending <i>sāta</i>.</p>
 <p>The <b>date</b> of the record in 11. 3 and 4 has been read by Dr. Sten Konow as "<i>savachare 10 3(?) he pa 3 diva dasame</i>" whereas my reading is "<i>rajī vachhare 2² ma 1 he pa 2 di 1.</i>" The reading <i>ma 1</i> after the regnal year is difficult to explain. If this were preceded by <i>he</i>, instead of being followed by it, it would have yielded the meaning <i>hēmantamāsa</i> 1, as we find in a very large number of similar dates coming from Northern India; but, <i>he</i> is required before <i>pa</i>; for otherwise the latter could not be explained. Besides, the dated Southern Brāhmī inscriptions as catalogued by Dr. Lüders in his <i>List of Brāhmī Inscriptions</i> give only the <i>paksha</i> of the season and in no case the month (<i>māsa</i>) as the northern dates do. I can only suggest that in this record both the <i>month</i> and the <i>paksha</i> are given and the word <i>he</i> which is an abbreviation for the season <i>hēmanta</i> is placed after <i>ma 1</i> while it should have preceded it, and thus arrive at the probable interpretation of the date as "the first day of the second fortnight of the first month of the winter season." If this interpretation is right, the details of the date would correspond to <i>Mārgaśīrsha bahula prathamā</i>, somewhere in December 210 A.D., the second year of Chamḍa-svāti.</p>
-<h3><h4>TEXT.<sup>2</sup></h4></h3>
-<div class="lines"><ol style="list-style-type: none;"><li>1 Sidham<sup>4</sup> [ |* ] Rañ[ō] Vāsiṭhi-</li><li>2 putasa <sup>5</sup>sami-siri-</li><li>3 Chamḍasāt[i][sa] [ra]jī-vachhare 2</li><li>4 ma 1 he pa 2 d[i] 1 Khadda[va]li-</li><li>5 amacha-Sa[sa]mi khagu-dhama</li><li>6 thāpita [||*]</li></ol></div>
+<h3><h4>TEXT.<sup class="fn"><a href="#fn-3-2">2</a></sup></h4></h3>
+<div class="lines"><ol style="list-style-type: none;"><li>1 Sidham<sup class="fn"><a href="#fn-3-4">4</a></sup> [ |* ] Rañ[ō] Vāsiṭhi-</li><li>2 putasa <sup class="fn"><a href="#fn-3-5">5</a></sup>sami-siri-</li><li>3 Chamḍasāt[i][sa] [ra]jī-vachhare 2</li><li>4 ma 1 he pa 2 d[i] 1 Khadda[va]li-</li><li>5 amacha-Sa[sa]mi khagu-dhama</li><li>6 thāpita [||*]</li></ol></div>
 <h3><h4>Notes on letters.</h4></h3>
 <p>L. 1. <i>si</i> — The letter <i>sa</i> throughout is written with a loop at the left bottom corner whence it is started. This loop, in certain cases, is almost closed, whereas in certain others it is half open. The <i>si</i> which begins the inscription is one of the former type, though it is a little deformed looking as though the loop were written twice.</p>
 <p><i>dham</i> — The position of the <i>anusvāra</i> attached to <i>dha</i> is worthy of notice. It is on the left side of the letter and not on its right top corner.</p>
 <p><i>ñō</i> — The <i>ō</i> mark is very faint.</p>
 <p><i>ṭhī</i> — The long <i>ī</i> is indicated by two horns as in Kshatrapa inscriptions (Bühler's <i>Tables</i> III, 9).</p>
 <p>L. 2. <i>ta</i> — The development of a loop in this letter is to be noted as in the Nasik inscription No. 20. (See Bühler's <i>Tables</i> III, 13). Possibly, there was a secondary <i>ta</i> below the letter thus making the word <i>puttasa</i>.</p>
-<div class="notes"><p><sup>1</sup> The word <i>Nūrṇuvar-Kaṇṇar</i> which occurs in the Tamil poem <i>Śilappadikāram</i>, has been translated by some, as, 'the hundred-eared' and taken to be the equivalent of Śātakarṇi (or Śātakarṇi).</p><p><sup>2</sup> The three thick horizontal marks one above the other each denoting the numeral 'one' are visible. But as the third topmost mark is above the level of the line and not vertically above the other two, I am inclined to read the symbol as '2' and not '3'.</p><p><sup>3</sup> Direct from the stone.</p><p><sup>4</sup> Spaces are left in the original after the complete words:—<i>Sidham</i>, <i>rañō</i>, etc., as shown in the text. After <i>Sami-siri-Chamḍasātisa</i> in 1. 3 and after <i>Sasami</i> in 1. 5, where we should have expected a space, it is wanting. The same system of separating words by spaces is found in the Hathigumpha inscription of Khāravēla, the Myākadoni inscription of Puļumāvi (above Vol. XIV, plate facing p. 155) and the Hirabaḍagalli inscription of Siva-Skanda-varman, <i>Ep. Ind.</i>, Vol. I, plate facing p. 6.</p><p><sup>5</sup> [The plate gives <i>sā</i>.—Ed.]</p></div>
+<div class="notes"><p><sup id="fn-3-1">1</sup> The word <i>Nūrṇuvar-Kaṇṇar</i> which occurs in the Tamil poem <i>Śilappadikāram</i>, has been translated by some, as, 'the hundred-eared' and taken to be the equivalent of Śātakarṇi (or Śātakarṇi).</p><p><sup id="fn-3-2">2</sup> The three thick horizontal marks one above the other each denoting the numeral 'one' are visible. But as the third topmost mark is above the level of the line and not vertically above the other two, I am inclined to read the symbol as '2' and not '3'.</p><p><sup id="fn-3-3">3</sup> Direct from the stone.</p><p><sup id="fn-3-4">4</sup> Spaces are left in the original after the complete words:—<i>Sidham</i>, <i>rañō</i>, etc., as shown in the text. After <i>Sami-siri-Chamḍasātisa</i> in 1. 3 and after <i>Sasami</i> in 1. 5, where we should have expected a space, it is wanting. The same system of separating words by spaces is found in the Hathigumpha inscription of Khāravēla, the Myākadoni inscription of Puļumāvi (above Vol. XIV, plate facing p. 155) and the Hirabaḍagalli inscription of Siva-Skanda-varman, <i>Ep. Ind.</i>, Vol. I, plate facing p. 6.</p><p><sup id="fn-3-5">5</sup> [The plate gives <i>sā</i>.—Ed.]</p></div>
 <p class="plate-note"><a href="#plate-3">Plate 3</a> is bound after this page.</p></section>
 <section class="pg pg-page" role="tabpanel" data-i="3"><div class="page">p. 319 · PDF 417</div>
 <p>L. 3. <i>Chām</i>—The <i>anusvāra</i> is clearly marked on the left top of the letter as in <i>dhām</i> in l. 1.</p>
@@ -191,7 +294,7 @@ figure.big img { max-height: 85vh; }
 <p>The letter between <i>dđa</i> and <i>li</i> is completely damaged and no traces are seen. It could have been a <i>ma</i> or a <i>va</i>. As, however, the present village name <i>Kođavali</i> to which there is a sure reference here is spelt with a <i>v</i>, I would prefer taking the damaged letter as <i>va</i> and not a <i>ma</i>.</p>
 <p>L. 5. The letter after <i>kha</i> (which Dr. Sten Konow read as <i>ve</i>) is like a <i>śu</i>; but, since what looks like the stroke within does not go right across to meet the opposite side, I read it as <i>gu</i>. The meaning in either case is not clear.</p>
 <h3><h4>TRANSLATION.</h4></h3>
-<p>Success; In the reign of king Vāsithīputa <sup>1</sup>Sami-siri-Chānda-sāti, in the year 2, month 1, the winter fortnight 2 (and) day 1, was established the charity (<i>i.e.</i>, the gift) of a <i>khān-gu</i>(?) by the minister Sasa (Śaśa) of Khađđavali.</p>
+<p>Success; In the reign of king Vāsithīputa <sup class="fn"><a href="#fn-4-1">1</a></sup>Sami-siri-Chānda-sāti, in the year 2, month 1, the winter fortnight 2 (and) day 1, was established the charity (<i>i.e.</i>, the gift) of a <i>khān-gu</i>(?) by the minister Sasa (Śaśa) of Khađđavali.</p>
 <h3><h4>POSTSCRIPT.</h4></h3>
 <p>Dr. Sten Konow to whom I had submitted the galley proof of this paper for remarks has thus kindly written to Mr. Hirananda Sastri:—</p>
 <p>• . * * *</p>
@@ -200,7 +303,7 @@ figure.big img { max-height: 85vh; }
 <p>L. 5. I cannot understand how <i>amachasasami</i> can mean by the minister Sasa. And it seems to me that the first word ends with <i>amachasa</i>. It is possible that the preceding <i>aksharas</i> contain the minister's name. The ensuing <i>akshara</i> looks to me more like <i>bhū</i> than <i>sa</i>. With regard to <i>Khagu</i> I have little to say. <i>Kha</i> is not certain. In favour of <i>ga</i> or <i>gu</i> speaks the use of <i>s</i> for <i>ś</i> in <i>śiri</i>. But the letter looks more like <i>śa</i> or <i>śu</i>.</p>
 <p>The remarks which I have been able to offer are, you will see, rather negative. But I cannot just now give more time to the question, being too much occupied with other work.</p>
 <p>* * * *</p>
-<div class="notes"><p><sup>1</sup> [See f. n. 5 on the opposite page—Ed.]</p></div></section>
+<div class="notes"><p><sup id="fn-4-1">1</sup> [See f. n. 5 on the opposite page—Ed.]</p></div></section>
 <section class="pg pg-plate" role="tabpanel" data-i="4"><div class="page" id="plate-1">Plate 1 · PDF page 411, bound after p. 316</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p411.webp" alt="Plate 1"></figure></section>
 <section class="pg pg-plate" role="tabpanel" data-i="5"><div class="page" id="plate-2">Plate 2 · PDF page 412, bound after p. 316</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p412.webp" alt="Plate 2"></figure></section>
 <section class="pg pg-plate" role="tabpanel" data-i="6"><div class="page" id="plate-3">Plate 3 · PDF page 415, bound after p. 318</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p415.webp" alt="Plate 3"></figure></section></div></main>
@@ -253,6 +356,28 @@ function toHash(){ if (location.hash){ var el=document.getElementById(location.h
   if (el){ showFor(el); el.scrollIntoView({block:'start'}); } } }
 window.addEventListener('hashchange', toHash);
 toHash();
+// footnote pop-ups: a mark opens its note beside it; a click elsewhere or Esc closes it
+var pop=null;
+function closePop(){ if (pop){ pop.remove(); pop=null; } }
+document.addEventListener('click', function(e){
+  var a=e.target.closest('sup.fn a');
+  if (!a){ if (pop && !pop.contains(e.target)) closePop(); return; }
+  e.preventDefault(); closePop();
+  var note=document.getElementById(a.getAttribute('href').slice(1)); if (!note) return;
+  // the note runs from its mark to the next note's mark (notes may share one paragraph)
+  var box=note.closest('.notes'), r0=document.createRange(); r0.setStartBefore(note);
+  var nxt=Array.prototype.filter.call(box.querySelectorAll('sup[id]'), function(x){
+    return note.compareDocumentPosition(x) & Node.DOCUMENT_POSITION_FOLLOWING; })[0];
+  if (nxt) r0.setEndBefore(nxt); else r0.setEndAfter(box.lastChild);
+  pop=document.createElement('div'); pop.className='fn-pop'; pop.appendChild(r0.cloneContents());
+  pop.querySelectorAll('[id]').forEach(function(x){ x.removeAttribute('id'); });
+  pop.querySelectorAll('hr').forEach(function(x){ x.remove(); });
+  document.body.appendChild(pop);
+  var r=a.getBoundingClientRect(), w=pop.offsetWidth;
+  pop.style.left=Math.max(8, Math.min(r.left+window.scrollX, window.scrollX+document.documentElement.clientWidth-w-8))+'px';
+  pop.style.top=(r.bottom+window.scrollY+4)+'px';
+});
+document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop(); });
 (function(){
   var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat');
   // what to mark: the search term, and the chosen category's matched words (CAT_TERMS)

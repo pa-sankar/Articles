@@ -55,13 +55,21 @@
   .home-link { text-decoration: none; color: var(--accent-strong); margin-right: 0.3rem; }
   .home-link:hover { color: var(--accent); }
 
-  --accent:#e0a85a; --note:#262420; --mark:#7a6420; --mark-on:#b07a10; } }
 mark { background: var(--mark); color: inherit; border-radius: 2px; }
 mark.on { background: var(--mark-on); }
 .meta { color: var(--muted); font-size: .9rem; }
 h1 { font-size: 1.5rem; line-height: 1.3; margin: .2rem 0; }
 h3 { font-size: 1.05rem; margin: 1.4rem 0 .4rem; letter-spacing: .02em; }
 .byline { font-variant: small-caps; color: var(--muted); }
+.art-head { margin: .6rem 0 1.2rem; padding-bottom: .9rem; border-bottom: 1px solid var(--line); }
+.ah-corpus { font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); font-weight: 600; }
+.ah-vol { font-size: 1rem; font-weight: 600; margin-top: .25rem; }
+.ah-part { font-weight: 400; color: var(--muted); }
+h1.ah-title { font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem; font-weight: 600;
+              line-height: 1.25; margin: .45rem 0 .3rem; }
+.ah-author { font-variant: small-caps; font-size: 1.05rem; }
+.ah-ref { color: var(--muted); font-size: .82rem; margin-top: .35rem; }
+h2.printed-title { font-size: 1.1rem; line-height: 1.35; margin: .4rem 0; }
 .page { display:flex; gap:.5rem; align-items:center; color:var(--muted); font-size:.8rem; margin:1.6rem 0 .6rem; }
 .page::before, .page::after { content:""; flex:1; border-top:1px solid var(--line); }
 .lines { font-size: .95rem; }
@@ -73,18 +81,107 @@ figcaption, .caption { color: var(--muted); font-size: .85rem; }
 .art table { border-collapse: collapse; font-size: .9rem; margin: .8rem 0; display:block; overflow-x:auto; }
 .art td, .art th { border: 1px solid var(--line); padding: .2rem .4rem; vertical-align: top; }
 .warn { border-left: 3px solid var(--accent); padding-left: .7rem; }
-input, select { font: inherit; padding: .35rem .5rem; box-sizing: border-box; }
-.search { display:flex; gap:.5rem; flex-wrap: wrap; margin: .8rem 0; }
-.search input { flex: 1 1 16rem; }
-.scroll { overflow-x: auto; }
-table.idx { border-collapse: collapse; width: 100%; font-size: .95rem; }
-.idx th { text-align: left; border-bottom: 2px solid var(--line); padding: .3rem .4rem; white-space: nowrap;
-  cursor: pointer; user-select: none; }
+/* the index's controls, table and row pop-up: the Inscriptions corpus pages' own look
+   (scripts/inscriptions_table_html.py), on the site's tokens (user, 2026-11-18) */
+.search, .dd-bar { margin-bottom: .75rem; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+input[type=search] { padding: 8px 13px; width: 20rem; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; box-sizing: border-box; }
+select { padding: 8px 10px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; }
+input[type=search]:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  box-shadow: var(--shadow); }
+table.idx { border-collapse: collapse; width: 100%; font-size: 14px; font-family: 'Segoe UI', system-ui, sans-serif; }
+.idx th, .idx td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);
+  padding: 10px 12px; text-align: left; vertical-align: top; overflow-wrap: break-word; }
+.idx th:last-child, .idx td:last-child { border-right: none; }
+.idx th { background: var(--surface-2); color: var(--text-dim); position: sticky; top: 0; z-index: 1;
+  text-transform: uppercase; letter-spacing: .04em; font-size: 11.5px; white-space: nowrap; cursor: pointer; user-select: none; }
 .idx th[aria-sort=ascending]::after { content: " ▲"; } .idx th[aria-sort=descending]::after { content: " ▼"; }
-.idx tr.filters th { cursor: default; border-bottom: 1px solid var(--line); }
-.idx tr.filters input { width: 100%; min-width: 4rem; font-size: .85rem; }
-.idx td { border-bottom: 1px solid var(--line); padding: .35rem .4rem; vertical-align: top; }
+.idx tbody tr:nth-child(even) { background: var(--surface-2); }
+.idx tbody tr:last-child td { border-bottom: none; }
+.idx tbody tr { cursor: pointer; }
+.idx tbody tr:hover { background: var(--surface-2); }
 .idx td.num { text-align: right; white-space: nowrap; }
+.idx td.attr { font-size: .85rem; }
+.idx th.ai::after { content: " AI"; font-size: .65rem; color: var(--accent-copper-strong); vertical-align: super; }
+.filter-dd { position: relative; display: inline-block; }
+.filter-dd-btn { padding: 8px 14px; cursor: pointer; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; text-align: left;
+  min-width: 8rem; max-width: 14rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filter-dd-btn:hover { border-color: var(--accent); }
+.filter-dd.active .filter-dd-btn { border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
+.filter-dd-panel { position: absolute; top: calc(100% + 4px); left: 0; z-index: 50; width: 16rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  box-shadow: var(--shadow); padding: .6rem; display: flex; flex-direction: column; gap: .5rem; }
+.filter-dd-panel[hidden] { display: none; }
+.filter-dd-mode { display: flex; gap: .9rem; font-size: .82rem; color: var(--text-dim); }
+.filter-dd-mode label { display: flex; align-items: center; gap: .3rem; cursor: pointer; }
+.filter-dd-search { padding: 5px 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+  color: var(--text); font-family: inherit; font-size: 13px; width: 100%; box-sizing: border-box; }
+.filter-dd-hint { font-size: 11px; color: var(--text-dim); margin: -2px 2px 2px; }
+.filter-dd-options { max-height: 14rem; overflow-y: auto; display: flex; flex-direction: column; }
+.filter-dd-opt { display: flex; align-items: center; gap: .5rem; padding: 3px 4px; border-radius: 4px;
+  font-size: .85rem; cursor: pointer; }
+.filter-dd-opt:hover { background: var(--surface-2); }
+.filter-dd-opt[hidden] { display: none; }
+.filter-dd-opt span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filter-dd-opt .n { font-style: normal; font-size: .75rem; color: var(--text-dim); }
+.filter-dd-opt-unavailable { opacity: .4; cursor: not-allowed; }
+.filter-dd-opt-unavailable:hover { background: none; }
+.filter-dd-actions { display: flex; justify-content: flex-end; }
+.filter-dd-clear { padding: 4px 10px; cursor: pointer; background: none; border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text-dim); font-family: inherit; font-size: 12.5px; }
+.filter-dd-clear:hover { color: var(--text); border-color: var(--accent); }
+.active-filters-summary { background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+  padding: .5rem .9rem; margin-bottom: .75rem; font-size: .85rem; color: var(--text); line-height: 1.6; }
+.active-filters-summary[hidden] { display: none; }
+.active-filters-summary strong { color: var(--text-dim); font-weight: 600; }
+.row-hint { font-style: italic; }
+body.noscroll { overflow: hidden; }
+.remarks-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center;
+  justify-content: center; z-index: 1000; padding: 1.5rem; }
+.remarks-modal-overlay[hidden] { display: none; }
+.remarks-modal-box { background: var(--surface); color: var(--text); border-radius: 10px; max-width: 44rem; width: 100%;
+  max-height: 80vh; overflow-y: auto; padding: 1.5rem; position: relative; box-shadow: var(--shadow);
+  font-family: 'Segoe UI', system-ui, sans-serif; box-sizing: border-box; }
+.remarks-modal-close { position: absolute; top: .5rem; right: .7rem; font-size: 1.3rem; line-height: 1;
+  background: none; border: none; cursor: pointer; color: var(--text-dim); }
+.remarks-modal-close:hover { color: var(--text); }
+.row-detail-box { max-width: 56rem; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
+.row-detail-box .remarks-modal-close { top: .5rem; right: .7rem; z-index: 2; }
+.row-detail-header { flex: none; padding: 1.5rem 3rem .7rem 1.5rem; margin-bottom: .4rem; border-bottom: 1px solid var(--border); }
+.row-detail-title { font-size: 1.1rem; font-weight: 600; line-height: 1.35; margin-bottom: .3rem; }
+.row-detail-idline { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.row-detail-id-text { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9rem; color: var(--text); }
+.row-detail-cite { color: var(--text-dim); font-size: .85rem; }
+.row-detail-read { margin-left: auto; font-size: .85rem; }
+.row-detail-body { flex: 1 1 auto; overflow-y: auto; padding: 0 1.5rem 1.5rem; }
+.row-detail-field { display: grid; grid-template-columns: 9rem 1fr; gap: .4rem .75rem; padding: .3rem 0;
+  border-bottom: 1px solid var(--border); align-items: baseline; }
+.row-detail-field:last-child { border-bottom: none; }
+.row-detail-label { color: var(--text-dim); font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; font-weight: 600; }
+.row-detail-value { line-height: 1.5; overflow-wrap: break-word; }
+.row-detail-na { color: var(--text-dim); font-style: italic; }
+.row-detail-quote { color: var(--text-dim); font-size: .85rem; margin-top: .15rem; }
+.v-derived { color: var(--accent-copper-strong); font-style: italic; }
+.row-detail-tabs { margin-top: 1.1rem; }
+.row-detail-tab-bar { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .6rem; }
+.row-detail-tab-btn { font: inherit; font-size: .85rem; padding: .35rem .8rem; border: 1px solid var(--border);
+  border-radius: 999px; background: var(--surface-2); color: var(--text-dim); cursor: pointer; }
+.row-detail-tab-btn.active { border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
+.row-detail-tab-btn.has-match { background: #fff3a0; color: #000; }
+.match-nav { margin-left: auto; display: flex; align-items: center; gap: .4rem; font-size: .82rem; color: var(--text-dim); }
+.match-nav[hidden], .match-nav button[hidden] { display: none; }
+.match-nav button { font: inherit; font-size: .82rem; padding: .25rem .7rem; border: 1px solid var(--border);
+  border-radius: 999px; background: var(--surface); color: var(--text); cursor: pointer; }
+.match-nav button:hover { border-color: var(--accent); }
+mark.current { background: #ffb347; outline: 2px solid #e08a00; }
+.row-detail-tab-content { line-height: 1.6; font-size: .95rem; background: var(--surface-2); border-radius: 6px;
+  padding: .8rem 1rem; }
+.ai-badge { font-size: .65rem; color: var(--accent-copper-strong); border: 1px solid var(--accent-copper);
+  border-radius: 3px; padding: 0 .25rem; vertical-align: middle; cursor: help; text-transform: none; letter-spacing: 0; }
+  @media (max-width: 640px) { input[type=search] { width: 100%; } .row-detail-field { grid-template-columns: 1fr; } }
 .snip { color: var(--muted); font-size: .85rem; margin-top: .2rem; }
 .hits { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: .4rem 0;
   font-size: .9rem; z-index: 1; }
@@ -104,6 +201,11 @@ table.idx { border-collapse: collapse; width: 100%; font-size: .95rem; }
 .plate-note { font-size: .85rem; color: var(--muted); font-style: italic; }
 figure.big img { max-height: 85vh; }
 .tab.has-match { background: #fff3a0; color: #000; }
+sup.fn a { text-decoration: none; padding: 0 .15em; }
+.fn-pop { position: absolute; z-index: 20; max-width: min(28rem, 90vw); background: var(--note);
+  border: 1px solid var(--line); border-radius: 4px; padding: .3rem .7rem; font-size: .85rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2); }
+.fn-pop p { margin: .2rem 0; }
 .hits ~ .tabs, .hits + .art .tabs { top: 2.4rem; }
   .wrap { max-width: 72rem; margin: 0 auto; }
   .wrap.narrow { max-width: 50rem; }
@@ -158,52 +260,54 @@ figure.big img { max-height: 85vh; }
 <div class="wrap narrow">
 <div class="brand">Project InscriptionSearch: Articles</div>
 <div class="titlebar"><h1><a href="../../" class="home-link" title="Home"><img src="../../images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> Epigraphia Indica</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
-<main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a> · Epigraphia Indica XVIII · EpInd XVIII No. 31 · Part VII · printed p. 307 · PDF pp. 397-403</p><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 307</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 308</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 309</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 810</button><button type="button" class="tab t-page" role="tab" data-i="4" title="page number not read from the scan; counted from the pages around it">p. 811</button><span class=tsep></span><span class="tg">Plates</span><button type="button" class="tab t-plate" role="tab" data-i="5">Plate 1</button><button type="button" class="tab t-plate" role="tab" data-i="6">Plate 2</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page">p. 307 · PDF 397</div>
-<h1>No. 31.—TEKKALI PLATES OF DANARNAVA'S SON INDRAVARMAN.</h1>
+<main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a></p>
+<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. XVIII · No. 31<span class=ah-part> · Part VII</span></div><h1 class="ah-title">Tekkali plates of Danarnava&#x27;s son Indravarman</h1><div class="ah-author">E. Hultzsch</div><div class="ah-ref">Printed p. 307 · PDF pp. 397–403</div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 307</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 308</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 309</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 810</button><button type="button" class="tab t-page" role="tab" data-i="4" title="page number not read from the scan; counted from the pages around it">p. 811</button><span class=tsep></span><span class="tg">Plates</span><button type="button" class="tab t-plate" role="tab" data-i="5">Plate 1</button><button type="button" class="tab t-plate" role="tab" data-i="6">Plate 2</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page">p. 307 · PDF 397</div>
+<h2 class="printed-title">No. 31.—TEKKALI PLATES OF DANARNAVA'S SON INDRAVARMAN.</h2>
 <p class="byline">BY E. HULTZSCH, PH.D. ; HALLE (SAALE).</p>
-<p>Ink-impressions of this inscription<sup>5</sup> were kindly made over to me by Rao Bahadur H. Krishna Sastri. The plates belong to Sri L. N. Deb, Esq., Yubraj of <b>Tekkali</b> in the Ganjām District of the Madras Presidency. These are “<b>three copper-plates</b>, each measuring about 5½” in breadth and 2¾” in height, and strung on a <b>ring</b> of the same metal. The first plate is inscribed only on the inner face, and the third plate bears only one line of writing on the outer face. The plates do not appear to have had raised rims. The ring is 3” in diameter and is fixed in a circular <b>seal</b> measuring 7/8” in diameter, on which is engraved the worn figure of a standing <b>bull</b> with raised hump, facing the proper left. The three plates, with ring and seal, weigh 60 tolas.”</p>
-<p>The writing on the plates is in a state of very good preservation. The <b>alphabet</b> resembles that of other early grants of the Gāṅgas of Kalinga. The letters <b>t</b> and <b>ṇ</b> have the same shape as in the majority of them,<sup>6</sup> while in one of the grants of Indravarman<sup>7</sup> the <b>t</b> closely resembles the <b>ṇ</b>. The <i>jihvāmūliya</i> is employed in line 18, and the <i>upadhmānīya</i> five times. A final form of <i>m</i> occurs in line 27. The group <b>ū</b> is written correctly in line 10, but is expressed by <b>ṇ</b> in lines 3 and 31. In line 30 occur the <b>numerical symbol</b> 100 and the two <b>decimal figures</b> 5 and 4. The <b>language</b> of the inscription is on the whole very correct Sanskrit prose, with three verses ‘sung by Vyāsa’, quoted in lines 25-29. Line 14 contains a few Dravidian words (<i>amba-achchi-pōṭi</i>).</p>
-<p>The <b>date</b> of this inscription (l. 30) is the year <b>100 54</b>=154; <i>i.e.</i> the first of the three figures is expressed by the numerical symbol ‘100’, and the two remaining figures are decimals. This fresh date induced me to re-examine the year of the Chicacole plates of Dēvēndravarman, son of Guṇārnava, which I had originally read as 100 80 3.<sup>8</sup> Kielhorn noted already that the middle figure is certainly not the numerical symbol ‘80’, but the decimal ‘8’.<sup>9</sup> The third figure of the year does not resemble the usual form of ‘3’; but, as the date is recorded also in words, it must be meant for ‘3’. Bühler solved this little problem in a very ingenious manner by explaining</p>
-<div class="notes"><sup>1</sup> Read <i>kramēṇa</i>.<sup>2</sup> [I think we can read it as <b>ṇ</b>—Ed.]<sup>3</sup> [The original wrongly gives <i>pāchyatē</i>—Ed.]<sup>4</sup> Read <i>ubhaya-vaṇśa</i>.<sup>5</sup> See the <i>Madras Epigraphical Report</i> for 1924, p. 10, App. A, No. 1, and p. 97, para. 2.<sup>6</sup> See <i>e.g.</i> above, Vol. XIV, p. 361; <i>Ind. Ant.</i>, Vol. XIII, p. 123; above, Vol. III, p. 121.<sup>7</sup> <i>Ind. Ant.</i> Vol. XIII, p. 120.<sup>8</sup> Above, Vol. III, p. 133.<sup>9</sup> Above, Vol. V, Appendix, p. 91, note 7.</div></section>
+<p>Ink-impressions of this inscription<sup class="fn"><a href="#fn-1-5">5</a></sup> were kindly made over to me by Rao Bahadur H. Krishna Sastri. The plates belong to Sri L. N. Deb, Esq., Yubraj of <b>Tekkali</b> in the Ganjām District of the Madras Presidency. These are “<b>three copper-plates</b>, each measuring about 5½” in breadth and 2¾” in height, and strung on a <b>ring</b> of the same metal. The first plate is inscribed only on the inner face, and the third plate bears only one line of writing on the outer face. The plates do not appear to have had raised rims. The ring is 3” in diameter and is fixed in a circular <b>seal</b> measuring 7/8” in diameter, on which is engraved the worn figure of a standing <b>bull</b> with raised hump, facing the proper left. The three plates, with ring and seal, weigh 60 tolas.”</p>
+<p>The writing on the plates is in a state of very good preservation. The <b>alphabet</b> resembles that of other early grants of the Gāṅgas of Kalinga. The letters <b>t</b> and <b>ṇ</b> have the same shape as in the majority of them,<sup class="fn"><a href="#fn-1-6">6</a></sup> while in one of the grants of Indravarman<sup class="fn"><a href="#fn-1-7">7</a></sup> the <b>t</b> closely resembles the <b>ṇ</b>. The <i>jihvāmūliya</i> is employed in line 18, and the <i>upadhmānīya</i> five times. A final form of <i>m</i> occurs in line 27. The group <b>ū</b> is written correctly in line 10, but is expressed by <b>ṇ</b> in lines 3 and 31. In line 30 occur the <b>numerical symbol</b> 100 and the two <b>decimal figures</b> 5 and 4. The <b>language</b> of the inscription is on the whole very correct Sanskrit prose, with three verses ‘sung by Vyāsa’, quoted in lines 25-29. Line 14 contains a few Dravidian words (<i>amba-achchi-pōṭi</i>).</p>
+<p>The <b>date</b> of this inscription (l. 30) is the year <b>100 54</b>=154; <i>i.e.</i> the first of the three figures is expressed by the numerical symbol ‘100’, and the two remaining figures are decimals. This fresh date induced me to re-examine the year of the Chicacole plates of Dēvēndravarman, son of Guṇārnava, which I had originally read as 100 80 3.<sup class="fn"><a href="#fn-1-8">8</a></sup> Kielhorn noted already that the middle figure is certainly not the numerical symbol ‘80’, but the decimal ‘8’.<sup class="fn"><a href="#fn-1-9">9</a></sup> The third figure of the year does not resemble the usual form of ‘3’; but, as the date is recorded also in words, it must be meant for ‘3’. Bühler solved this little problem in a very ingenious manner by explaining</p>
+<div class="notes"><sup id="fn-1-1">1</sup> Read <i>kramēṇa</i>.<sup id="fn-1-2">2</sup> [I think we can read it as <b>ṇ</b>—Ed.]<sup id="fn-1-3">3</sup> [The original wrongly gives <i>pāchyatē</i>—Ed.]<sup id="fn-1-4">4</sup> Read <i>ubhaya-vaṇśa</i>.<sup id="fn-1-5">5</sup> See the <i>Madras Epigraphical Report</i> for 1924, p. 10, App. A, No. 1, and p. 97, para. 2.<sup id="fn-1-6">6</sup> See <i>e.g.</i> above, Vol. XIV, p. 361; <i>Ind. Ant.</i>, Vol. XIII, p. 123; above, Vol. III, p. 121.<sup id="fn-1-7">7</sup> <i>Ind. Ant.</i> Vol. XIII, p. 120.<sup id="fn-1-8">8</sup> Above, Vol. III, p. 133.<sup id="fn-1-9">9</sup> Above, Vol. V, Appendix, p. 91, note 7.</div></section>
 <section class="pg pg-page" role="tabpanel" data-i="1"><div class="page">p. 308 · PDF 398</div>
-<p>the figure '3' of these plates as an abbreviation of <i>lōka</i>, 'the (three) worlds'.<sup>1</sup> Hence the year is in reality <b>100 83</b>=183. The day of the same grant consists of the <i>decimal</i> figure '2' followed by a cipher (0)=<b>20</b>. If we now re-examine the date of the Purle plates of Indravarman, son of Dānārṇava,<sup>2</sup> the year turns out to be (not 100 40 9, but) <b>100 37</b>=137, and the day <b>20 0</b>=20; and the year of one of the Chicacole plates of Indravarman is not 100 40 6,<sup>3</sup> but <b>100 38</b>=138, and its day is <b>10h</b> (still expressed by a numerical symbol). If we go back to the other Chicacole plates of Indravarman,<sup>4</sup> we find that both the second figure of the year and the first figure of the day are expressed by numerical symbols: <b>100 20 8</b>=128, and <b>10 5</b>=15. Subsequently to 100 83=183, the year of the Chicacole plates of Dēvēndravarman, son of Guṇārṇava,<sup>5</sup> even the <i>first</i> figure ceases to be represented by a numerical symbol and is expressed by a decimal in <b>195</b>, the year of the Siddhāntam plates of Dēvēndravarman, son of Guṇārṇava.<sup>6</sup> The day of the same grant is <b>5h<sup>7</sup></b> (changed unnecessarily by the editor into [<sup>८</sup>*]<sup>९</sup>):. I may be excused for having gone into such details, because this digression will in future induce editors, including myself, to be more careful and methodical in handling the dates of the Eastern Gāṅgas.</p>
+<p>the figure '3' of these plates as an abbreviation of <i>lōka</i>, 'the (three) worlds'.<sup class="fn"><a href="#fn-2-1">1</a></sup> Hence the year is in reality <b>100 83</b>=183. The day of the same grant consists of the <i>decimal</i> figure '2' followed by a cipher (0)=<b>20</b>. If we now re-examine the date of the Purle plates of Indravarman, son of Dānārṇava,<sup class="fn"><a href="#fn-2-2">2</a></sup> the year turns out to be (not 100 40 9, but) <b>100 37</b>=137, and the day <b>20 0</b>=20; and the year of one of the Chicacole plates of Indravarman is not 100 40 6,<sup class="fn"><a href="#fn-2-3">3</a></sup> but <b>100 38</b>=138, and its day is <b>10h</b> (still expressed by a numerical symbol). If we go back to the other Chicacole plates of Indravarman,<sup class="fn"><a href="#fn-2-4">4</a></sup> we find that both the second figure of the year and the first figure of the day are expressed by numerical symbols: <b>100 20 8</b>=128, and <b>10 5</b>=15. Subsequently to 100 83=183, the year of the Chicacole plates of Dēvēndravarman, son of Guṇārṇava,<sup class="fn"><a href="#fn-2-5">5</a></sup> even the <i>first</i> figure ceases to be represented by a numerical symbol and is expressed by a decimal in <b>195</b>, the year of the Siddhāntam plates of Dēvēndravarman, son of Guṇārṇava.<sup class="fn"><a href="#fn-2-6">6</a></sup> The day of the same grant is <b>5h<sup class="fn"><a href="#fn-2-7">7</a></sup></b> (changed unnecessarily by the editor into [<sup>८</sup>*]<sup>९</sup>):. I may be excused for having gone into such details, because this digression will in future induce editors, including myself, to be more careful and methodical in handling the dates of the Eastern Gāṅgas.</p>
 <p>I shall now recapitulate the years of some of the earlier Gāṅga grants, at the end of which the names of certain officers are mentioned.</p>
 <p>No. I. Urlām plates of Hastivarman, surnamed Rājasimha or Raṇabhīta (above, Vol. XVII, p. 333). Year <b>80 0</b>=80, in words and figures. Written by Vinayachandra, son of Bhānuchandra.</p>
 <p>No. II. Achyutapuram plates of Indravarman, surnamed Rājasimha (above, Vol. III, p. 129). Year <b>80 7</b>=87, in words and figures. Written by the same officer.</p>
 <p>No. III. Parlā-Kimeđi plates of Indravarman, surnamed Rājasimha (<i>Ind. Ant.</i>, Vol. XVI, p. 134). Year <b>90 1</b>=91, in words and figures. Written by the same officer.</p>
-<p>No. IV. Chicacole plates of Indravarman (<i>Ind. Ant.</i>, Vol. XIII, p. 121). Year <b>100 20 8</b>=128, in figures alone. Engraved by Āditya-Mañchin,<sup>8</sup> son of Vinayachandra.</p>
+<p>No. IV. Chicacole plates of Indravarman (<i>Ind. Ant.</i>, Vol. XIII, p. 121). Year <b>100 20 8</b>=128, in figures alone. Engraved by Āditya-Mañchin,<sup class="fn"><a href="#fn-2-8">8</a></sup> son of Vinayachandra.</p>
 <p>No. V. Purle plates of Indravarman, son of Dānārṇava (above, Vol. XIV, p. 362). Year <b>100 37</b>=137, in figures alone. Engraved by Khanđichandra, son of Āditya-Bhōgika.</p>
 <p>No. VI. Tekkali plates of Indravarman, son of Dānārṇava (the subjoined grant). Year <b>100 54</b>=154, in figures alone. Engraved by the same officer.</p>
 <p>No. VII. Chicacole plates of Dēvēndravarman, son of Guṇārṇava (above, Vol. III, p. 133). Year <b>100 83</b>=183, in words and figures. Engraved by Sarvachandra, son of Khanđichandra-Bhōgika.</p>
 <p>From the preceding list it follows that Nos. I—III were written by Vinayachandra. No. IV was engraved by his son Āditya, Nos. V and VI by Khanđichandra, son of Āditya, and No. VII by Sarvachandra, son of Khanđichandra. In this manner, the names of these menials become an important confirmation of the correctness of the dates of their masters. Moreover, No. V was written by the <i>Sarvādhikrīta Śāmbapurōpādhyāya</i>, son of the <i>Hastyadhyaksha Dharmachandra</i> (ll. 29-31). In lines 29-32 of the subjoined grant (No. VI of the above list), the latter is stated to have been written by the same officer.</p>
-<div class="notes"><p><sup>1</sup> <i>Indian Paleography</i>; translated by Fleet, p. 78.</p><p><sup>2</sup> Above, Vol. XIV, p. 362.</p><p><sup>3</sup> <i>Ind. Ant.</i>, Vol. XIII, p. 123. In column XV of the Table of Numerals in Bühler's <i>Indian Paleography</i>, the symbol '40' must be transferred to the line '3'.</p><p><sup>4</sup> <i>Ind. Ant.</i>, Vol. XIII, p. 121.</p><p><sup>5</sup> Above, Vol. III, p. 133.</p><p><sup>6</sup> Above, Vol. XIII, p. 215.</p><p><sup>7</sup> Cf. 10h in the Chicacole plates of Indravarman, <i>Ind. Ant.</i>, Vol. XIII, p. 123.</p><p><sup>8</sup> Like <i>Bhōgika</i> in Nos. V—VII, <i>Mañchin</i> is perhaps an equivalent of the Telugu <i>Bhōi</i>, 'a palānkeen-bearer; cf. above, Vol. XIII, p. 215, text line 30. Brown's <i>English-Telugu Dictionary</i> has the form <i>Bōyi</i></p></div></section>
+<div class="notes"><p><sup id="fn-2-1">1</sup> <i>Indian Paleography</i>; translated by Fleet, p. 78.</p><p><sup id="fn-2-2">2</sup> Above, Vol. XIV, p. 362.</p><p><sup id="fn-2-3">3</sup> <i>Ind. Ant.</i>, Vol. XIII, p. 123. In column XV of the Table of Numerals in Bühler's <i>Indian Paleography</i>, the symbol '40' must be transferred to the line '3'.</p><p><sup id="fn-2-4">4</sup> <i>Ind. Ant.</i>, Vol. XIII, p. 121.</p><p><sup id="fn-2-5">5</sup> Above, Vol. III, p. 133.</p><p><sup id="fn-2-6">6</sup> Above, Vol. XIII, p. 215.</p><p><sup id="fn-2-7">7</sup> Cf. 10h in the Chicacole plates of Indravarman, <i>Ind. Ant.</i>, Vol. XIII, p. 123.</p><p><sup id="fn-2-8">8</sup> Like <i>Bhōgika</i> in Nos. V—VII, <i>Mañchin</i> is perhaps an equivalent of the Telugu <i>Bhōi</i>, 'a palānkeen-bearer; cf. above, Vol. XIII, p. 215, text line 30. Brown's <i>English-Telugu Dictionary</i> has the form <i>Bōyi</i></p></div></section>
 <section class="pg pg-page" role="tabpanel" data-i="2"><div class="page">p. 309 · PDF 399</div>
 <p>The executor (ājñā) of this grant was the <i>Mahāmahattara</i> <b>Hariśarman</b> (l. 29 f.). The donee was a Brāhmaṇa named <b>Skandaśarman</b> (l. 17), who lived at <b>Garakhōnna</b> (l. 15). The royal donor was <b>Dānārpava's</b> son, the <b>Kaliṅga</b> king <b>Indravarman</b> of the <b>Gāṅga</b> family, who issued this edict from his residence of <b>Kaliṅganagara</b>. He seems to have made the grant for the spiritual merit of his mother <b>Achchipōti</b> (l. 14). The grant was made at an eclipse of the sun (l. 15) in the year <b>154</b> (of the Gāṅga era) (l. 30). It consisted of a field at the village of <b>Tuṅgannā</b> (l. 11) or <b>Tuṅgana</b> (l. 21) in the district of <b>Rūpyavatī</b> (l. 11).</p>
-<p>I am unable to identify either the village granted or its boundaries (ll. 18-22). But the <b>Rūpyavatī-vishaya</b> (l. 11) may be connected with the [Rū]pāvarttani-<i>vishaya</i><sup>1</sup> which contained the village of Sellāda. For, according to Mr. G. Ramadas,<sup>2</sup> this village belongs to the Tekkali Tāluk, and the subjoined grant is preserved at Tekkali.</p>
-<h3><h4>TEXT.<sup>3</sup></h4></h3>
+<p>I am unable to identify either the village granted or its boundaries (ll. 18-22). But the <b>Rūpyavatī-vishaya</b> (l. 11) may be connected with the [Rū]pāvarttani-<i>vishaya</i><sup class="fn"><a href="#fn-3-1">1</a></sup> which contained the village of Sellāda. For, according to Mr. G. Ramadas,<sup class="fn"><a href="#fn-3-2">2</a></sup> this village belongs to the Tekkali Tāluk, and the subjoined grant is preserved at Tekkali.</p>
+<h3><h4>TEXT.<sup class="fn"><a href="#fn-3-3">3</a></sup></h4></h3>
 <h3><h5><i>First Plate.</i></h5></h3>
-<div class="lines"><ol style="list-style-type: none;"><li>1 श्रीं<sup>4</sup> स्वस्ति [॥*] सर्वतुं सुखरमणीयाद्विजयश्रोत्रिवासात्कलिङ्गन-</li><li>2 गरवासक्रान्महेन्द्राचलामलशिखरप्रतिष्ठितस्य चराचरगु-</li><li>3 रोस्सकलभुवननिर्माणैकसूत्रधारस्य भगवतो गोकर्ण-<sup>5</sup></li><li>4 स्वामिनश्चरणकमलयुगलप्रणामाद्विगतकलिकल-</li><li>5 ङ्गो गाङ्गामलकुलतिलको नयविनयसम्पदामाधार[:] स्वासि-</li><li>6 धारापरिस्यन्दाधिगतसकलकलिङ्गाधिराज्य ×प्रविततचतुरुदधि-</li><li>7 सलिलतरङ्गमेखलावनितलामलयशाः<sup>6</sup> अनेकसमर-</li></ol></div>
+<div class="lines"><ol style="list-style-type: none;"><li>1 श्रीं<sup class="fn"><a href="#fn-3-4">4</a></sup> स्वस्ति [॥*] सर्वतुं सुखरमणीयाद्विजयश्रोत्रिवासात्कलिङ्गन-</li><li>2 गरवासक्रान्महेन्द्राचलामलशिखरप्रतिष्ठितस्य चराचरगु-</li><li>3 रोस्सकलभुवननिर्माणैकसूत्रधारस्य भगवतो गोकर्ण-<sup class="fn"><a href="#fn-3-5">5</a></sup></li><li>4 स्वामिनश्चरणकमलयुगलप्रणामाद्विगतकलिकल-</li><li>5 ङ्गो गाङ्गामलकुलतिलको नयविनयसम्पदामाधार[:] स्वासि-</li><li>6 धारापरिस्यन्दाधिगतसकलकलिङ्गाधिराज्य ×प्रविततचतुरुदधि-</li><li>7 सलिलतरङ्गमेखलावनितलामलयशाः<sup class="fn"><a href="#fn-3-6">6</a></sup> अनेकसमर-</li></ol></div>
 <h3><h5><i>Second Plate ; First Side.</i></h5></h3>
-<div class="lines"><ol style="list-style-type: none;"><li>8 संघट्टविजयजनितजयशब्दप्रतापोपनतसमस्तसाम-</li><li>9 न्तचूडामणिप्रभामस्त्ररोपुच्चरस्त्रितचरणे ×परममा-</li><li>10 हैश्चरो मातापितृपादानुष्यातश्चोमद्दानार्णवसनुश्चोमान्महा-</li><li>11 राजेन्द्रवर्मा रूप्यवतीविषये तुङ्गनायामे सर्वसमवेतात्कुटु-</li><li>12 म्बिनसमाज्ञापयत्यस्ति<sup>8</sup> विदितमस्तु वो यथास्मिन्यामे हल-</li><li>13 स्य भूमिब्रह्मदेयदण्डमानमिता सर्वकरभरै ×परिहृत्याच-</li><li>14 न्द्रार्कप्रतिष्ठाङ्गुत्वा अम्बश्चिपोटिभट्टारिकाया ×पुण्याभिवृ-</li><li>15 हये सूर्योपरागे सलिलपूर्वकं गरखोन्नवास्तव्याय शाण्डि-</li></ol></div>
+<div class="lines"><ol style="list-style-type: none;"><li>8 संघट्टविजयजनितजयशब्दप्रतापोपनतसमस्तसाम-</li><li>9 न्तचूडामणिप्रभामस्त्ररोपुच्चरस्त्रितचरणे ×परममा-</li><li>10 हैश्चरो मातापितृपादानुष्यातश्चोमद्दानार्णवसनुश्चोमान्महा-</li><li>11 राजेन्द्रवर्मा रूप्यवतीविषये तुङ्गनायामे सर्वसमवेतात्कुटु-</li><li>12 म्बिनसमाज्ञापयत्यस्ति<sup class="fn"><a href="#fn-3-8">8</a></sup> विदितमस्तु वो यथास्मिन्यामे हल-</li><li>13 स्य भूमिब्रह्मदेयदण्डमानमिता सर्वकरभरै ×परिहृत्याच-</li><li>14 न्द्रार्कप्रतिष्ठाङ्गुत्वा अम्बश्चिपोटिभट्टारिकाया ×पुण्याभिवृ-</li><li>15 हये सूर्योपरागे सलिलपूर्वकं गरखोन्नवास्तव्याय शाण्डि-</li></ol></div>
 <h3><h5><i>Second Plate ; Second Side.</i></h5></h3>
 <div class="lines"><ol style="list-style-type: none;"><li>16 त्वसगोत्राय वाजसनेयसम्ब्रह्मचारिणे वेदवेदाङ्गपारगा-</li><li>17 य स्कन्दशर्मणे सम्प्रत्ता [!*] तदेवं विदित्वास्य स्वकीयां भूमिं भुञ्जानस्य न</li></ol></div>
-<div class="notes"><p><sup>1</sup> <i>Madras Epigraphical Report</i> for 1919, p. 14, Appendix A, No. 6.</p><p><sup>2</sup> <i>Journal of the Mythic Society</i>, Vol. XIV, p. 271.</p><p><sup>3</sup> From ink-impressions supplied by Rao Bahadur Krishna Sastri.</p><p><sup>4</sup> Expressed by a symbol.</p><p><sup>5</sup> Read गोकर्ण.</p><p><sup>6</sup> Read °यशा.</p><p><sup>7</sup> Read °चरण ×प.</p><p><sup>8</sup> The word अस्ति is superfluous. Cf. <i>Ind. Ant.</i> Vol. XIII, p. 123, note 50; above, Vol. III, p. 132, note 4; Vol. XIII, p. 214, note 2.</p></div></section>
+<div class="notes"><p><sup id="fn-3-1">1</sup> <i>Madras Epigraphical Report</i> for 1919, p. 14, Appendix A, No. 6.</p><p><sup id="fn-3-2">2</sup> <i>Journal of the Mythic Society</i>, Vol. XIV, p. 271.</p><p><sup id="fn-3-3">3</sup> From ink-impressions supplied by Rao Bahadur Krishna Sastri.</p><p><sup id="fn-3-4">4</sup> Expressed by a symbol.</p><p><sup id="fn-3-5">5</sup> Read गोकर्ण.</p><p><sup id="fn-3-6">6</sup> Read °यशा.</p><p><sup id="fn-3-7">7</sup> Read °चरण ×प.</p><p><sup id="fn-3-8">8</sup> The word अस्ति is superfluous. Cf. <i>Ind. Ant.</i> Vol. XIII, p. 123, note 50; above, Vol. III, p. 132, note 4; Vol. XIII, p. 214, note 2.</p></div></section>
 <section class="pg pg-page" role="tabpanel" data-i="3"><div class="page">p. 810 · PDF 400</div>
-<div class="lines"><p>18 केनचिदाबाधङ्कार्थः [*] सीमालिङ्गान्यप्यस्य चेवस्य प्रदक्षिणक्र-<br/>19 मेण बोड्यानि [*] पूर्वेण विद्युद्गङ्गा [*] दक्षिणेण<sup>1</sup> पुरुषच्छा-<br/>20 यया पाषाणपङ्क्तिः [*] पश्चिमेन शर्करवाटकसीमान्ताः [*] उत्त-<br/>21 रेणापि सैव विद्युद्गङ्गा [*] तुङ्गनतडाकोदकमप्ये[त*]त्वेवं काराख-<br/>22 ण्डाः<sup>2</sup> ब्राह्मणपलान्याश्च<sup>3</sup> निर्गल्य प्रविशति यावत्पच्चते [*] भविष्य-<br/>23 तश्च राज्ञ×प्रज्ञापयति [*] धर्मक्रमविक्रमाणामन्यतम-</p></div>
+<div class="lines"><p>18 केनचिदाबाधङ्कार्थः [*] सीमालिङ्गान्यप्यस्य चेवस्य प्रदक्षिणक्र-<br/>19 मेण बोड्यानि [*] पूर्वेण विद्युद्गङ्गा [*] दक्षिणेण<sup class="fn"><a href="#fn-4-1">1</a></sup> पुरुषच्छा-<br/>20 यया पाषाणपङ्क्तिः [*] पश्चिमेन शर्करवाटकसीमान्ताः [*] उत्त-<br/>21 रेणापि सैव विद्युद्गङ्गा [*] तुङ्गनतडाकोदकमप्ये[त*]त्वेवं काराख-<br/>22 ण्डाः<sup class="fn"><a href="#fn-4-2">2</a></sup> ब्राह्मणपलान्याश्च<sup class="fn"><a href="#fn-4-3">3</a></sup> निर्गल्य प्रविशति यावत्पच्चते [*] भविष्य-<br/>23 तश्च राज्ञ×प्रज्ञापयति [*] धर्मक्रमविक्रमाणामन्यतम-</p></div>
 <p><i>Third Plate ; First Side.</i></p>
-<div class="lines"><p>24 योगादवाप्य महीमनुशासद्भिरयन्दानधर्मोनुपालनोयो व्या-<br/>25 सगीताश्वाव श्लोका भवन्ति [||*] बहुभिर्व्वसुधा दत्ता बहुभिश्चानुपालिता [*]<br/>26 यस्ययस्य यदा भूमिस्तस्यतस्य तदा फलं [|| १*] स्वदत्तां परदत्तां वा<br/>27 यत्नाद्रक्ष युधिष्ठिर [*] महीम्महीमतां श्रेष्ठ दानाच्छेयोनु-<br/>28 पालनम् [|| २*] ‘षष्ठिवर्षसद्द्वासाणि स्वर्गे तिष्ठति भूमिदः [*] आ-<br/>29 क्षेमा चानुमन्ता च तान्येव नरके वसेदिति [|| ३*] आज्ञा महामहत्त-<br/>30 रहरिशर्मा [*] प्रवर्द्धमानविजयराज्यसंवत्सरा[:*] १०० ५४ [*] लिखित-<br/>31 मिदं शासनं हस्त्यद्ध्यक्षधर्मचन्द्रसूनना सर्वाधिकृतेन श[*]स्वपुरो-<sup>5</sup></p></div>
+<div class="lines"><p>24 योगादवाप्य महीमनुशासद्भिरयन्दानधर्मोनुपालनोयो व्या-<br/>25 सगीताश्वाव श्लोका भवन्ति [||*] बहुभिर्व्वसुधा दत्ता बहुभिश्चानुपालिता [*]<br/>26 यस्ययस्य यदा भूमिस्तस्यतस्य तदा फलं [|| १*] स्वदत्तां परदत्तां वा<br/>27 यत्नाद्रक्ष युधिष्ठिर [*] महीम्महीमतां श्रेष्ठ दानाच्छेयोनु-<br/>28 पालनम् [|| २*] ‘षष्ठिवर्षसद्द्वासाणि स्वर्गे तिष्ठति भूमिदः [*] आ-<br/>29 क्षेमा चानुमन्ता च तान्येव नरके वसेदिति [|| ३*] आज्ञा महामहत्त-<br/>30 रहरिशर्मा [*] प्रवर्द्धमानविजयराज्यसंवत्सरा[:*] १०० ५४ [*] लिखित-<br/>31 मिदं शासनं हस्त्यद्ध्यक्षधर्मचन्द्रसूनना सर्वाधिकृतेन श[*]स्वपुरो-<sup class="fn"><a href="#fn-4-5">5</a></sup></p></div>
 <p><i>Third Plate ; Second Side.</i></p>
-<div class="lines"><p>32 पाद्ध्यायेनोत्कीर्णमादित्यभोगकसूनना<sup>6</sup> खण्डिचन्द्रेणेति<sup>7</sup> [||*]</p></div>
+<div class="lines"><p>32 पाद्ध्यायेनोत्कीर्णमादित्यभोगकसूनना<sup class="fn"><a href="#fn-4-6">6</a></sup> खण्डिचन्द्रेणेति<sup class="fn"><a href="#fn-4-7">7</a></sup> [||*]</p></div>
 <h3><h4>ABRIDGED TRANSLATION.</h4></h3>
 <p>(Lines 1-12.) From the residence of Kaliṅganagara (l. 1 f.), the worshipper of the god Gōkarṇa-svāmin (l. 3 f.) on the Mahēndra mountain (l. 2), the ornament of the spotless family of the Gāṅgas (l. 5), who has obtained the sovereignty over the whole of Kaliṅga (l. 6), the fervent devotee of Mahēsvara, who meditates on the feet of (his) mother and father, the son of the glorious Dānārṇava, the glorious <i>Mahārāja Indravarman</i>, commands (as follows) the ryots, accompanied by all (others), at the village of Tuṅgannā in the Rūpyavatī district (<i>vishaya</i>) (ll. 9-12).</p>
-<p>(Ll. 12-17.) “Be it known to you that (one) plough (<i>hala</i>) of land in this village, measured by the rod (used for) <i>brahmadēyas</i>, exempting (it) from the burden of all taxes, making (it) to last as long as the moon and the sun, has been granted, for the increase of the spiritual merit of (my) mother, the lady Achchipōti,<sup>8</sup> at an eclipse of the sun, with previous (libations of) water, to Skandaśarman, who resides at Garakhonna (and) belongs to the <i>gōtra</i> of the Śāṇḍilyas, a student of the Vājasanēya (<i>charaṇa</i>), who has mastered the Vēdas and Vēdāṅgas.”</p>
-<div class="notes"><p><sup>1</sup> Read दक्षिणेन.</p><p><sup>2</sup> Read ‘खण्ड्या.</p><p><sup>3</sup> Read perhaps ‘पालन्याश्च.</p><p><sup>4</sup> Read षष्टिं वर्षे.</p><p><sup>5</sup> See above, Vol. XIV, p. 362, text line 30.</p><p><sup>6</sup> Read ‘कीर्णमादित्यभोगिक’.</p><p><sup>7</sup> This line ends with a punctuation.</p><p><sup>8</sup> <i>amha</i> (—<i>Sānskrit ambā</i>) in Telugu means ‘a mother’, <i>achchi</i> in Kanarese the same, and <i>bōti</i> according to own’s <i>Telugu-English Dictionary</i> ‘a damsel’.</p></div>
+<p>(Ll. 12-17.) “Be it known to you that (one) plough (<i>hala</i>) of land in this village, measured by the rod (used for) <i>brahmadēyas</i>, exempting (it) from the burden of all taxes, making (it) to last as long as the moon and the sun, has been granted, for the increase of the spiritual merit of (my) mother, the lady Achchipōti,<sup class="fn"><a href="#fn-4-8">8</a></sup> at an eclipse of the sun, with previous (libations of) water, to Skandaśarman, who resides at Garakhonna (and) belongs to the <i>gōtra</i> of the Śāṇḍilyas, a student of the Vājasanēya (<i>charaṇa</i>), who has mastered the Vēdas and Vēdāṅgas.”</p>
+<div class="notes"><p><sup id="fn-4-1">1</sup> Read दक्षिणेन.</p><p><sup id="fn-4-2">2</sup> Read ‘खण्ड्या.</p><p><sup id="fn-4-3">3</sup> Read perhaps ‘पालन्याश्च.</p><p><sup id="fn-4-4">4</sup> Read षष्टिं वर्षे.</p><p><sup id="fn-4-5">5</sup> See above, Vol. XIV, p. 362, text line 30.</p><p><sup id="fn-4-6">6</sup> Read ‘कीर्णमादित्यभोगिक’.</p><p><sup id="fn-4-7">7</sup> This line ends with a punctuation.</p><p><sup id="fn-4-8">8</sup> <i>amha</i> (—<i>Sānskrit ambā</i>) in Telugu means ‘a mother’, <i>achchi</i> in Kanarese the same, and <i>bōti</i> according to own’s <i>Telugu-English Dictionary</i> ‘a damsel’.</p></div>
 <p class="plate-note"><a href="#plate-1">Plate 1</a> is bound after this page.</p>
 <p class="plate-note"><a href="#plate-2">Plate 2</a> is bound after this page.</p></section>
 <section class="pg pg-page" role="tabpanel" data-i="4"><div class="page">p. 811 · PDF 403</div>
-<p>(Ll. 18-22.) “And the marks of the boundaries of this field are to be known in the order from right to left. To the east, the <b>Vidyudgaṅgā</b>. To the south, a row of boulders for (a distance which equals) the shadow of a man.<sup>1</sup> To the west, the boundaries of <b>Śarkaravāṭaka</b>. And to the north, the same <b>Vidyudgaṅgā</b>. And the water of the tank (<i>taṭāka</i>) of <b>Tuṅgana</b>,<sup>2</sup> flowing out of the <i>Kārākhandī</i> and <i>Brāhmaṇapālanī</i> (canals ?), enters this field until (the crop) ripens.”</p>
+<p>(Ll. 18-22.) “And the marks of the boundaries of this field are to be known in the order from right to left. To the east, the <b>Vidyudgaṅgā</b>. To the south, a row of boulders for (a distance which equals) the shadow of a man.<sup class="fn"><a href="#fn-5-1">1</a></sup> To the west, the boundaries of <b>Śarkaravāṭaka</b>. And to the north, the same <b>Vidyudgaṅgā</b>. And the water of the tank (<i>taṭāka</i>) of <b>Tuṅgana</b>,<sup class="fn"><a href="#fn-5-2">2</a></sup> flowing out of the <i>Kārākhandī</i> and <i>Brāhmaṇapālanī</i> (canals ?), enters this field until (the crop) ripens.”</p>
 <p>[Ll. 24-28 contain three verses 'sung by <b>Vyāsa</b>'.]</p>
-<p>(Ll. 29-31.) “The executor (<i>ājñā</i>) (was) the <i>Mahāmahattara</i> <b>Hariśarman</b>. <b>100</b> (and) <b>54</b> years of the kingdom of increasing victory (had then passed). This edict (<i>śāsana</i>) (was) written by the <i>Sarvādhikrita</i> <b>Ś[ā]mbapurōpādhyāya</b>, the son of the <i>Hastyadhyaksha</i> <b>Dharmachandra</b>, (and) engraved by <b>Khaṇdichandra</b>, son of <b>Āditya-Bhōg[i]ka</b>.”</p></section>
+<p>(Ll. 29-31.) “The executor (<i>ājñā</i>) (was) the <i>Mahāmahattara</i> <b>Hariśarman</b>. <b>100</b> (and) <b>54</b> years of the kingdom of increasing victory (had then passed). This edict (<i>śāsana</i>) (was) written by the <i>Sarvādhikrita</i> <b>Ś[ā]mbapurōpādhyāya</b>, the son of the <i>Hastyadhyaksha</i> <b>Dharmachandra</b>, (and) engraved by <b>Khaṇdichandra</b>, son of <b>Āditya-Bhōg[i]ka</b>.”</p>
+<div class="notes"><p><sup id="fn-5-1">1</sup> Cf. above, Vol. III, p. 134, note 1, and Vol. XIV, p. 363, <i>passim</i>.</p><p><sup id="fn-5-2">2</sup> This name was spelled <i>Tuṅgannā</i> in line 11.</p></div></section>
 <section class="pg pg-plate" role="tabpanel" data-i="5"><div class="page" id="plate-1">Plate 1 · PDF page 401, bound after p. 810</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p401.webp" alt="Plate 1"></figure></section>
 <section class="pg pg-plate" role="tabpanel" data-i="6"><div class="page" id="plate-2">Plate 2 · PDF page 402, bound after p. 810</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p402.webp" alt="Plate 2"></figure></section></div></main>
 <footer>Generated 18 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
@@ -255,6 +359,28 @@ function toHash(){ if (location.hash){ var el=document.getElementById(location.h
   if (el){ showFor(el); el.scrollIntoView({block:'start'}); } } }
 window.addEventListener('hashchange', toHash);
 toHash();
+// footnote pop-ups: a mark opens its note beside it; a click elsewhere or Esc closes it
+var pop=null;
+function closePop(){ if (pop){ pop.remove(); pop=null; } }
+document.addEventListener('click', function(e){
+  var a=e.target.closest('sup.fn a');
+  if (!a){ if (pop && !pop.contains(e.target)) closePop(); return; }
+  e.preventDefault(); closePop();
+  var note=document.getElementById(a.getAttribute('href').slice(1)); if (!note) return;
+  // the note runs from its mark to the next note's mark (notes may share one paragraph)
+  var box=note.closest('.notes'), r0=document.createRange(); r0.setStartBefore(note);
+  var nxt=Array.prototype.filter.call(box.querySelectorAll('sup[id]'), function(x){
+    return note.compareDocumentPosition(x) & Node.DOCUMENT_POSITION_FOLLOWING; })[0];
+  if (nxt) r0.setEndBefore(nxt); else r0.setEndAfter(box.lastChild);
+  pop=document.createElement('div'); pop.className='fn-pop'; pop.appendChild(r0.cloneContents());
+  pop.querySelectorAll('[id]').forEach(function(x){ x.removeAttribute('id'); });
+  pop.querySelectorAll('hr').forEach(function(x){ x.remove(); });
+  document.body.appendChild(pop);
+  var r=a.getBoundingClientRect(), w=pop.offsetWidth;
+  pop.style.left=Math.max(8, Math.min(r.left+window.scrollX, window.scrollX+document.documentElement.clientWidth-w-8))+'px';
+  pop.style.top=(r.bottom+window.scrollY+4)+'px';
+});
+document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop(); });
 (function(){
   var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat');
   // what to mark: the search term, and the chosen category's matched words (CAT_TERMS)
