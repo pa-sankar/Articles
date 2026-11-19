@@ -69,6 +69,8 @@ h1.ah-title { font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem;
               line-height: 1.25; margin: .45rem 0 .3rem; }
 .ah-author { font-variant: small-caps; font-size: 1.05rem; }
 .ah-ref { color: var(--muted); font-size: .82rem; margin-top: .35rem; }
+.ext-icon { margin-left: .2em; vertical-align: -1px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 h2.printed-title { font-size: 1.1rem; line-height: 1.35; margin: .4rem 0; }
 .page { display:flex; gap:.5rem; align-items:center; color:var(--muted); font-size:.8rem; margin:1.6rem 0 .6rem; }
 .page::before, .page::after { content:""; flex:1; border-top:1px solid var(--line); }
@@ -133,8 +135,26 @@ table.idx { border-collapse: collapse; width: 100%; font-size: 14px; font-family
 .filter-dd-opt[hidden] { display: none; }
 .filter-dd-opt span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .filter-dd-opt .n { font-style: normal; font-size: .75rem; color: var(--text-dim); }
-.filter-dd-opt-unavailable { opacity: .4; cursor: not-allowed; }
-.filter-dd-opt-unavailable:hover { background: none; }
+.filter-dd-opt-gone { display: none !important; }
+button.go { padding: 8px 16px; font: inherit; font-weight: 600; border-radius: 7px; cursor: pointer;
+  border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+button:disabled, input:disabled, select:disabled { opacity: .5; cursor: default; }
+.partial { margin: .6rem 0; padding: .5rem .8rem; border-radius: 7px; font-size: .9rem; font-weight: 600;
+  background: #fff3cd; color: #6b4e00; border: 1px solid #e6c766; }
+.partial[hidden] { display: none; }
+.busy { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center;
+  justify-content: center; z-index: 100; }
+.busy[hidden] { display: none; }
+.busy-box { background: var(--surface); color: var(--text); border-radius: 10px; padding: 1.2rem 1.4rem;
+  width: min(26rem, 92vw); box-shadow: var(--shadow); }
+.busy-box h2 { font-size: 1.05rem; margin: 0 0 .6rem; }
+.busy-bar { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; margin: .6rem 0; }
+.busy-bar div { height: 100%; width: 0; background: var(--accent); transition: width .15s; }
+.busy-box .meta { min-height: 1.3em; }
+.busy-actions { display: flex; justify-content: flex-end; gap: .5rem; margin-top: .8rem; }
+.busy-actions button { padding: 6px 16px; font: inherit; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+.busy-actions button.ok { border-color: var(--accent); background: var(--accent); color: #fff; }
 .filter-dd-actions { display: flex; justify-content: flex-end; }
 .filter-dd-clear { padding: 4px 10px; cursor: pointer; background: none; border: 1px solid var(--border);
   border-radius: 6px; color: var(--text-dim); font-family: inherit; font-size: 12.5px; }
@@ -247,6 +267,12 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
   .card h3 { margin: 0 0 0.3rem 0; font-size: 1rem; }
   .card p { margin: 0; color: var(--text-dim); }
   .card.soon { opacity: 0.85; }
+  .card .src { margin-top: .4rem; font-size: .85rem; }
+  .src-list { padding-left: 1.2rem; } .src-list li { margin: .25rem 0; }
+  ol.how { padding-left: 1.4rem; } ol.how li { margin-bottom: 1rem; }
+  ol.how h3 { font-size: 1rem; margin: 0 0 .2rem; } ol.how p { margin: 0; }
+  .ext-icon { margin-left: .2em; vertical-align: -1px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .badge {
     display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.03em;
     text-transform: uppercase; color: var(--accent-copper-strong); background: var(--surface-2);
@@ -267,11 +293,12 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <div class="brand">Project InscriptionSearch: Articles</div>
 <div class="titlebar"><h1><a href="../../" class="home-link" title="Home"><img src="../../images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> Epigraphia Indica</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
 <main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a></p>
-<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. XVIII · No. 7<span class=ah-part> · Part II</span></div><h1 class="ah-title">Vappaghoshavata grant of Jayanaga</h1><div class="ah-author">L. D. Barnett</div><div class="ah-ref">Printed p. 60 · PDF pp. 80–88</div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 60</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 61</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 62</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 63</button><button type="button" class="tab t-page" role="tab" data-i="4">p. 64</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page" id="p-60">p. 60 · PDF 80</div>
+<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. XVIII · No. 7<span class=ah-part> · Part II</span></div><h1 class="ah-title">Vappaghoshavata grant of Jayanaga</h1><div class="ah-author">L. D. Barnett</div><div class="ah-ref">Printed p. 60 · PDF pp. 80–88 · <a href="https://archive.org/details/mpl.411.754.epi.18.944" class="src-link" target="_blank" rel="noopener" title="Opens archive.org in a new tab">Source scan<svg class="ext-icon" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" focusable="false"><path d="M9 2h5v5M14 2 7.5 8.5M12 9.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only"> (opens archive.org in a new tab)</span></a></div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 60</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 61</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 62</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 63</button><button type="button" class="tab t-page" role="tab" data-i="4">p. 64</button><span class=tsep></span><span class="tg">Plates</span><button type="button" class="tab t-plate" role="tab" data-i="5">Plate 1</button><button type="button" class="tab t-plate" role="tab" data-i="6">Plate 2</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page" id="p-60">p. 60 · PDF 80</div>
 <h2 class="printed-title"><b>No. 7.—VAPPAGHOSHAVATA GRANT OF JAYANAGA.</b></h2>
 <p class="byline">BY LIONEL D. BARNETT.</p>
 <p>The record belongs to the Museum of Perth, to the authorities of which I am indebted for permission to edit and reproduce it. It was presented to the Museum some time ago by Mr. J. Greig of Calcutta. The Museum possesses a paper signed by him and containing a copy of a</p>
-<div class="notes"><p><sup id="fn-1-1">1</sup> This curious expression is meant for <i>trayōvimśē varshē</i>.</p><p><sup id="fn-1-2">2</sup> The <i>th</i> of <i>pōthī</i> slightly differs in shape from the <i>th</i> of <i>Prithivi</i> and of <i>aṭvamēth(dh-āvabhri(bhṛi)tha</i>-in-re 4; but it cannot be <i>r</i>, as it has been read in the <i>Annual Report on Epigraphy</i> for 1919-20, p. 99 f. Cf. the <i>x</i> of <i>Eliyēru</i>- (l. 15) and <i>-ereya</i> (l. 24).</p><p>Instead of <i>-duhítā</i> (l. 20) and <i>-nāma</i> we would have expected <i>-duhitrā</i> and <i>-nāmnyā</i>. The next word is a superfluous repetition of <i>dattām</i> in line 18.</p><p><sup id="fn-1-3">3</sup> Read: <i>bhūmis</i>. <sup id="fn-1-5">5</sup> Read <i>-dattām vd</i>. <sup id="fn-1-6">6</sup> Read <i>harēta</i>.</p><p><sup id="fn-1-7">7</sup> Read <i>shashṭiṇ</i>. <sup id="fn-1-8">8</sup> Read perhaps <i>Tēn-āsya</i>.</p><p><sup id="fn-1-9">9</sup> Cf. above, Vol. V, p. 121, n. 6, and Vol. XII, p. 62, n. 2. In Vol. X, p. 48, text line 8, rcad कीट्व° for कीरडे.</p><p><sup id="fn-1-10">10</sup> As suggested in the <i>Annual Report on Epigraphy</i> for 1919-20, p. 100, <i>kada-ereya</i> is the same as <i>kaṭaka-rāja</i>, 'the chief of the royal camp,' for which see above, Vol. VII, p. 184 f., and Vol. IX, p. 49 f. According to Kittel'n <i>Kannada-English Dictionary</i>, 9, v. ere. 1, the Kanarese noun <i>ereya</i>. (= Tamil <i>iraivan</i>) is a synonym of the Sanskrit <i>rāja</i>.</p></div></section>
+<div class="notes"><p><sup id="fn-1-1">1</sup> This curious expression is meant for <i>trayōvimśē varshē</i>.</p><p><sup id="fn-1-2">2</sup> The <i>th</i> of <i>pōthī</i> slightly differs in shape from the <i>th</i> of <i>Prithivi</i> and of <i>aṭvamēth(dh-āvabhri(bhṛi)tha</i>-in-re 4; but it cannot be <i>r</i>, as it has been read in the <i>Annual Report on Epigraphy</i> for 1919-20, p. 99 f. Cf. the <i>x</i> of <i>Eliyēru</i>- (l. 15) and <i>-ereya</i> (l. 24).</p><p>Instead of <i>-duhítā</i> (l. 20) and <i>-nāma</i> we would have expected <i>-duhitrā</i> and <i>-nāmnyā</i>. The next word is a superfluous repetition of <i>dattām</i> in line 18.</p><p><sup id="fn-1-3">3</sup> Read: <i>bhūmis</i>. <sup id="fn-1-5">5</sup> Read <i>-dattām vd</i>. <sup id="fn-1-6">6</sup> Read <i>harēta</i>.</p><p><sup id="fn-1-7">7</sup> Read <i>shashṭiṇ</i>. <sup id="fn-1-8">8</sup> Read perhaps <i>Tēn-āsya</i>.</p><p><sup id="fn-1-9">9</sup> Cf. above, Vol. V, p. 121, n. 6, and Vol. XII, p. 62, n. 2. In Vol. X, p. 48, text line 8, rcad कीट्व° for कीरडे.</p><p><sup id="fn-1-10">10</sup> As suggested in the <i>Annual Report on Epigraphy</i> for 1919-20, p. 100, <i>kada-ereya</i> is the same as <i>kaṭaka-rāja</i>, 'the chief of the royal camp,' for which see above, Vol. VII, p. 184 f., and Vol. IX, p. 49 f. According to Kittel'n <i>Kannada-English Dictionary</i>, 9, v. ere. 1, the Kanarese noun <i>ereya</i>. (= Tamil <i>iraivan</i>) is a synonym of the Sanskrit <i>rāja</i>.</p></div>
+<p class="plate-note"><a href="#plate-1">Plate 1</a> is bound after this page.</p></section>
 <section class="pg pg-page" role="tabpanel" data-i="1"><div class="page" id="p-61">p. 61 · PDF 83</div>
 <p>somewhat unsuccessful attempt to translate and annotate the plate, which bears the subscription: "R. Mittro, Asiatic Society, 6th December 1854," and to which Mr. Greig has prefixed the note "Translation of a Copper Plate found in the Indigo Estate at Mallia<sup class="fn"><a href="#fn-2-1">1</a></sup> by one of Mr. James Smith's villagers, and presented to me by that gentleman in January 1855."</p>
 <p>It consists of a single rectangular plate of copper, slightly irregular in shape, about <math>7\frac{7}{8}</math> in. in width and <math>5\frac{1}{2}</math> in. in height, with a circular seal about 3 in. in diameter soldered on the proper left side. The seal, which is very much worn, shews traces of an upright female figure, apparently LakshmI, with either one or two elephants performing the <i>kumbhābhishēka</i> over her, while in the exergue below there are the remains of a now illegible inscription. The plate itself, which is inscribed on one side only, is in very good preservation, except for a crack running down it, which has been repaired by a small rivet. Two or three letters at the end of l. 14 and a whole line of writing immediately following the latter have been deliberately erased.—The characters, which have been picked out comparatively recently with white paint, are of a well-formed upright Gupta type, apparently of the latter half of the sixth century, and average in height a little less than <math>\frac{1}{4}</math> in. In most respects they are archaic enough to justify an ascription to the fifth century; but the forms of the initial <i>i</i> (<i>iti</i>, l. 11) and the bipartite <i>y</i> (<i>passim</i>), make the latter date more probable. The conjunct nasais and consonants are used in preference to the simple consonants with preceding <i>anusvāra</i> (e.g. <i>-sambhōga-</i>, l. 3). <i>V</i> and <i>b</i> are confused (e.g. <i>-sāmbatsarē</i>, l. 2, <i>Audumvarī[ka-]</i>, l. 3, but <i>sa-vrahmachāriṇē</i>, l. 5, <i>-vrāhmaṇānām</i>, l. 8, etc.). Internal <i>ā</i> is denoted either by a doubly waving line curving upwards towards the right from the top of the shaft (cf. the 8th and 18th syllables of l. 1), or by a short upward tick at the right corner of the top (cf. the 14th syllable of l. 1), or by a downward loop from the right corner of the top (cf. the 15th syllable of l. 2). Internal <i>ē</i> is represented usually by a waving line similar to the first type of <i>ā</i> but in the opposite direction (e.g. the 18th syllable of l. 2), rarely by a perpendicular tick on the left corner of the top (<i>-svāminē</i>, l. 5) Internal <i>ō</i> is made with the waving <i>ē</i> combined with either the ticked or the downward, looped <i>ā</i>. The curve of internal <i>ī</i> is sometimes single (e.g. <i>śrī</i>, l. 2, <i>-sīmā</i>, l. 9), sometimes double (e.g. <i>grāmīṇa-</i>, l. 14). The angularity of the base of the <i>th</i> (<i>dāsyath=ēti</i>, l. 7) is note worthy; so also is the combination of the syllable <i>ti</i> with a following <i>daṇḍa</i>, in which the curving line denoting <i>i</i> is carried around the <i>t</i> and upwards to the right of it, terminating there in a small horizontal tick on a level with the top of the <i>t</i> (see ll. 4, 7, 13), a peculiarity which seems to have been affected by Eastern scribes, as we find it again even as late as the Tālchēr plates of Gayāḍa-Tuṅgadēva (see Nagendranath Vasu's <i>Archæol. Survey of Mayurabhanja</i>, plate to face p. 154. and <i>J. As. Soc. Beng.</i>, Vol. XII, 1916, No. 6, pl 4, last line).—The cursive <i>rya</i> in <i>Sūrya-</i> (l. 3) is also significant. The language is Sanskrit prose, becoming in parts loose and almost dialectal. As already remarked <i>b</i> and <i>v</i> are confused. Lexically we may note the words <i>ākshayaṇl-dharman</i> (l. 6); <i>gaṅginikā</i> (l. 9 bis), the modern <i>gāṅginā</i>, which possibly may be used here as a common noun meaning "āry river-bed" (see above, Vol. XII, p. 66, n. 3, and p. 78, n. 5), but more probably is the name of a particular river (see below); and <i>tāmra-paṭṭa</i> (ll. 8, 11, 13, bis), which here, instead of its primary meaning of "copper-plate" (as above, Vol. VII, pp. 87, 95, 98, Vol. VIII, pp. 152, 157-59), signifies an estate granted under a warrant engraved on a copper-plate.<sup class="fn"><a href="#fn-2-2">2</a></sup></p>
@@ -281,7 +308,8 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <p>of king Jayanāga, who was at the time residing in Karṇasuvarṇaka, and who, to judge from his title of <i>Mahārājādhirāju</i>, must have been a ruler of considerable importance. The document was drawn up in accordance with Narāyaṇabhadra's instructions by his commissioner (<i>vyavahārin</i>) Sūryasēna. On the principles of this administrative hierarchy the student may profitably compare the observations of Mr. Radhagovinda Basak in his paper on the Dāmōdarpur Plates (above, Vol. XV, pp. 116 ff).</p>
 <p>Of Jayanāga we know nothing from other sources. But Mr. John Allan has suggested to me that he may be the same as the king whose coins, described in his <i>Catalogue of the Coins of the Gupta Dynasties</i> (<i>Catalogue of the Indian Coins in the British Museum</i>), pp. lxi., civ., cvi., cxxiii, 150-51, and pl. xxiv, bear on the obverse the abbreviated name <i>Jaya</i> and on the reverse a sented Lakshmī with an elephant sprinkling her. This connection seems highly probable. In any case, the present document furnishes an important fact concerning the early history of Karṇasuvarṇa, which, taken in connection with the Nidhanpur grant of Bhāskaravarman (above, Vol. XII, p. 65), supplies material for interesting speculation.</p>
 <p>The names of places mentioned, besides Karṇasuvarṇaka (l. 1), are the Audumvarikavishaya (l. 3); the villages of Vappaghōshavāṭa (l. 6), Kutkuṭa-grāma (ll. 8, 14), and Amalapautika-grāma (l. 10); Gaṅginikā (l. 9, bis), literally "river," which here is perhaps used as a proper name; the Sūrshapa-yānaka or "mustard-channel" (l. 10); and the pool of Vakhata-Sūmālikā (ll. 13-14). On the geographical position of Karṇasuvarṇaka, the ancient capital of the kingdom of the same name, see T. Watters, <i>On Yuan Chwang</i>, Vol. II, pp. 191-93, and H. Beveridge, <i>The Site of Karṇa Suvarṇa</i>, in <i>J. A. S. B.</i>, 1893, pp. 315 ff., the latter of whom identifies it with Rāṅgāmāṭi, near Murshidābād, which is said to have been formerly known as Kāṇśōṇā or Kāṇśōnā, a name which phonetically corresponds perfectly to <i>Karṇasuvarṇaka</i>, through an intermediate Prakrit form <i>Kaṇṇasoṇṇaa</i>.<sup class="fn"><a href="#fn-3-1">1</a></sup> On the other names I am indebted to Mr. S. K. Chatterji, M. A., D. Lit., for the following observations. The Gaṅginikā seems to be the river Jalaṅgi, a branch of the Ganges or Padmā which unites with the Bhāgirathi near Nadiyā, the classical Navadvipa. The Bengali poet Bharatachandra Raya (c. 1740 A.D.) in his <i>Annadā-maṅgala</i> (pp. 136 and 151 of Muktārāma Vidyāvāgiśa's edition, Calcutta, 1857) speaks of the ancestors of the Rājās of Nadiā as living in the <i>parganah</i> of Bāgwān (Bāgoān) at a village called Ānduliyā: "Gaṅgā herself <i>i.e.</i> the Bhāgirathi to the west, to the east the Gāṅgini; there is the village of Baṭagāchi; opposite to it, on the other side of the river, is Ānduliyā." In the Survey map of the Nadiā District Bāgwān is a village in the Meherpur sub-division, and close to it, on the two sides of the Jalaṅgi, are the villages of Baṭagāchi ("Burgachee") and Ānduliyā ("Andooleea"), as stated by Bharatachandra. It seems likely that this river Jalaṅgi is the Gaṅginikā of the present record. North of Bāgwān, at some distance from the Jalaṅgi, is an important village named Gāṅgani, which may possibly preserve the name of the Gaṅginikā. Rivers in the plains often change their courses. None of the other place-names can be located. But it may be noted that Vappaghōshavāṭa (<i>vappa</i> is the Bengali <i>bāp</i>, "father," and <i>ghōsha-vāṭa</i> = "dwelling of herdsmen") would be a likely village-name in Southern Murshidābād and Nadiā, where there was much cattle-breeding. A Ghōshpādā exists in the south, on the Bhāgirathi, and is well known as the home of the founder of the Kartābhajā sect; cf. Gōās (<i>i.e.</i> Gō-vāsa or Gōpa-vāsa) in Nadiā and Murshidābād, Gōāṭi (<i>i.e.</i> Gōpa-vāṭikā), a suburb of Krishnagar, near Nadiā town, etc. An extended stem <i>Vakhaṭaka</i> is apparently the origin of the Middle Bengali place-name <i>Bahadā</i> or <i>Baharā</i>, in Modern Bengali <i>Bay(a)dā</i> or <i>Bay(a)rā</i>, which is found in the names of e.g. Jōt-Bayṛā,<sup class="fn"><a href="#fn-3-2">2</a></sup> opposite Kumārkhāli</p>
-<div class="notes"><p><sup id="fn-3-1">1</sup> This identification is not accepted by Mr. Manmohan Chakravartti, <i>J. A. S. B.</i>, 1903, p. 280 f. But he admits that in quite recont times a suburb of Murshidābād was named Kurṇasuvarṇa (see v. 2 of the preface to Rādhākānta'e <i>Śatṭa-kalpa-druma</i>).</p><p><sup id="fn-3-2">2</sup> <i>Jōt</i> is from <i>yōktra</i>, "yoke of oxen," hence a measure of land; but the name is sometimes falsely sanskritised into the pretentious <i>Yadu-Bayarā</i>. —S. K. C.</p></div></section>
+<div class="notes"><p><sup id="fn-3-1">1</sup> This identification is not accepted by Mr. Manmohan Chakravartti, <i>J. A. S. B.</i>, 1903, p. 280 f. But he admits that in quite recont times a suburb of Murshidābād was named Kurṇasuvarṇa (see v. 2 of the preface to Rādhākānta'e <i>Śatṭa-kalpa-druma</i>).</p><p><sup id="fn-3-2">2</sup> <i>Jōt</i> is from <i>yōktra</i>, "yoke of oxen," hence a measure of land; but the name is sometimes falsely sanskritised into the pretentious <i>Yadu-Bayarā</i>. —S. K. C.</p></div>
+<p class="plate-note"><a href="#plate-2">Plate 2</a> is bound after this page.</p></section>
 <section class="pg pg-page" role="tabpanel" data-i="3"><div class="page" id="p-63">p. 63 · PDF 87</div>
 <p>in the Kushtiyā sub-division of Nadiā ; Bayrā on the Kabadāk or Kabatākh, in the Bongong (Vanagrāma) sub-division of Nadiā ; Hāṭ-Bayrā (i.e. Haṭṭa-Vakhaṭaka), and elsewhere.</p>
 <h3 id="text">TEXT.<sup class="fn"><a href="#fn-4-1">1</a></sup></h3>
@@ -290,7 +318,9 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <p>Hail ! In the year of the rise . . . of the Great Emperor, the supreme worshipper of the Lord, the fortunate king <b>Jayanāga</b>, when he is resident at <b>Karṇasuvarṇaka</b>, at the time that the Baron <b>Nārāyaṇabhadra</b>, who meditates upon his feet, is in the enjoyment of the <b>Audumbarika province</b>, his commissioner the Mahāpratihāra <b>Sūryasēna</b> acting as administrator : the command given to him by the noble Baron is as follows : “The village of <b>Vappaghōshavāṭa</b> has been given by me to <b>Bhatṭa Brahmavira Svāmin</b>, a member of the Kāśyapa <i>gōtra</i> and colleague of the Chhāndōgas, for the increāse of the merit of my mother, my father, and myself, as a perpetual endowment<sup class="fn"><a href="#fn-4-3">3</a></sup> : you are to give (a <i>deed engraved on</i>) a copper-plate adorned with the seal of the province and specifying the boundaries.” The signs of the boundary therein are : on the west, the boundary of the grant belonging to the Brāhmaṇs of Kutkuṭa-grāma ; on the north, the river-bed ; on the east, the same river-bed ; issuing thence and running along the western boundary of Āmalapautika-grāma, (the boundary) is the Sarshapa-yānaka ; it is limited by</p>
 <div class="notes"><p><sup id="fn-4-1">1</sup> From the plate.</p><p><sup id="fn-4-2">2</sup> Read <i>saṅvatsarē</i>.</p><p><sup id="fn-4-3">3</sup> Apparently <i>ākshayaṇi-dharman</i> denotes the same form of tenure as <i>akshaya-nīvī</i> cr <i>nīvī</i> - <i>dharma</i>, on which see Mr. Radhagovinda Basak's note above, Vol. XV, p. 181, n. 8.</p></div></section>
 <section class="pg pg-page" role="tabpanel" data-i="4"><div class="page" id="p-64">p. 64 · PDF 88</div>
-<p>the same [boundary], as far as <b>Bhatṭa Unmīlana-svāmin's</b> grant; from the south thereof, (the boundary), turning along further by the same boundary to the north, proceeds as far as the boundary of <b>Bhāraṇi-svāmin's</b> grant, thence in a straight line enters the pond of <b>Vakhatṭa-Sūmālikā</b> on the boundary of <b>Bhatṭa Unmīlana-svāmin's</b> grant, and goes as far as the same boundary of the <b>Brāhmaṇs</b> of <b>Kutkuṭa-grāma</b>.</p></section></div></main>
+<p>the same [boundary], as far as <b>Bhatṭa Unmīlana-svāmin's</b> grant; from the south thereof, (the boundary), turning along further by the same boundary to the north, proceeds as far as the boundary of <b>Bhāraṇi-svāmin's</b> grant, thence in a straight line enters the pond of <b>Vakhatṭa-Sūmālikā</b> on the boundary of <b>Bhatṭa Unmīlana-svāmin's</b> grant, and goes as far as the same boundary of the <b>Brāhmaṇs</b> of <b>Kutkuṭa-grāma</b>.</p></section>
+<section class="pg pg-plate" role="tabpanel" data-i="5"><div class="page" id="plate-1">Plate 1 · PDF page 81, bound after p. 60</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p81.webp" alt="Plate 1"></figure></section>
+<section class="pg pg-plate" role="tabpanel" data-i="6"><div class="page" id="plate-2">Plate 2 · PDF page 86, bound after p. 62</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p86.webp" alt="Plate 2"></figure></section></div></main>
 <footer>Generated 19 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
 Feedback: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">this form</a>.</footer>
 </div>
@@ -324,6 +354,48 @@ function markHtml(text, term, mode){ // escaped text with <mark>s
   r.forEach(function(x){ out+=e(text.slice(at,x[0]))+'<mark>'+e(text.slice(x[0],x[1]))+'</mark>'; at=x[1]; });
   return out+e(text.slice(at));
 }
+
+var SEARCH_BASE=window.SEARCH_BASE||'search/', SEARCH_TEXT={};
+var SEARCH_FROM_DISK=location.protocol==='file:';
+var DISK_NOTE='The full-text search needs the page opened through a local server '
+  +'(python -m http.server in this folder, then http://localhost:8000/), not from disk.';
+function loadOne(ed){   // an edition's text: from the cache, else fetched (a missing file: none)
+  if (SEARCH_TEXT[ed]) return Promise.resolve(SEARCH_TEXT[ed]);
+  return fetch(SEARCH_BASE+ed+'.json').then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(recs){ SEARCH_TEXT[ed]=recs; return recs; }, function(){ SEARCH_TEXT[ed]=[]; return []; });
+}
+// ---- the search pop-up (user, 2026-11-19), shared by the indexes and Advanced Search: the
+// search starts on the button or Enter only, the controls are off while it runs, the pop-up
+// shows progress and Cancel, then the count with OK; a cancelled search keeps what it found
+var BUSY=null;
+function busyEls(){
+  if (BUSY) return BUSY;
+  var b=document.getElementById('busy');
+  BUSY={box:b, title:b.querySelector('h2'), msg:b.querySelector('.meta'), bar:b.querySelector('.busy-bar div'),
+        cancel:b.querySelector('.cancel'), ok:b.querySelector('.ok'), job:null, onOk:null};
+  BUSY.cancel.addEventListener('click', function(){ if (BUSY.job){ BUSY.job.cancelled=true; BUSY.msg.textContent='Stopping…'; } });
+  BUSY.ok.addEventListener('click', function(){ BUSY.box.hidden=true; if (BUSY.onOk) BUSY.onOk(); });
+  return BUSY;
+}
+function busyOpen(title){ var b=busyEls(); b.job={cancelled:false}; b.title.textContent=title; b.msg.textContent='';
+  b.bar.style.width='0'; b.cancel.hidden=false; b.ok.hidden=true; b.box.hidden=false; return b.job; }
+function busyProgress(frac, msg){ var b=busyEls(); b.bar.style.width=Math.round(Math.min(1,frac)*100)+'%'; b.msg.textContent=msg; }
+function busyDone(msg, onOk){ var b=busyEls(); b.job=null; b.title.textContent='Search finished'; b.bar.style.width='100%';
+  b.msg.textContent=msg; b.cancel.hidden=true; b.ok.hidden=false; b.onOk=onOk||null; b.ok.focus(); }
+function busyClose(){ var b=busyEls(); b.job=null; b.box.hidden=true; }
+function setControls(els, on){ els.forEach(function(el){ if (el) el.disabled=!on; }); }
+// the editions' text one at a time, with progress; cb(how many loaded, cancelled?)
+function loadWithProgress(eds, label, job, cb){
+  var k=0;
+  (function next(){
+    if (job.cancelled || k>=eds.length) return cb(k, job.cancelled);
+    busyProgress(k/eds.length, 'Loading '+label(eds[k])+' ('+(k+1)+' of '+eds.length+')…');
+    loadOne(eds[k]).then(function(){ k++; setTimeout(next, 0); });
+  })();
+}
+// Enter in the box runs the search, as the button does
+function searchOnEnter(box, run){ box.addEventListener('keydown', function(e){
+  if (e.key==='Enter'){ e.preventDefault(); if (!busyEls().job) run(); } }); }
 window.CAT_TERMS={};
 // page tabs: one page shown at a time; #plate-N / #fig-N and search matches open their tab
 var panels=Array.prototype.slice.call(document.querySelectorAll('section.pg'));
@@ -334,10 +406,12 @@ function showTab(i){
   tabBtns.forEach(function(b,k){ b.setAttribute('aria-selected', k===i ? 'true' : 'false'); });
 }
 function showFor(el){ var p=el && el.closest('section.pg'); if (p) showTab(+p.dataset.i); }
-tabBtns.forEach(function(b){ b.addEventListener('click', function(){ showTab(+b.dataset.i); window.scrollTo(0,0); }); });
+var onTab=null; // set by the search marks below: the hits bar follows the page the reader opens
+tabBtns.forEach(function(b){ b.addEventListener('click', function(){ showTab(+b.dataset.i); window.scrollTo(0,0);
+  if (onTab) onTab(+b.dataset.i); }); });
 showTab(0);
 function toHash(){ if (location.hash){ var el=document.getElementById(location.hash.slice(1));
-  if (el){ showFor(el); el.scrollIntoView({block:'start'}); } } }
+  if (el){ showFor(el); el.scrollIntoView({block:'start'}); var p=el.closest('section.pg'); if (p && onTab) onTab(+p.dataset.i); } } }
 window.addEventListener('hashchange', toHash);
 toHash();
 // footnote pop-ups: a mark opens its note beside it; a click elsewhere or Esc closes it
@@ -363,7 +437,8 @@ document.addEventListener('click', function(e){
 });
 document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop(); });
 (function(){
-  var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat');
+  var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat'),
+      titleOnly=ps.get('in')==='title';
   // what to mark: the search term, and the chosen category's matched words (CAT_TERMS)
   var finds=[]; if (term) finds.push([term,mode]);
   if (cat && window.CAT_TERMS && CAT_TERMS[cat]) CAT_TERMS[cat].forEach(function(t){ finds.push([t,'embedded']); });
@@ -372,7 +447,8 @@ document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop
     r.sort(function(a,b){return a[0]-b[0];}); var out=[];
     r.forEach(function(x){ if (out.length && x[0]<out[out.length-1][1]) { out[out.length-1][1]=Math.max(out[out.length-1][1],x[1]); } else out.push(x.slice()); });
     return out; }
-  var main=document.querySelector('main'), walker=document.createTreeWalker(main, NodeFilter.SHOW_TEXT), nodes=[], n;
+  // a title-only search marks the title alone, as that is all it searched
+  var main=document.querySelector('main'), root=(titleOnly && main.querySelector('.ah-title')) || main, walker=document.createTreeWalker(root, NodeFilter.SHOW_TEXT), nodes=[], n;
   while ((n=walker.nextNode())) if (!n.parentNode.closest('.hits')) nodes.push(n);
   var marks=[];
   nodes.forEach(function(node){
@@ -386,11 +462,21 @@ document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop
   var i=0, label=document.createElement('span');
   // every tab holding a match gets the yellow has-match style (as in the inscription popups)
   marks.forEach(function(m){ var p=m.closest('section.pg'); if (p && tabBtns[+p.dataset.i]) tabBtns[+p.dataset.i].classList.add('has-match'); });
-  function go(k){ if (!marks.length) return; marks[i].classList.remove('on'); i=(k+marks.length)%marks.length;
-    showFor(marks[i]); marks[i].classList.add('on'); marks[i].scrollIntoView({block:'center'});
-    label.textContent=' '+(i+1)+' of '+marks.length+' ';}
+  // between: the reader opened a page with no match; i is then the first match after it
+  var between=false, tabOf=function(m){ var p=m.closest('section.pg'); return p ? +p.dataset.i : -1; };
+  function setOn(k){ marks[i].classList.remove('on'); i=k; between=false; marks[i].classList.add('on');
+    label.textContent=' '+(i+1)+' of '+marks.length+' '; }
+  function go(k){ if (!marks.length) return; setOn((k+marks.length)%marks.length);
+    showFor(marks[i]); marks[i].scrollIntoView({block:'center'}); }
   var prev=document.createElement('button'); prev.textContent='◀ previous'; prev.onclick=function(){go(i-1);};
-  var next=document.createElement('button'); next.textContent='next ▶'; next.onclick=function(){go(i+1);};
+  var next=document.createElement('button'); next.textContent='next ▶'; next.onclick=function(){go(between?i:i+1);};
+  onTab=function(t){ if (!marks.length) return;
+    var j=-1; marks.some(function(m,k){ if (tabOf(m)===t){ j=k; return true; } return false; });
+    if (j>=0) return setOn(j);   // the page's first match; the reader is at its top, so no scroll
+    marks[i].classList.remove('on');
+    var after=-1; marks.some(function(m,k){ if (tabOf(m)>t){ after=k; return true; } return false; });
+    i=after>=0 ? after : 0; between=true;
+    label.textContent=' – of '+marks.length+' (none on this page) '; };
   bar.appendChild(document.createTextNode((term?'"'+term+'"':'')+(term&&cat?' + ':'')+(cat?'category '+cat:'')+': ')); bar.appendChild(prev); bar.appendChild(label); bar.appendChild(next);
   main.insertBefore(bar, main.firstChild);
   if (marks.length) go(0); else label.textContent=' no match on this page ';

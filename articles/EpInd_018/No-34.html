@@ -69,6 +69,8 @@ h1.ah-title { font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem;
               line-height: 1.25; margin: .45rem 0 .3rem; }
 .ah-author { font-variant: small-caps; font-size: 1.05rem; }
 .ah-ref { color: var(--muted); font-size: .82rem; margin-top: .35rem; }
+.ext-icon { margin-left: .2em; vertical-align: -1px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 h2.printed-title { font-size: 1.1rem; line-height: 1.35; margin: .4rem 0; }
 .page { display:flex; gap:.5rem; align-items:center; color:var(--muted); font-size:.8rem; margin:1.6rem 0 .6rem; }
 .page::before, .page::after { content:""; flex:1; border-top:1px solid var(--line); }
@@ -133,8 +135,26 @@ table.idx { border-collapse: collapse; width: 100%; font-size: 14px; font-family
 .filter-dd-opt[hidden] { display: none; }
 .filter-dd-opt span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .filter-dd-opt .n { font-style: normal; font-size: .75rem; color: var(--text-dim); }
-.filter-dd-opt-unavailable { opacity: .4; cursor: not-allowed; }
-.filter-dd-opt-unavailable:hover { background: none; }
+.filter-dd-opt-gone { display: none !important; }
+button.go { padding: 8px 16px; font: inherit; font-weight: 600; border-radius: 7px; cursor: pointer;
+  border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+button:disabled, input:disabled, select:disabled { opacity: .5; cursor: default; }
+.partial { margin: .6rem 0; padding: .5rem .8rem; border-radius: 7px; font-size: .9rem; font-weight: 600;
+  background: #fff3cd; color: #6b4e00; border: 1px solid #e6c766; }
+.partial[hidden] { display: none; }
+.busy { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center;
+  justify-content: center; z-index: 100; }
+.busy[hidden] { display: none; }
+.busy-box { background: var(--surface); color: var(--text); border-radius: 10px; padding: 1.2rem 1.4rem;
+  width: min(26rem, 92vw); box-shadow: var(--shadow); }
+.busy-box h2 { font-size: 1.05rem; margin: 0 0 .6rem; }
+.busy-bar { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; margin: .6rem 0; }
+.busy-bar div { height: 100%; width: 0; background: var(--accent); transition: width .15s; }
+.busy-box .meta { min-height: 1.3em; }
+.busy-actions { display: flex; justify-content: flex-end; gap: .5rem; margin-top: .8rem; }
+.busy-actions button { padding: 6px 16px; font: inherit; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+.busy-actions button.ok { border-color: var(--accent); background: var(--accent); color: #fff; }
 .filter-dd-actions { display: flex; justify-content: flex-end; }
 .filter-dd-clear { padding: 4px 10px; cursor: pointer; background: none; border: 1px solid var(--border);
   border-radius: 6px; color: var(--text-dim); font-family: inherit; font-size: 12.5px; }
@@ -247,6 +267,12 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
   .card h3 { margin: 0 0 0.3rem 0; font-size: 1rem; }
   .card p { margin: 0; color: var(--text-dim); }
   .card.soon { opacity: 0.85; }
+  .card .src { margin-top: .4rem; font-size: .85rem; }
+  .src-list { padding-left: 1.2rem; } .src-list li { margin: .25rem 0; }
+  ol.how { padding-left: 1.4rem; } ol.how li { margin-bottom: 1rem; }
+  ol.how h3 { font-size: 1rem; margin: 0 0 .2rem; } ol.how p { margin: 0; }
+  .ext-icon { margin-left: .2em; vertical-align: -1px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .badge {
     display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.03em;
     text-transform: uppercase; color: var(--accent-copper-strong); background: var(--surface-2);
@@ -267,11 +293,13 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <div class="brand">Project InscriptionSearch: Articles</div>
 <div class="titlebar"><h1><a href="../../" class="home-link" title="Home"><img src="../../images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> Epigraphia Indica</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
 <main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a></p>
-<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. XVIII · No. 34<span class=ah-part> · Part VII</span></div><h1 class="ah-title">The Kodavali rock inscription of Chandasati : the second year of reign</h1><div class="ah-author">H. Krishna Sastri</div><div class="ah-ref">Printed p. 316 · PDF pp. 410–418</div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 316</button><button type="button" class="tab t-page" role="tab" data-i="1" title="page number not read from the scan; counted from the pages around it">p. 317</button><button type="button" class="tab t-page" role="tab" data-i="2" title="page number not read from the scan; counted from the pages around it">p. 318</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 319</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page" id="p-316">p. 316 · PDF 410</div>
+<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. XVIII · No. 34<span class=ah-part> · Part VII</span></div><h1 class="ah-title">The Kodavali rock inscription of Chandasati : the second year of reign</h1><div class="ah-author">H. Krishna Sastri</div><div class="ah-ref">Printed p. 316 · PDF pp. 410–418 · <a href="https://archive.org/details/mpl.411.754.epi.18.944" class="src-link" target="_blank" rel="noopener" title="Opens archive.org in a new tab">Source scan<svg class="ext-icon" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" focusable="false"><path d="M9 2h5v5M14 2 7.5 8.5M12 9.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only"> (opens archive.org in a new tab)</span></a></div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 316</button><button type="button" class="tab t-page" role="tab" data-i="1" title="page number not read from the scan; counted from the pages around it">p. 317</button><button type="button" class="tab t-page" role="tab" data-i="2" title="page number not read from the scan; counted from the pages around it">p. 318</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 319</button><span class=tsep></span><span class="tg">Plates</span><button type="button" class="tab t-plate" role="tab" data-i="4">Plate 1</button><button type="button" class="tab t-plate" role="tab" data-i="5">Plate 2</button><button type="button" class="tab t-plate" role="tab" data-i="6">Plate 3</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page" id="p-316">p. 316 · PDF 410</div>
 <h2 class="printed-title"><b>No. 34.—THE KODAVALI ROCK-INSCRIPTION OF CHANDASATI ; THE SECOND<br/>YEAR OF REIGN.</b></h2>
 <p class="byline">BY H. KRISHNA SASTRI, B.A., OOTACAMUND.</p>
 <p>Going in a north-westerly direction from <b>Piṭhāpuram</b>, a station on the East Coast Railway, for a distance of about 9 miles along the Sāmalkōṭa-Kattipūđi road, the village of <b>Kođavali</b> is sighted. It is situated not very far from the right side of the road. Proceeding thence for nearly two miles again in a north-westerly direction one reaches the foot of a range of hills</p>
-<div class="notes"><sup id="fn-1-1">1</sup> Read perhaps <i>gyy-avakāśam</i>.<sup id="fn-1-2">2</sup> Read <i>Ētaōk-chatur</i>.<sup id="fn-1-3">3</sup> Read <i>kshētran</i>.<sup id="fn-1-4">4</sup> The writer had originally written =<i>ukađaka</i>; but he has himself cancelled the first <i>ka</i> by adding a horizontal line at the top of it.<sup id="fn-1-5">5</sup> Read <i>sa</i>.<sup id="fn-1-6">6</sup> Cancel this syllable.</div></section>
+<div class="notes"><sup id="fn-1-1">1</sup> Read perhaps <i>gyy-avakāśam</i>.<sup id="fn-1-2">2</sup> Read <i>Ētaōk-chatur</i>.<sup id="fn-1-3">3</sup> Read <i>kshētran</i>.<sup id="fn-1-4">4</sup> The writer had originally written =<i>ukađaka</i>; but he has himself cancelled the first <i>ka</i> by adding a horizontal line at the top of it.<sup id="fn-1-5">5</sup> Read <i>sa</i>.<sup id="fn-1-6">6</sup> Cancel this syllable.</div>
+<p class="plate-note"><a href="#plate-1">Plate 1</a> is bound after this page.</p>
+<p class="plate-note"><a href="#plate-2">Plate 2</a> is bound after this page.</p></section>
 <section class="pg pg-page" role="tabpanel" data-i="1"><div class="page" id="p-317">p. 317 · PDF 413</div>
 <p>covered with thin forest vegetation. From here the place called “ <b>Dhanam-dibbā</b> ”<sup class="fn"><a href="#fn-2-1">1</a></sup>—‘the treasure-mound’—is reached by a gravelly foot-path running along the slope of the hill, which appears to have been once provided with steps of rubble stone. Struggling two or three furlongs along this unwelcome path we come to the crown of the hillock and to the mound ‘Dhanam-dibbā’ on it. Here are found the remains of what looks like a <b>Buddhist</b> <i>stūpa</i> consisting mostly of large-sized bricks and sometimes unhewn stone.<sup class="fn"><a href="#fn-2-2">2</a></sup> On the southern side of the mound are seen also portions of a structure built of cut and dressed stone. The four <b>rock cut wells</b> on the south and west sides of the mound, 4 to 5 feet square and 6 to 7 feet deep, are of peculiar interest and seem to have been used once for storing water for the use of the occupants of the Buddhist monastery, as the mound may prove to be when excavations are properly carried out.</p>
 <p>On the north wall of one of the wells on the western side of the mound measuring 5' 8½' long by 5' 5¼' broad and 7' 2' deep, is engraved in 6 lines the <b>Āndhra</b> inscription, edited below, in <b>Brāhmī</b> characters of about the 3rd century A.D. This inscription which was published in 1908 by Dr. Konow in <i>Z. D. M. G.</i>, Vol. LXII, p. 591 f. has been noticed as No. 1341 by Dr. Lüders in his <i>List of Brāhmī Inscriptions</i> in Vol. X, above. As remarked by Dr. Sten Konow in the Director-General of Archæology's <i>Annual Survey Report</i> for 1907-08, p. 225, this is the only lithic record hitherto discovered of the <b>Āndhra</b> king <b>Chaḍasāta</b>, who is already known to us from a number of coins found in the Kistna and the Godavari districts. My friend Mr. C. R. Krishnama Aeharlu, B.A., of the Madras Epigraphical Department has also spent some hours with me in reading the inscription directly from the stone; and the text given below is the joint production of both of us. The accompanying facsimile plate is reproduced from an inked estampage prepared under my direct supervision. The inscription thus deciphered will be seen to differ much from the published text of Dr. Sten Konow. The object of the record, for instance, was not the establishment of the earth-dwelling (<i>bhumī vesa</i>) of an unnamed minister (<i>āmacha</i>), but was the establishment of the gift (<i>dhama</i>) of a <i>khaṅgu</i> (rock-cut well ?) by the minister <b>Sasa</b> of <b>Khaḍdavali</b>—the ancient form of the present village name Koḍavali.<sup class="fn"><a href="#fn-2-3">3</a></sup></p>
@@ -288,7 +316,8 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <p><i>ñō</i> — The <i>ō</i> mark is very faint.</p>
 <p><i>ṭhī</i> — The long <i>ī</i> is indicated by two horns as in Kshatrapa inscriptions (Bühler's <i>Tables</i> III, 9).</p>
 <p>L. 2. <i>ta</i> — The development of a loop in this letter is to be noted as in the Nasik inscription No. 20. (See Bühler's <i>Tables</i> III, 13). Possibly, there was a secondary <i>ta</i> below the letter thus making the word <i>puttasa</i>.</p>
-<div class="notes"><p><sup id="fn-3-1">1</sup> The word <i>Nūrṇuvar-Kaṇṇar</i> which occurs in the Tamil poem <i>Śilappadikāram</i>, has been translated by some, as, 'the hundred-eared' and taken to be the equivalent of Śātakarṇi (or Śātakarṇi).</p><p><sup id="fn-3-2">2</sup> The three thick horizontal marks one above the other each denoting the numeral 'one' are visible. But as the third topmost mark is above the level of the line and not vertically above the other two, I am inclined to read the symbol as '2' and not '3'.</p><p><sup id="fn-3-3">3</sup> Direct from the stone.</p><p><sup id="fn-3-4">4</sup> Spaces are left in the original after the complete words:—<i>Sidham</i>, <i>rañō</i>, etc., as shown in the text. After <i>Sami-siri-Chamḍasātisa</i> in 1. 3 and after <i>Sasami</i> in 1. 5, where we should have expected a space, it is wanting. The same system of separating words by spaces is found in the Hathigumpha inscription of Khāravēla, the Myākadoni inscription of Puļumāvi (above Vol. XIV, plate facing p. 155) and the Hirabaḍagalli inscription of Siva-Skanda-varman, <i>Ep. Ind.</i>, Vol. I, plate facing p. 6.</p><p><sup id="fn-3-5">5</sup> [The plate gives <i>sā</i>.—Ed.]</p></div></section>
+<div class="notes"><p><sup id="fn-3-1">1</sup> The word <i>Nūrṇuvar-Kaṇṇar</i> which occurs in the Tamil poem <i>Śilappadikāram</i>, has been translated by some, as, 'the hundred-eared' and taken to be the equivalent of Śātakarṇi (or Śātakarṇi).</p><p><sup id="fn-3-2">2</sup> The three thick horizontal marks one above the other each denoting the numeral 'one' are visible. But as the third topmost mark is above the level of the line and not vertically above the other two, I am inclined to read the symbol as '2' and not '3'.</p><p><sup id="fn-3-3">3</sup> Direct from the stone.</p><p><sup id="fn-3-4">4</sup> Spaces are left in the original after the complete words:—<i>Sidham</i>, <i>rañō</i>, etc., as shown in the text. After <i>Sami-siri-Chamḍasātisa</i> in 1. 3 and after <i>Sasami</i> in 1. 5, where we should have expected a space, it is wanting. The same system of separating words by spaces is found in the Hathigumpha inscription of Khāravēla, the Myākadoni inscription of Puļumāvi (above Vol. XIV, plate facing p. 155) and the Hirabaḍagalli inscription of Siva-Skanda-varman, <i>Ep. Ind.</i>, Vol. I, plate facing p. 6.</p><p><sup id="fn-3-5">5</sup> [The plate gives <i>sā</i>.—Ed.]</p></div>
+<p class="plate-note"><a href="#plate-3">Plate 3</a> is bound after this page.</p></section>
 <section class="pg pg-page" role="tabpanel" data-i="3"><div class="page" id="p-319">p. 319 · PDF 417</div>
 <p>L. 3. <i>Chām</i>—The <i>anusvāra</i> is clearly marked on the left top of the letter as in <i>dhām</i> in l. 1.</p>
 <p>After Chāndasātisa, Dr. Sten Konow read <i>savachhare</i>. But to me it appears as if there is space enough for two letters between the <i>sa</i> of <i>Chāndasātisa</i> and <i>vachhare</i>. Perhaps some word like <i>raji</i> has to be read. There are no doubt traces of a <i>sa</i> to justify the reading <i>savachhare</i>.</p>
@@ -306,7 +335,10 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <p>L. 5. I cannot understand how <i>amachasasami</i> can mean by the minister Sasa. And it seems to me that the first word ends with <i>amachasa</i>. It is possible that the preceding <i>aksharas</i> contain the minister's name. The ensuing <i>akshara</i> looks to me more like <i>bhū</i> than <i>sa</i>. With regard to <i>Khagu</i> I have little to say. <i>Kha</i> is not certain. In favour of <i>ga</i> or <i>gu</i> speaks the use of <i>s</i> for <i>ś</i> in <i>śiri</i>. But the letter looks more like <i>śa</i> or <i>śu</i>.</p>
 <p>The remarks which I have been able to offer are, you will see, rather negative. But I cannot just now give more time to the question, being too much occupied with other work.</p>
 <p>* * * *</p>
-<div class="notes"><p><sup id="fn-4-1">1</sup> [See f. n. 5 on the opposite page—Ed.]</p></div></section></div></main>
+<div class="notes"><p><sup id="fn-4-1">1</sup> [See f. n. 5 on the opposite page—Ed.]</p></div></section>
+<section class="pg pg-plate" role="tabpanel" data-i="4"><div class="page" id="plate-1">Plate 1 · PDF page 411, bound after p. 316</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p411.webp" alt="Plate 1"></figure></section>
+<section class="pg pg-plate" role="tabpanel" data-i="5"><div class="page" id="plate-2">Plate 2 · PDF page 412, bound after p. 316</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p412.webp" alt="Plate 2"></figure></section>
+<section class="pg pg-plate" role="tabpanel" data-i="6"><div class="page" id="plate-3">Plate 3 · PDF page 415, bound after p. 318</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p415.webp" alt="Plate 3"></figure></section></div></main>
 <footer>Generated 19 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
 Feedback: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">this form</a>.</footer>
 </div>
@@ -340,6 +372,48 @@ function markHtml(text, term, mode){ // escaped text with <mark>s
   r.forEach(function(x){ out+=e(text.slice(at,x[0]))+'<mark>'+e(text.slice(x[0],x[1]))+'</mark>'; at=x[1]; });
   return out+e(text.slice(at));
 }
+
+var SEARCH_BASE=window.SEARCH_BASE||'search/', SEARCH_TEXT={};
+var SEARCH_FROM_DISK=location.protocol==='file:';
+var DISK_NOTE='The full-text search needs the page opened through a local server '
+  +'(python -m http.server in this folder, then http://localhost:8000/), not from disk.';
+function loadOne(ed){   // an edition's text: from the cache, else fetched (a missing file: none)
+  if (SEARCH_TEXT[ed]) return Promise.resolve(SEARCH_TEXT[ed]);
+  return fetch(SEARCH_BASE+ed+'.json').then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(recs){ SEARCH_TEXT[ed]=recs; return recs; }, function(){ SEARCH_TEXT[ed]=[]; return []; });
+}
+// ---- the search pop-up (user, 2026-11-19), shared by the indexes and Advanced Search: the
+// search starts on the button or Enter only, the controls are off while it runs, the pop-up
+// shows progress and Cancel, then the count with OK; a cancelled search keeps what it found
+var BUSY=null;
+function busyEls(){
+  if (BUSY) return BUSY;
+  var b=document.getElementById('busy');
+  BUSY={box:b, title:b.querySelector('h2'), msg:b.querySelector('.meta'), bar:b.querySelector('.busy-bar div'),
+        cancel:b.querySelector('.cancel'), ok:b.querySelector('.ok'), job:null, onOk:null};
+  BUSY.cancel.addEventListener('click', function(){ if (BUSY.job){ BUSY.job.cancelled=true; BUSY.msg.textContent='Stopping…'; } });
+  BUSY.ok.addEventListener('click', function(){ BUSY.box.hidden=true; if (BUSY.onOk) BUSY.onOk(); });
+  return BUSY;
+}
+function busyOpen(title){ var b=busyEls(); b.job={cancelled:false}; b.title.textContent=title; b.msg.textContent='';
+  b.bar.style.width='0'; b.cancel.hidden=false; b.ok.hidden=true; b.box.hidden=false; return b.job; }
+function busyProgress(frac, msg){ var b=busyEls(); b.bar.style.width=Math.round(Math.min(1,frac)*100)+'%'; b.msg.textContent=msg; }
+function busyDone(msg, onOk){ var b=busyEls(); b.job=null; b.title.textContent='Search finished'; b.bar.style.width='100%';
+  b.msg.textContent=msg; b.cancel.hidden=true; b.ok.hidden=false; b.onOk=onOk||null; b.ok.focus(); }
+function busyClose(){ var b=busyEls(); b.job=null; b.box.hidden=true; }
+function setControls(els, on){ els.forEach(function(el){ if (el) el.disabled=!on; }); }
+// the editions' text one at a time, with progress; cb(how many loaded, cancelled?)
+function loadWithProgress(eds, label, job, cb){
+  var k=0;
+  (function next(){
+    if (job.cancelled || k>=eds.length) return cb(k, job.cancelled);
+    busyProgress(k/eds.length, 'Loading '+label(eds[k])+' ('+(k+1)+' of '+eds.length+')…');
+    loadOne(eds[k]).then(function(){ k++; setTimeout(next, 0); });
+  })();
+}
+// Enter in the box runs the search, as the button does
+function searchOnEnter(box, run){ box.addEventListener('keydown', function(e){
+  if (e.key==='Enter'){ e.preventDefault(); if (!busyEls().job) run(); } }); }
 window.CAT_TERMS={};
 // page tabs: one page shown at a time; #plate-N / #fig-N and search matches open their tab
 var panels=Array.prototype.slice.call(document.querySelectorAll('section.pg'));
@@ -350,10 +424,12 @@ function showTab(i){
   tabBtns.forEach(function(b,k){ b.setAttribute('aria-selected', k===i ? 'true' : 'false'); });
 }
 function showFor(el){ var p=el && el.closest('section.pg'); if (p) showTab(+p.dataset.i); }
-tabBtns.forEach(function(b){ b.addEventListener('click', function(){ showTab(+b.dataset.i); window.scrollTo(0,0); }); });
+var onTab=null; // set by the search marks below: the hits bar follows the page the reader opens
+tabBtns.forEach(function(b){ b.addEventListener('click', function(){ showTab(+b.dataset.i); window.scrollTo(0,0);
+  if (onTab) onTab(+b.dataset.i); }); });
 showTab(0);
 function toHash(){ if (location.hash){ var el=document.getElementById(location.hash.slice(1));
-  if (el){ showFor(el); el.scrollIntoView({block:'start'}); } } }
+  if (el){ showFor(el); el.scrollIntoView({block:'start'}); var p=el.closest('section.pg'); if (p && onTab) onTab(+p.dataset.i); } } }
 window.addEventListener('hashchange', toHash);
 toHash();
 // footnote pop-ups: a mark opens its note beside it; a click elsewhere or Esc closes it
@@ -379,7 +455,8 @@ document.addEventListener('click', function(e){
 });
 document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop(); });
 (function(){
-  var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat');
+  var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat'),
+      titleOnly=ps.get('in')==='title';
   // what to mark: the search term, and the chosen category's matched words (CAT_TERMS)
   var finds=[]; if (term) finds.push([term,mode]);
   if (cat && window.CAT_TERMS && CAT_TERMS[cat]) CAT_TERMS[cat].forEach(function(t){ finds.push([t,'embedded']); });
@@ -388,7 +465,8 @@ document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop
     r.sort(function(a,b){return a[0]-b[0];}); var out=[];
     r.forEach(function(x){ if (out.length && x[0]<out[out.length-1][1]) { out[out.length-1][1]=Math.max(out[out.length-1][1],x[1]); } else out.push(x.slice()); });
     return out; }
-  var main=document.querySelector('main'), walker=document.createTreeWalker(main, NodeFilter.SHOW_TEXT), nodes=[], n;
+  // a title-only search marks the title alone, as that is all it searched
+  var main=document.querySelector('main'), root=(titleOnly && main.querySelector('.ah-title')) || main, walker=document.createTreeWalker(root, NodeFilter.SHOW_TEXT), nodes=[], n;
   while ((n=walker.nextNode())) if (!n.parentNode.closest('.hits')) nodes.push(n);
   var marks=[];
   nodes.forEach(function(node){
@@ -402,11 +480,21 @@ document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop
   var i=0, label=document.createElement('span');
   // every tab holding a match gets the yellow has-match style (as in the inscription popups)
   marks.forEach(function(m){ var p=m.closest('section.pg'); if (p && tabBtns[+p.dataset.i]) tabBtns[+p.dataset.i].classList.add('has-match'); });
-  function go(k){ if (!marks.length) return; marks[i].classList.remove('on'); i=(k+marks.length)%marks.length;
-    showFor(marks[i]); marks[i].classList.add('on'); marks[i].scrollIntoView({block:'center'});
-    label.textContent=' '+(i+1)+' of '+marks.length+' ';}
+  // between: the reader opened a page with no match; i is then the first match after it
+  var between=false, tabOf=function(m){ var p=m.closest('section.pg'); return p ? +p.dataset.i : -1; };
+  function setOn(k){ marks[i].classList.remove('on'); i=k; between=false; marks[i].classList.add('on');
+    label.textContent=' '+(i+1)+' of '+marks.length+' '; }
+  function go(k){ if (!marks.length) return; setOn((k+marks.length)%marks.length);
+    showFor(marks[i]); marks[i].scrollIntoView({block:'center'}); }
   var prev=document.createElement('button'); prev.textContent='◀ previous'; prev.onclick=function(){go(i-1);};
-  var next=document.createElement('button'); next.textContent='next ▶'; next.onclick=function(){go(i+1);};
+  var next=document.createElement('button'); next.textContent='next ▶'; next.onclick=function(){go(between?i:i+1);};
+  onTab=function(t){ if (!marks.length) return;
+    var j=-1; marks.some(function(m,k){ if (tabOf(m)===t){ j=k; return true; } return false; });
+    if (j>=0) return setOn(j);   // the page's first match; the reader is at its top, so no scroll
+    marks[i].classList.remove('on');
+    var after=-1; marks.some(function(m,k){ if (tabOf(m)>t){ after=k; return true; } return false; });
+    i=after>=0 ? after : 0; between=true;
+    label.textContent=' – of '+marks.length+' (none on this page) '; };
   bar.appendChild(document.createTextNode((term?'"'+term+'"':'')+(term&&cat?' + ':'')+(cat?'category '+cat:'')+': ')); bar.appendChild(prev); bar.appendChild(label); bar.appendChild(next);
   main.insertBefore(bar, main.firstChild);
   if (marks.length) go(0); else label.textContent=' no match on this page ';

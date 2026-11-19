@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Advanced Search — Project InscriptionSearch: Articles</title>
+<meta name="description" content="Search the full text of every article on this site.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project InscriptionSearch: Articles">
+<meta property="og:title" content="Advanced Search — Project InscriptionSearch: Articles">
+<meta property="og:description" content="Search the full text of every article on this site.">
+<meta property="og:url" content="https://pa-sankar.github.io/Articles/AdvancedSearch.html">
+<meta property="og:image" content="https://pa-sankar.github.io/Articles/images/articles-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Advanced Search — Project InscriptionSearch: Articles">
+<meta name="twitter:description" content="Search the full text of every article on this site.">
+<meta name="twitter:image" content="https://pa-sankar.github.io/Articles/images/articles-image.jpg">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2213%22>📜</text></svg>">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap">
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-TXX3D8HF"></script>
+<script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'GT-TXX3D8HF', {'page_group': 'articles'});</script>
+<style>
+  :root {
+    --bg: #f6f2e9; --surface: #ffffff; --surface-2: #efe9da;
+    --text: #2b2a24; --text-dim: #6b6759; --border: #ddd4bd;
+    --accent: #5f7a5a; --accent-strong: #3f5a3c;
+    --accent-copper: #a6612f; --accent-copper-strong: #7d431c;
+    --shadow: 0 1px 2px rgba(43,42,36,0.06), 0 8px 24px rgba(43,42,36,0.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c1b16; --surface: #24231c; --surface-2: #2c2a21;
+      --text: #ece7d8; --text-dim: #a29d8b; --border: #45422f;
+      --accent: #8caa84; --accent-strong: #a9c6a1;
+      --accent-copper: #d18a52; --accent-copper-strong: #e2a06c;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c1b16; --surface: #24231c; --surface-2: #2c2a21;
+    --text: #ece7d8; --text-dim: #a29d8b; --border: #45422f;
+    --accent: #8caa84; --accent-strong: #a9c6a1;
+    --accent-copper: #d18a52; --accent-copper-strong: #e2a06c;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; padding: 3rem 1rem 4rem;
+    background: var(--bg); color: var(--text); line-height: 1.6;
+  }
+  a { color: var(--accent-strong); }
+  a:hover { color: var(--accent); }
+  .home-link { text-decoration: none; color: var(--accent-strong); margin-right: 0.3rem; }
+  .home-link:hover { color: var(--accent); }
+
+mark { background: var(--mark); color: inherit; border-radius: 2px; }
+mark.on { background: var(--mark-on); }
+.meta { color: var(--muted); font-size: .9rem; }
+h1 { font-size: 1.5rem; line-height: 1.3; margin: .2rem 0; }
+h3 { font-size: 1.05rem; margin: 1.4rem 0 .4rem; letter-spacing: .02em; }
+.byline { font-variant: small-caps; color: var(--muted); }
+.art-head { margin: .6rem 0 1.2rem; padding-bottom: .9rem; border-bottom: 1px solid var(--line); }
+.ah-corpus { font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); font-weight: 600; }
+.ah-vol { font-size: 1rem; font-weight: 600; margin-top: .25rem; }
+.ah-part { font-weight: 400; color: var(--muted); }
+h1.ah-title { font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem; font-weight: 600;
+              line-height: 1.25; margin: .45rem 0 .3rem; }
+.ah-author { font-variant: small-caps; font-size: 1.05rem; }
+.ah-ref { color: var(--muted); font-size: .82rem; margin-top: .35rem; }
+.ext-icon { margin-left: .2em; vertical-align: -1px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+h2.printed-title { font-size: 1.1rem; line-height: 1.35; margin: .4rem 0; }
+.page { display:flex; gap:.5rem; align-items:center; color:var(--muted); font-size:.8rem; margin:1.6rem 0 .6rem; }
+.page::before, .page::after { content:""; flex:1; border-top:1px solid var(--line); }
+.lines { font-size: .95rem; }
+.notes { background: var(--note); border-radius: 4px; padding: .4rem .8rem; font-size: .85rem; margin: .8rem 0; }
+.notes p { margin: .25rem 0; }
+figure { margin: 1rem 0; text-align: center; }
+figure img { max-width: 100%; border: 1px solid var(--line); }
+figcaption, .caption { color: var(--muted); font-size: .85rem; }
+.art table { border-collapse: collapse; font-size: .9rem; margin: .8rem 0; display:block; overflow-x:auto; }
+.art td, .art th { border: 1px solid var(--line); padding: .2rem .4rem; vertical-align: top; }
+.warn { border-left: 3px solid var(--accent); padding-left: .7rem; }
+/* the index's controls, table and row pop-up: the Inscriptions corpus pages' own look
+   (scripts/inscriptions_table_html.py), on the site's tokens (user, 2026-11-18) */
+.search, .dd-bar { margin-bottom: .75rem; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+input[type=search] { padding: 8px 13px; width: 20rem; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; box-sizing: border-box; }
+select { padding: 8px 10px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; }
+input[type=search]:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  box-shadow: var(--shadow); }
+table.idx { border-collapse: collapse; width: 100%; font-size: 14px; font-family: 'Segoe UI', system-ui, sans-serif; }
+.idx th, .idx td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);
+  padding: 10px 12px; text-align: left; vertical-align: top; overflow-wrap: break-word; }
+.idx th:last-child, .idx td:last-child { border-right: none; }
+.idx th { background: var(--surface-2); color: var(--text-dim); position: sticky; top: 0; z-index: 1;
+  text-transform: uppercase; letter-spacing: .04em; font-size: 11.5px; white-space: nowrap; cursor: pointer; user-select: none; }
+.idx th[aria-sort=ascending]::after { content: " ▲"; } .idx th[aria-sort=descending]::after { content: " ▼"; }
+.idx tbody tr:nth-child(even) { background: var(--surface-2); }
+.idx tbody tr:last-child td { border-bottom: none; }
+.idx tbody tr { cursor: pointer; }
+.count { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin: 0.5rem 0; }
+.pager { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--muted); font-size: 13px; }
+.pager button { padding: 5px 12px; cursor: pointer; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text); font-family: inherit; font-size: 13px; }
+.pager button:disabled { cursor: default; opacity: 0.4; }
+.pager select { padding: 5px 8px; font-size: 13px; }
+.idx tbody tr:hover { background: var(--surface-2); }
+.idx td.num { text-align: right; white-space: nowrap; }
+.idx td.attr { font-size: .85rem; }
+.idx th.ai::after { content: " AI"; font-size: .65rem; color: var(--accent-copper-strong); vertical-align: super; }
+.filter-dd { position: relative; display: inline-block; }
+.filter-dd-btn { padding: 8px 14px; cursor: pointer; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; text-align: left;
+  min-width: 8rem; max-width: 14rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filter-dd-btn:hover { border-color: var(--accent); }
+.filter-dd.active .filter-dd-btn { border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
+.filter-dd-panel { position: absolute; top: calc(100% + 4px); left: 0; z-index: 50; width: 16rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  box-shadow: var(--shadow); padding: .6rem; display: flex; flex-direction: column; gap: .5rem; }
+.filter-dd-panel[hidden] { display: none; }
+.filter-dd-mode { display: flex; gap: .9rem; font-size: .82rem; color: var(--text-dim); }
+.filter-dd-mode label { display: flex; align-items: center; gap: .3rem; cursor: pointer; }
+.filter-dd-search { padding: 5px 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+  color: var(--text); font-family: inherit; font-size: 13px; width: 100%; box-sizing: border-box; }
+.filter-dd-hint { font-size: 11px; color: var(--text-dim); margin: -2px 2px 2px; }
+.filter-dd-options { max-height: 14rem; overflow-y: auto; display: flex; flex-direction: column; }
+.filter-dd-opt { display: flex; align-items: center; gap: .5rem; padding: 3px 4px; border-radius: 4px;
+  font-size: .85rem; cursor: pointer; }
+.filter-dd-opt:hover { background: var(--surface-2); }
+.filter-dd-opt[hidden] { display: none; }
+.filter-dd-opt span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filter-dd-opt .n { font-style: normal; font-size: .75rem; color: var(--text-dim); }
+.filter-dd-opt-gone { display: none !important; }
+button.go { padding: 8px 16px; font: inherit; font-weight: 600; border-radius: 7px; cursor: pointer;
+  border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+button:disabled, input:disabled, select:disabled { opacity: .5; cursor: default; }
+.partial { margin: .6rem 0; padding: .5rem .8rem; border-radius: 7px; font-size: .9rem; font-weight: 600;
+  background: #fff3cd; color: #6b4e00; border: 1px solid #e6c766; }
+.partial[hidden] { display: none; }
+.busy { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center;
+  justify-content: center; z-index: 100; }
+.busy[hidden] { display: none; }
+.busy-box { background: var(--surface); color: var(--text); border-radius: 10px; padding: 1.2rem 1.4rem;
+  width: min(26rem, 92vw); box-shadow: var(--shadow); }
+.busy-box h2 { font-size: 1.05rem; margin: 0 0 .6rem; }
+.busy-bar { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; margin: .6rem 0; }
+.busy-bar div { height: 100%; width: 0; background: var(--accent); transition: width .15s; }
+.busy-box .meta { min-height: 1.3em; }
+.busy-actions { display: flex; justify-content: flex-end; gap: .5rem; margin-top: .8rem; }
+.busy-actions button { padding: 6px 16px; font: inherit; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+.busy-actions button.ok { border-color: var(--accent); background: var(--accent); color: #fff; }
+.filter-dd-actions { display: flex; justify-content: flex-end; }
+.filter-dd-clear { padding: 4px 10px; cursor: pointer; background: none; border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text-dim); font-family: inherit; font-size: 12.5px; }
+.filter-dd-clear:hover { color: var(--text); border-color: var(--accent); }
+.active-filters-summary { background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+  padding: .5rem .9rem; margin-bottom: .75rem; font-size: .85rem; color: var(--text); line-height: 1.6; }
+.active-filters-summary[hidden] { display: none; }
+.active-filters-summary strong { color: var(--text-dim); font-weight: 600; }
+.row-hint { font-style: italic; }
+body.noscroll { overflow: hidden; }
+.remarks-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center;
+  justify-content: center; z-index: 1000; padding: 1.5rem; }
+.remarks-modal-overlay[hidden] { display: none; }
+.remarks-modal-box { background: var(--surface); color: var(--text); border-radius: 10px; max-width: 44rem; width: 100%;
+  max-height: 80vh; overflow-y: auto; padding: 1.5rem; position: relative; box-shadow: var(--shadow);
+  font-family: 'Segoe UI', system-ui, sans-serif; box-sizing: border-box; }
+.remarks-modal-close { position: absolute; top: .5rem; right: .7rem; font-size: 1.3rem; line-height: 1;
+  background: none; border: none; cursor: pointer; color: var(--text-dim); }
+.remarks-modal-close:hover { color: var(--text); }
+.row-detail-box { max-width: 56rem; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
+.row-detail-box .remarks-modal-close { top: .5rem; right: .7rem; z-index: 2; }
+.row-detail-header { flex: none; padding: 1.5rem 3rem .7rem 1.5rem; margin-bottom: .4rem; border-bottom: 1px solid var(--border); }
+.row-detail-title { font-size: 1.1rem; font-weight: 600; line-height: 1.35; margin-bottom: .3rem; }
+.row-detail-idline { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.row-detail-id-text { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9rem; color: var(--text); }
+.row-detail-cite { color: var(--text-dim); font-size: .85rem; }
+.row-detail-read { margin-left: auto; font-size: .85rem; }
+.row-detail-body { flex: 1 1 auto; overflow-y: auto; padding: 0 1.5rem 1.5rem; }
+.row-detail-field { display: grid; grid-template-columns: 9rem 1fr; gap: .4rem .75rem; padding: .3rem 0;
+  border-bottom: 1px solid var(--border); align-items: baseline; }
+.row-detail-field:last-child { border-bottom: none; }
+.row-detail-label { color: var(--text-dim); font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; font-weight: 600; }
+.row-detail-value { line-height: 1.5; overflow-wrap: break-word; }
+.row-detail-na { color: var(--text-dim); font-style: italic; }
+.row-detail-quote { color: var(--text-dim); font-size: .85rem; margin-top: .15rem; }
+.v-derived { color: var(--accent-copper-strong); font-style: italic; }
+.row-detail-tabs { margin-top: 1.1rem; }
+.row-detail-tab-bar { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .6rem; }
+.row-detail-tab-btn { font: inherit; font-size: .85rem; padding: .35rem .8rem; border: 1px solid var(--border);
+  border-radius: 999px; background: var(--surface-2); color: var(--text-dim); cursor: pointer; }
+.row-detail-tab-btn.active { border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
+.row-detail-tab-btn.has-match { background: #fff3a0; color: #000; }
+.match-nav { margin-left: auto; display: flex; align-items: center; gap: .4rem; font-size: .82rem; color: var(--text-dim); }
+.match-nav[hidden], .match-nav button[hidden] { display: none; }
+.match-nav button { font: inherit; font-size: .82rem; padding: .25rem .7rem; border: 1px solid var(--border);
+  border-radius: 999px; background: var(--surface); color: var(--text); cursor: pointer; }
+.match-nav button:hover { border-color: var(--accent); }
+mark.current { background: #ffb347; outline: 2px solid #e08a00; }
+.row-detail-tab-content { line-height: 1.6; font-size: .95rem; background: var(--surface-2); border-radius: 6px;
+  padding: .8rem 1rem; }
+.ai-badge { font-size: .65rem; color: var(--accent-copper-strong); border: 1px solid var(--accent-copper);
+  border-radius: 3px; padding: 0 .25rem; vertical-align: middle; cursor: help; text-transform: none; letter-spacing: 0; }
+  @media (max-width: 640px) { input[type=search] { width: 100%; } .row-detail-field { grid-template-columns: 1fr; } }
+.snip { color: var(--muted); font-size: .85rem; margin-top: .2rem; }
+.hits { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: .4rem 0;
+  font-size: .9rem; z-index: 1; }
+.hits button { font: inherit; }
+.tabs { display: flex; flex-wrap: wrap; gap: .3rem; margin: 1rem 0 .4rem; position: sticky; top: 0;
+  background: var(--bg); padding: .3rem 0; z-index: 1; border-bottom: 1px solid var(--line); }
+.tab { font: inherit; font-size: .85rem; padding: .15rem .55rem; border: 1px solid var(--line);
+  border-radius: 4px; background: transparent; color: var(--fg); cursor: pointer; }
+.tab[aria-selected=true] { border-color: var(--accent); color: var(--accent); font-weight: bold; }
+.tg { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted);
+  align-self: center; margin-right: .1rem; }
+.tsep { width: .8rem; }
+.tab.t-plate { border-color: #c98d5c; background: #f7e7d8; color: #7d431c; }
+.tab.t-image { border-color: #8fae88; background: #e4eee0; color: #3f5a3c; }
+  .tab.t-image { background: #243021; color: #a9c6a1; border-color: #4d6448; } }
+.tab.t-plate[aria-selected=true], .tab.t-image[aria-selected=true] { border-width: 2px; }
+.plate-note { font-size: .85rem; color: var(--muted); font-style: italic; }
+figure.big img { max-height: 85vh; }
+.tab.has-match { background: #fff3a0; color: #000; }
+sup.fn a { text-decoration: none; padding: 0 .15em; }
+.fn-pop { position: absolute; z-index: 20; max-width: min(28rem, 90vw); background: var(--note);
+  border: 1px solid var(--line); border-radius: 4px; padding: .3rem .7rem; font-size: .85rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2); }
+.fn-pop p { margin: .2rem 0; }
+.hits ~ .tabs, .hits + .art .tabs { top: 2.4rem; }
+  .wrap { max-width: 72rem; margin: 0 auto; }
+  .wrap.narrow { max-width: 50rem; }
+  body { padding: 1.5rem 1rem 4rem; }
+  .brand {
+    font-family: 'Cinzel', Georgia, 'Times New Roman', serif; font-weight: 600;
+    font-size: 12.5px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--accent-copper-strong); margin: 0 0 4px;
+  }
+  .titlebar {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 8px 18px; padding-bottom: 16px; margin-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .titlebar h1 { font-size: 22px; margin: 0; font-weight: 700; }
+  .subscribe-btn {
+    display: inline-block; font-size: 0.85rem; font-weight: 600;
+    padding: 0.4rem 1rem; border-radius: 999px; text-decoration: none;
+    background: var(--accent-copper); color: #fff;
+  }
+  .subscribe-btn:hover { background: var(--accent-copper-strong); color: #fff; }
+  .source-notice { margin: 1rem 0; padding: 1rem 1.25rem; border: 2px solid #b7791f; border-radius: 6px;
+    background: #fff4d6; color: #4a3500; font-size: 1.05rem; line-height: 1.5; }
+  .about { color: var(--text); max-width: 62rem; }
+  .filters-help { color: var(--text-dim); font-size: 0.85rem; line-height: 1.5; margin-bottom: 0.75rem; max-width: 62rem; }
+  .filters-help strong { color: var(--text); }
+  .card {
+    display: block; border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem;
+    margin: 0.75rem 0; background: var(--surface); box-shadow: var(--shadow); color: inherit; text-decoration: none;
+  }
+  a.card:hover { border-color: var(--accent); }
+  a.card:hover h3 { color: var(--accent-strong); }
+  .card h3 { margin: 0 0 0.3rem 0; font-size: 1rem; }
+  .card p { margin: 0; color: var(--text-dim); }
+  .card.soon { opacity: 0.85; }
+  .card .src { margin-top: .4rem; font-size: .85rem; }
+  .src-list { padding-left: 1.2rem; } .src-list li { margin: .25rem 0; }
+  ol.how { padding-left: 1.4rem; } ol.how li { margin-bottom: 1rem; }
+  ol.how h3 { font-size: 1rem; margin: 0 0 .2rem; } ol.how p { margin: 0; }
+  .ext-icon { margin-left: .2em; vertical-align: -1px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .badge {
+    display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.03em;
+    text-transform: uppercase; color: var(--accent-copper-strong); background: var(--surface-2);
+    border: 1px solid var(--border); border-radius: 999px; padding: 0.1rem 0.6rem; margin-left: 0.4rem;
+    vertical-align: middle;
+  }
+  footer { margin-top: 30px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-dim); }
+  /* the review pages' styles (build_article_pages.CSS) on the site's tokens */
+  :root { --fg: var(--text); --muted: var(--text-dim); --line: var(--border); --note: var(--surface-2);
+    --mark: #ffe58a; --mark-on: #ffb020; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --mark: #7a6420; --mark-on: #b07a10; } }
+  .art { font: 17px/1.65 Georgia, "Noto Serif", serif; }
+  .art h1 { font-size: 1.45rem; line-height: 1.3; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="brand">Project InscriptionSearch: Articles</div>
+<div class="titlebar"><h1><a href="./" class="home-link" title="Home"><img src="images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> Advanced Search</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
+<main><style>
+.adv-bar { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: .8rem 0; }
+.adv-bar input[type=search] { flex: 1 1 18rem; padding: 8px 10px; font: inherit; border: 1px solid var(--border);
+  border-radius: 7px; background: var(--surface); color: var(--text); }
+.adv-bar select { padding: 7px; font: inherit; border: 1px solid var(--border); border-radius: 7px;
+  background: var(--surface); color: var(--text); }
+.res td .where { display: block; color: var(--text-dim); font-size: 12px; }
+.res td .snip { display: block; color: var(--text-dim); font-size: 12.5px; margin-top: 3px; }
+.res td.n { text-align: right; white-space: nowrap; }
+.res tr.go-row { cursor: pointer; }
+.res tr.go-row:hover td { background: var(--surface-2); }
+</style><h1>Advanced Search</h1><p class="meta">Searches the full text of every article, and its title, citation and author. Accents and capitals are optional. Narrow the volumes with the lists, type a word and press Search (or Enter); a result opens the article at the match.</p><div class="adv-bar"><input type="search" id="q" placeholder="Search the articles" aria-label="Search the articles"><button type="button" id="go" class="go">Search</button><select id="w" aria-label="Match"><option value="embedded">anywhere in a word</option><option value="partial">at the start of a word</option><option value="full">whole word</option></select><select id="in" aria-label="Search in"><option value="all">in the text, title, author and citation</option><option value="title">in the title only</option></select></div><div id="partial" class="partial" hidden></div><div class="count"><span id="info" class="meta"></span><span id="pager" class="pager" hidden><button type="button" class="prev">&larr; Prev</button><span></span><button type="button" class="next">Next &rarr;</button></span></div><div class="dd-bar" id="dds"></div><div class="scroll"><table class="idx res" id="res"><thead><tr><th>Corpus</th><th>Volume</th><th>Article</th><th>Author</th><th>Matches in text</th></tr></thead><tbody></tbody></table></div><div id="busy" class="busy" hidden role="dialog" aria-modal="true" aria-live="polite"><div class="busy-box"><h2></h2><div class="busy-bar"><div></div></div><div class="meta"></div><div class="busy-actions"><button type="button" class="cancel">Cancel</button><button type="button" class="ok" hidden>OK</button></div></div></div></main>
+<footer>Generated 19 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
+Feedback: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">this form</a>.</footer>
+</div>
+<script>
+function foldMap(s){ // folded text + each folded char's index in s (diacritics removed per char)
+  var out='', idx=[];
+  for (var i=0;i<s.length;i++){
+    var f=s[i].normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+    for (var k=0;k<f.length;k++){ out+=f[k]; idx.push(i); }
+  }
+  return {t:out, idx:idx};
+}
+function fold(s){ return foldMap(s).t; }
+function escRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+function makeMatcher(term, mode){ // a new RegExp each time: a 'g' RegExp keeps lastIndex
+  var body=escRe(fold(term));
+  var p = mode==='full' ? '(?<![\\p{L}\\p{N}])('+body+')(?![\\p{L}\\p{N}])'
+        : mode==='partial' ? '(?<![\\p{L}\\p{N}])('+body+')' : '('+body+')';
+  return new RegExp(p,'gu');
+}
+function findAll(text, term, mode){ // [[start,end] in the ORIGINAL text]
+  if (!term) return [];
+  var fm=foldMap(text), re=makeMatcher(term,mode), m, out=[];
+  while ((m=re.exec(fm.t))){ if (!m[0]) { re.lastIndex++; continue; }
+    out.push([fm.idx[m.index], fm.idx[m.index+m[0].length-1]+1]); }
+  return out;
+}
+function markHtml(text, term, mode){ // escaped text with <mark>s
+  var e=function(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
+  var r=findAll(text,term,mode), out='', at=0;
+  r.forEach(function(x){ out+=e(text.slice(at,x[0]))+'<mark>'+e(text.slice(x[0],x[1]))+'</mark>'; at=x[1]; });
+  return out+e(text.slice(at));
+}
+
+var SEARCH_BASE=window.SEARCH_BASE||'search/', SEARCH_TEXT={};
+var SEARCH_FROM_DISK=location.protocol==='file:';
+var DISK_NOTE='The full-text search needs the page opened through a local server '
+  +'(python -m http.server in this folder, then http://localhost:8000/), not from disk.';
+function loadOne(ed){   // an edition's text: from the cache, else fetched (a missing file: none)
+  if (SEARCH_TEXT[ed]) return Promise.resolve(SEARCH_TEXT[ed]);
+  return fetch(SEARCH_BASE+ed+'.json').then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(recs){ SEARCH_TEXT[ed]=recs; return recs; }, function(){ SEARCH_TEXT[ed]=[]; return []; });
+}
+// ---- the search pop-up (user, 2026-11-19), shared by the indexes and Advanced Search: the
+// search starts on the button or Enter only, the controls are off while it runs, the pop-up
+// shows progress and Cancel, then the count with OK; a cancelled search keeps what it found
+var BUSY=null;
+function busyEls(){
+  if (BUSY) return BUSY;
+  var b=document.getElementById('busy');
+  BUSY={box:b, title:b.querySelector('h2'), msg:b.querySelector('.meta'), bar:b.querySelector('.busy-bar div'),
+        cancel:b.querySelector('.cancel'), ok:b.querySelector('.ok'), job:null, onOk:null};
+  BUSY.cancel.addEventListener('click', function(){ if (BUSY.job){ BUSY.job.cancelled=true; BUSY.msg.textContent='Stopping…'; } });
+  BUSY.ok.addEventListener('click', function(){ BUSY.box.hidden=true; if (BUSY.onOk) BUSY.onOk(); });
+  return BUSY;
+}
+function busyOpen(title){ var b=busyEls(); b.job={cancelled:false}; b.title.textContent=title; b.msg.textContent='';
+  b.bar.style.width='0'; b.cancel.hidden=false; b.ok.hidden=true; b.box.hidden=false; return b.job; }
+function busyProgress(frac, msg){ var b=busyEls(); b.bar.style.width=Math.round(Math.min(1,frac)*100)+'%'; b.msg.textContent=msg; }
+function busyDone(msg, onOk){ var b=busyEls(); b.job=null; b.title.textContent='Search finished'; b.bar.style.width='100%';
+  b.msg.textContent=msg; b.cancel.hidden=true; b.ok.hidden=false; b.onOk=onOk||null; b.ok.focus(); }
+function busyClose(){ var b=busyEls(); b.job=null; b.box.hidden=true; }
+function setControls(els, on){ els.forEach(function(el){ if (el) el.disabled=!on; }); }
+// the editions' text one at a time, with progress; cb(how many loaded, cancelled?)
+function loadWithProgress(eds, label, job, cb){
+  var k=0;
+  (function next(){
+    if (job.cancelled || k>=eds.length) return cb(k, job.cancelled);
+    busyProgress(k/eds.length, 'Loading '+label(eds[k])+' ('+(k+1)+' of '+eds.length+')…');
+    loadOne(eds[k]).then(function(){ k++; setTimeout(next, 0); });
+  })();
+}
+// Enter in the box runs the search, as the button does
+function searchOnEnter(box, run){ box.addEventListener('keydown', function(e){
+  if (e.key==='Enter'){ e.preventDefault(); if (!busyEls().job) run(); } }); }
+window.PAGE_PREFIX={"EpInd": "articles/", "CII": "articles/", "MAR": "articles/"};window.CORPUS_NAMES={"EpInd": "Epigraphia Indica", "CII": "Corpus Inscriptionum Indicarum", "MAR": "Mysore Archaeological Reports"};
+var q=document.getElementById('q'), w=document.getElementById('w'), info=document.getElementById('info'),
+    tb=document.querySelector('#res tbody'), pager=document.getElementById('pager'), PAGES=window.PAGE_PREFIX||{},
+    goBtn=document.getElementById('go'), partial=document.getElementById('partial');
+var EDS=[], ED={}, REC=[], page=1, SIZE=50, results=[], last=null;
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+// ---- the lists: the EpInd index's (build_article_pages.py FILTERS) plus Corpus and Volume. Their
+// values come from search/filters.json, read before any text, so a list narrows the volumes to
+// load: only those still holding an article that passes every list
+var KEYS=[['corpus','Corpus'],['volume','Volume'],['author','Author'],['dynasty','Dynasty'],['king','King'],
+          ['century','Century'],['place','Place'],['language','Language'],['script','Script']];
+function ddHtml(key, label, opts){
+  return '<div class="filter-dd" data-key="'+key+'"><button type="button" class="filter-dd-btn">'+label+'</button>'
+    +'<div class="filter-dd-panel" hidden><div class="filter-dd-mode">'
+    +'<label><input type="radio" name="'+key+'Mode" value="include" checked> Include</label>'
+    +'<label><input type="radio" name="'+key+'Mode" value="exclude"> Exclude</label></div>'
+    +'<input type="search" class="filter-dd-search" placeholder="Type to narrow this list…" aria-label="Narrow the '+label+' list">'
+    +'<div class="filter-dd-options">'+opts.map(function(o){ return '<label class="filter-dd-opt"><input type="checkbox" value="'
+      +esc(o[0])+'"><span>'+esc(o[1])+'</span><em class="n"></em></label>'; }).join('')+'</div>'
+    +'<div class="filter-dd-actions"><button type="button" class="filter-dd-clear">Clear</button></div></div></div>';
+}
+function dd(key){ return document.querySelector('.filter-dd[data-key='+key+']'); }
+function ddState(key){ var d=dd(key); if (!d) return {key:key, vals:[], exclude:false};
+  return {key:key, vals:[].slice.call(d.querySelectorAll('.filter-dd-options input:checked')).map(function(c){ return c.value; }),
+          exclude:d.querySelector('.filter-dd-mode input[value=exclude]').checked}; }
+function passSt(st, have){ if (!st.vals.length) return true;
+  var any=st.vals.some(function(v){ return have.indexOf(v)>=0; }); return st.exclude ? !any : any; }
+function passRec(rec, states, skip){ return states.every(function(st,j){ return j===skip || passSt(st, rec.f[st.key]||[]); }); }
+function states(){ return KEYS.map(function(k){ return ddState(k[0]); }); }
+function recsInScope(){ var st=states(); return REC.filter(function(r){ return passRec(r, st); }); }
+// counts: each list counts what passes every OTHER list (and, after a search, only the results);
+// a value at 0 leaves the list, a ticked one stays (as on the indexes)
+function counts(){
+  var st=states(), pool=last ? results.map(function(x){ return x.rec; }) : REC;
+  KEYS.forEach(function(k, i){ var d=dd(k[0]); if (!d) return; var c={};
+    pool.forEach(function(r){ if (passRec(r, st, i)) (r.f[k[0]]||[]).forEach(function(v){ c[v]=(c[v]||0)+1; }); });
+    d.querySelectorAll('.filter-dd-opt').forEach(function(o){ o.querySelector('.n').textContent=c[o.querySelector('input').value]||0; });
+    hideAbsent(d);
+    var s=st[i], b=d.querySelector('.filter-dd-btn');
+    b.textContent=b.dataset.label+(s.vals.length?': '+(s.exclude?'Exclude ':'Include ')+s.vals.length:'');
+    d.classList.toggle('active', s.vals.length>0); });
+}
+function hideAbsent(d){ var gone=0;
+  d.querySelectorAll('.filter-dd-opt').forEach(function(o){
+    var off=o.querySelector('.n').textContent==='0' && !o.querySelector('input').checked;
+    o.classList.toggle('filter-dd-opt-gone', off); if (off) gone++; });
+  var note=d.querySelector('.filter-dd-gone');
+  if (!note){ note=document.createElement('div'); note.className='filter-dd-hint filter-dd-gone'; d.querySelector('.filter-dd-options').after(note); }
+  note.textContent=gone ? gone+' other value'+(gone>1?'s are':' is')+' not in '+(last?'the results':'scope') : ''; }
+function scopeNote(){ if (last) return; var r=recsInScope(), eds={}; r.forEach(function(x){ eds[x.ed]=1; });
+  info.textContent=r.length+' article'+(r.length!==1?'s':'')+' in '+Object.keys(eds).length+' volume'
+    +(Object.keys(eds).length!==1?'s':'')+' to search. Type a word, then Search.'; }
+function onListChange(){ counts(); scopeNote();
+  if (last) partial.hidden=false, partial.textContent='The lists changed since this search: press Search to apply them.'; }
+function wireDropdowns(){
+  document.querySelectorAll('.filter-dd').forEach(function(d){
+    var btn=d.querySelector('.filter-dd-btn'), panel=d.querySelector('.filter-dd-panel'), box=d.querySelector('.filter-dd-search');
+    btn.dataset.label=btn.textContent;
+    btn.addEventListener('click', function(e){ e.stopPropagation(); var open=panel.hidden;
+      document.querySelectorAll('.filter-dd-panel').forEach(function(p){ p.hidden=true; }); panel.hidden=!open; if (open) box.focus(); });
+    panel.addEventListener('click', function(e){ e.stopPropagation(); });
+    d.querySelectorAll('input[type=checkbox], input[type=radio]').forEach(function(c){ c.addEventListener('change', onListChange); });
+    box.addEventListener('input', function(){ var t=fold(box.value.trim());
+      d.querySelectorAll('.filter-dd-opt').forEach(function(o){ o.hidden=!!t && fold(o.querySelector('span').textContent).indexOf(t)<0; }); });
+    d.querySelector('.filter-dd-clear').addEventListener('click', function(){
+      d.querySelectorAll('.filter-dd-options input:checked').forEach(function(c){ c.checked=false; }); onListChange(); });
+  });
+  document.addEventListener('click', function(){ document.querySelectorAll('.filter-dd-panel').forEach(function(p){ p.hidden=true; }); });
+}
+// ---- search: the button or Enter only; the shared pop-up (SEARCH_LOAD_JS busy*); volumes one
+// at a time, CHUNK records between looks at Cancel; a cancelled search shows what it found
+var FIELDS=['title','cite','author','path','k','text'], CHUNK=150, where=document.getElementById('in');
+function hrefOf(r, term, mode, inn){
+  var parts=r.k.split('#'), corpus=r.k.split('_')[0];
+  return (PAGES[corpus]||'')+parts[0]+'.html?q='+encodeURIComponent(term)+'&w='+mode
+    +(inn==='title'?'&in=title':'')+(parts[1]?'#'+parts[1]:'');
+}
+function controls(on){ setControls([q,w,where,goBtn].concat([].slice.call(document.querySelectorAll('.filter-dd-btn'))), on); }
+function search(){
+  var term=q.value.trim(), mode=w.value, inn=where.value, fields=inn==='title' ? ['title'] : FIELDS;
+  if (!term){ q.focus(); info.textContent='Type a word, then Search.'; return; }
+  if (SEARCH_FROM_DISK){ info.textContent=DISK_NOTE; return; }
+  var scope=recsInScope(), want={}, eds=[];
+  scope.forEach(function(r){ (want[r.ed]=want[r.ed]||{})[r.id]=r; });
+  eds=EDS.filter(function(e){ return want[e.edition]; });
+  if (!eds.length){ info.textContent='No article is left by the lists above.'; return; }
+  var job=busyOpen('Searching “'+term+'”'), found=[], k=0; controls(false);
+  function finish(){
+    controls(true);
+    last={term:term, mode:mode, inn:inn, done:k, total:eds.length, cancelled:job.cancelled};
+    results=found; page=1; draw(); counts();
+    if (job.cancelled) return busyClose();
+    busyDone(found.length+' result'+(found.length!==1?'s':'')+' in '+eds.length+' volume'+(eds.length!==1?'s':'')+'.',
+             function(){ goBtn.focus(); });
+  }
+  (function next(){
+    if (job.cancelled || k>=eds.length) return finish();
+    var e=eds[k], name=e.corpus+' '+e.designation, here=want[e.edition];
+    busyProgress(k/eds.length, 'Loading '+name+' ('+(k+1)+' of '+eds.length+')…');
+    loadOne(e.edition).then(function(recs){
+      var at=0;
+      (function step(){
+        if (job.cancelled) return finish();
+        for (var end=Math.min(at+CHUNK, recs.length); at<end; at++){
+          var r=recs[at], rec=here[r.id], hits=0; if (!rec) continue;     // left out by a list
+          fields.forEach(function(f){ if (r[f]) hits+=findAll(r[f],term,mode).length; });
+          if (hits) found.push({r:r, e:e, rec:rec, n:inn==='title' ? 0 : findAll(r.text||'',term,mode).length}); }
+        busyProgress((k+(recs.length ? at/recs.length : 1))/eds.length,
+                     'Searching '+name+' ('+(k+1)+' of '+eds.length+') · '+found.length+' found so far');
+        if (at<recs.length) setTimeout(step, 0); else { k++; setTimeout(next, 0); }
+      })();
+    });
+  })();
+}
+function snippet(text, term, mode){ var h=findAll(text,term,mode); if (!h.length) return '';
+  var a=Math.max(0,h[0][0]-90), b=Math.min(text.length,h[0][1]+90);
+  return (a?'… ':'')+markHtml(text.slice(a,b),term,mode)+(b<text.length?' …':''); }
+function draw(){
+  // marks and links follow the search that made these results, not what is typed now
+  var term=last?last.term:'', mode=last?last.mode:w.value, inn=last?last.inn:'all', pages=Math.max(1,Math.ceil(results.length/SIZE));
+  page=Math.min(Math.max(1,page),pages);
+  // a title-only search marks the title alone: that is all it looked at
+  var m=function(s){ return markHtml(String(s||''),term,mode); }, mo=inn==='title' ? esc : m;
+  tb.innerHTML=results.slice((page-1)*SIZE, page*SIZE).map(function(x){
+    var r=x.r, f=x.rec.f, href=hrefOf(r,term,mode,inn);
+    var facts=['dynasty','king','century','place'].map(function(k){ return (f[k]||[]).join(', '); }).filter(Boolean).join(' · ');
+    return '<tr class="go-row" data-href="'+esc(href)+'"><td>'+esc(r.corpus)+'</td><td>'+esc(x.e.designation)+'</td><td><a href="'+esc(href)+'">'+m(r.title)+'</a>'
+      +(r.path?'<span class="where">'+mo(r.path)+'</span>':'')
+      +'<span class="where">'+mo(r.cite)+' · '+mo(r.k)+(facts?' · '+esc(facts):'')+'</span>'
+      +'<span class="snip">'+(inn==='title' ? 'Match in the title' : x.n ? snippet(r.text,term,mode) : 'Match in the title, author or citation')+'</span></td>'
+      +'<td>'+mo(r.author)+'</td><td class="n">'+x.n+'</td></tr>'; }).join('');
+  if (last){
+    info.textContent=results.length+' result'+(results.length!==1?'s':'')+' for “'+last.term+'” in '
+      +last.done+' of '+last.total+' volume'+(last.total!==1?'s':'');
+    partial.hidden=!last.cancelled;
+    partial.textContent='PARTIAL RESULTS: the search was cancelled after '+last.done+' of '+last.total
+      +' volume'+(last.total!==1?'s':'')+'. Search again to see them all.';
+  }
+  pager.hidden=pages<2;
+  pager.querySelector('span').textContent='page '+page+' of '+pages;
+  pager.querySelector('.prev').disabled=page<=1; pager.querySelector('.next').disabled=page>=pages;
+}
+pager.querySelector('.prev').addEventListener('click', function(){ page--; draw(); });
+pager.querySelector('.next').addEventListener('click', function(){ page++; draw(); });
+// the whole row opens the article; a click that selects text, or a ctrl/middle click on the
+// title link, keeps its usual meaning
+tb.addEventListener('click', function(e){
+  var tr=e.target.closest('tr.go-row'); if (!tr || e.target.closest('a')) return;
+  if (String(window.getSelection())) return;
+  if (e.ctrlKey || e.metaKey) window.open(tr.dataset.href, '_blank'); else location.href=tr.dataset.href; });
+goBtn.addEventListener('click', search);
+searchOnEnter(q, search);
+// ---- start: the volumes and every article's filter values
+function getJson(f){ return fetch(SEARCH_BASE+f).then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); }); }
+Promise.all([getJson('editions.json'), getJson('filters.json').catch(function(){ return {}; })]).then(function(got){
+  EDS=got[0].sort(function(a,b){ return (a.corpus+'').localeCompare(b.corpus) || a.sort-b.sort; });
+  EDS.forEach(function(e){ ED[e.edition]=e; });
+  Object.keys(got[1]).forEach(function(ed){ var e=ED[ed]; if (!e) return;
+    got[1][ed].forEach(function(x){ var f=Object.assign({}, x.f, {corpus:[e.corpus], volume:[ed]});
+      REC.push({ed:ed, id:x.id, f:f}); }); });
+  var names=window.CORPUS_NAMES||{}, vals={};
+  KEYS.forEach(function(k){ vals[k[0]]={}; });
+  REC.forEach(function(r){ KEYS.forEach(function(k){ (r.f[k[0]]||[]).forEach(function(v){ vals[k[0]][v]=1; }); }); });
+  var order=function(k, a, b){
+    if (k==='century'){ var x=parseInt(a,10)||0, y=parseInt(b,10)||0; return x-y || a.localeCompare(b); }
+    return fold(a).localeCompare(fold(b)); };
+  document.getElementById('dds').innerHTML=KEYS.map(function(k){
+    var key=k[0], opts;
+    if (key==='volume') opts=EDS.filter(function(e){ return vals.volume[e.edition]; }).map(function(e){
+      return [e.edition, e.corpus+' '+e.designation+(e.year?' ('+e.year+')':'')]; });
+    else opts=Object.keys(vals[key]).sort(function(a,b){ return key==='corpus' ? 0 : order(key,a,b); })
+      .map(function(v){ return [v, key==='corpus' ? (names[v]||v) : v]; });
+    return opts.length ? ddHtml(key, k[1], opts) : '';
+  }).join('');
+  wireDropdowns(); counts(); scopeNote();
+}).catch(function(){ info.textContent=SEARCH_FROM_DISK ? DISK_NOTE : 'The list of volumes (search/editions.json) could not be read.'; });
+</script><script>var s=document.getElementById('subscribeLink'); if (s) s.addEventListener('click', function(){ if (typeof gtag==='function') gtag('event','subscribe_click'); });</script>
+</body>
+</html>

@@ -69,6 +69,8 @@ h1.ah-title { font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem;
               line-height: 1.25; margin: .45rem 0 .3rem; }
 .ah-author { font-variant: small-caps; font-size: 1.05rem; }
 .ah-ref { color: var(--muted); font-size: .82rem; margin-top: .35rem; }
+.ext-icon { margin-left: .2em; vertical-align: -1px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 h2.printed-title { font-size: 1.1rem; line-height: 1.35; margin: .4rem 0; }
 .page { display:flex; gap:.5rem; align-items:center; color:var(--muted); font-size:.8rem; margin:1.6rem 0 .6rem; }
 .page::before, .page::after { content:""; flex:1; border-top:1px solid var(--line); }
@@ -133,8 +135,26 @@ table.idx { border-collapse: collapse; width: 100%; font-size: 14px; font-family
 .filter-dd-opt[hidden] { display: none; }
 .filter-dd-opt span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .filter-dd-opt .n { font-style: normal; font-size: .75rem; color: var(--text-dim); }
-.filter-dd-opt-unavailable { opacity: .4; cursor: not-allowed; }
-.filter-dd-opt-unavailable:hover { background: none; }
+.filter-dd-opt-gone { display: none !important; }
+button.go { padding: 8px 16px; font: inherit; font-weight: 600; border-radius: 7px; cursor: pointer;
+  border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+button:disabled, input:disabled, select:disabled { opacity: .5; cursor: default; }
+.partial { margin: .6rem 0; padding: .5rem .8rem; border-radius: 7px; font-size: .9rem; font-weight: 600;
+  background: #fff3cd; color: #6b4e00; border: 1px solid #e6c766; }
+.partial[hidden] { display: none; }
+.busy { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center;
+  justify-content: center; z-index: 100; }
+.busy[hidden] { display: none; }
+.busy-box { background: var(--surface); color: var(--text); border-radius: 10px; padding: 1.2rem 1.4rem;
+  width: min(26rem, 92vw); box-shadow: var(--shadow); }
+.busy-box h2 { font-size: 1.05rem; margin: 0 0 .6rem; }
+.busy-bar { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; margin: .6rem 0; }
+.busy-bar div { height: 100%; width: 0; background: var(--accent); transition: width .15s; }
+.busy-box .meta { min-height: 1.3em; }
+.busy-actions { display: flex; justify-content: flex-end; gap: .5rem; margin-top: .8rem; }
+.busy-actions button { padding: 6px 16px; font: inherit; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+.busy-actions button.ok { border-color: var(--accent); background: var(--accent); color: #fff; }
 .filter-dd-actions { display: flex; justify-content: flex-end; }
 .filter-dd-clear { padding: 4px 10px; cursor: pointer; background: none; border: 1px solid var(--border);
   border-radius: 6px; color: var(--text-dim); font-family: inherit; font-size: 12.5px; }
@@ -247,6 +267,12 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
   .card h3 { margin: 0 0 0.3rem 0; font-size: 1rem; }
   .card p { margin: 0; color: var(--text-dim); }
   .card.soon { opacity: 0.85; }
+  .card .src { margin-top: .4rem; font-size: .85rem; }
+  .src-list { padding-left: 1.2rem; } .src-list li { margin: .25rem 0; }
+  ol.how { padding-left: 1.4rem; } ol.how li { margin-bottom: 1rem; }
+  ol.how h3 { font-size: 1rem; margin: 0 0 .2rem; } ol.how p { margin: 0; }
+  .ext-icon { margin-left: .2em; vertical-align: -1px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .badge {
     display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.03em;
     text-transform: uppercase; color: var(--accent-copper-strong); background: var(--surface-2);
@@ -267,11 +293,12 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <div class="brand">Project InscriptionSearch: Articles</div>
 <div class="titlebar"><h1><a href="../../" class="home-link" title="Home"><img src="../../images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> Epigraphia Indica</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
 <main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a></p>
-<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. XVIII · No. 38<span class=ah-part> · Part VII</span></div><h1 class="ah-title">Polonnaruva inscription of Vijayabahu I</h1><div class="ah-author">S. Paranavitana</div><div class="ah-ref">Printed p. 330 · PDF pp. 434–457</div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 330</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 331</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 332</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 333</button><button type="button" class="tab t-page" role="tab" data-i="4">p. 334</button><button type="button" class="tab t-page" role="tab" data-i="5">p. 335</button><button type="button" class="tab t-page" role="tab" data-i="6">p. 336</button><button type="button" class="tab t-page" role="tab" data-i="7">p. 337</button><button type="button" class="tab t-page" role="tab" data-i="8" title="page number not read from the scan; counted from the pages around it">p. 338</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page" id="p-330">p. 330 · PDF 434</div>
+<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. XVIII · No. 38<span class=ah-part> · Part VII</span></div><h1 class="ah-title">Polonnaruva inscription of Vijayabahu I</h1><div class="ah-author">S. Paranavitana</div><div class="ah-ref">Printed p. 330 · PDF pp. 434–457 · <a href="https://archive.org/details/mpl.411.754.epi.18.944" class="src-link" target="_blank" rel="noopener" title="Opens archive.org in a new tab">Source scan<svg class="ext-icon" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" focusable="false"><path d="M9 2h5v5M14 2 7.5 8.5M12 9.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only"> (opens archive.org in a new tab)</span></a></div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 330</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 331</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 332</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 333</button><button type="button" class="tab t-page" role="tab" data-i="4">p. 334</button><button type="button" class="tab t-page" role="tab" data-i="5">p. 335</button><button type="button" class="tab t-page" role="tab" data-i="6">p. 336</button><button type="button" class="tab t-page" role="tab" data-i="7">p. 337</button><button type="button" class="tab t-page" role="tab" data-i="8" title="page number not read from the scan; counted from the pages around it">p. 338</button><span class=tsep></span><span class="tg">Plates</span><button type="button" class="tab t-plate" role="tab" data-i="9">Plate 1</button><button type="button" class="tab t-plate" role="tab" data-i="10">Plate 2</button><button type="button" class="tab t-plate" role="tab" data-i="11">Plate 3</button><button type="button" class="tab t-plate" role="tab" data-i="12">Plate 4</button><button type="button" class="tab t-plate" role="tab" data-i="13">Plate 5</button><button type="button" class="tab t-plate" role="tab" data-i="14">Plate 6</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page" id="p-330">p. 330 · PDF 434</div>
 <h2 class="printed-title"><h4>No. 38.—POLONNARUVA INSCRIPTION OF VIJAYABAHU I.</h4></h2>
 <p class="byline"><p>BY S. PARANAVITANA, OOTACAMUND.</p></p>
 <p>The subjoined inscription is engraved on a stone slab lying to the west of <i>Vihāra</i> No. 1, about 50 feet north-east of the Latāmanđāpaya in <b>Polonnaruva</b>, the mediaeval capital of the kings of Ceylon. It was first discovered and brought to notice by Mr. H. C. P. Bell, C.C.S., the late Archæological Commissioner of Ceylon, who sent inked estampages of it, for examination, to the Government Epigraphist for India. Mr. H. Krishna Sastri in his <i>Annual Report on Epigraphy</i> for the year 1913, has discussed the historical importance of this record. An account of the inscription, with a translation of it, has also been published by Mr. H. C. P. Bell in the <i>Annual Report of the Archæological Survey of Ceylon</i> for the year 1911-12. The text of the inscription has recently been published in the <i>South-Indian Inscriptions (Texts)</i>, Vol. IV (No. 1396). The present article is prepared with the help of an impression preserved in the office of the Government Epigraphist for India, and of another kindly supplied by the Archæological Commissioner of Ceylon. I am much indebted to Rao Bahadur H. Krishna Sastri and</p>
-<div class="notes"><p><sup id="fn-1-1">1</sup> Expressed by a symbol.</p><p><sup id="fn-1-2">2</sup> Correct <i>bhavantiu</i> or <i>Bhavam tri</i>. The metre seems to be <i>upajāti</i> although the first <i>akshara</i> of the second line does not conform to the scanning. [What is meant here is probably Bhavam Tri(Tri)-nētram.—Ed.]</p><p><sup id="fn-1-3">3</sup> Possibly this is to be corrected '<i>lōkyām</i>' or '<i>lōchyam</i>'.</p><p><sup id="fn-1-4">4</sup> This expression is repeated at the end of the third verse, in line 3. The correct reading is possibly '<i>Bhagavatī tu Sūryah</i>' or '<i>Bhagavāms=tu Sūryah</i>'.</p><p><sup id="fn-1-5">5</sup> The metre is probably <i>upajāti</i>, but the fifth <i>akshara</i> is short instead of long. [The original reads <i>Śatv-āstu</i>.—Ed.]</p><p><sup id="fn-1-6">6</sup> Apparently <i>martyulōkē</i> is intended. <sup id="fn-1-7">7</sup> [The original has <i>varnna</i>.—Ed.]</p><p><sup id="fn-1-8">8</sup> <i>va</i> ia written below the line. <sup id="fn-1-9">9</sup> Correct <i>Pratimā</i>.</p><p><sup id="fn-1-10">10</sup> Correct <i>bhaktānām</i> (?). [The original reads <i>bhaktyārnāh</i>.—Ed.]</p></div></section>
+<div class="notes"><p><sup id="fn-1-1">1</sup> Expressed by a symbol.</p><p><sup id="fn-1-2">2</sup> Correct <i>bhavantiu</i> or <i>Bhavam tri</i>. The metre seems to be <i>upajāti</i> although the first <i>akshara</i> of the second line does not conform to the scanning. [What is meant here is probably Bhavam Tri(Tri)-nētram.—Ed.]</p><p><sup id="fn-1-3">3</sup> Possibly this is to be corrected '<i>lōkyām</i>' or '<i>lōchyam</i>'.</p><p><sup id="fn-1-4">4</sup> This expression is repeated at the end of the third verse, in line 3. The correct reading is possibly '<i>Bhagavatī tu Sūryah</i>' or '<i>Bhagavāms=tu Sūryah</i>'.</p><p><sup id="fn-1-5">5</sup> The metre is probably <i>upajāti</i>, but the fifth <i>akshara</i> is short instead of long. [The original reads <i>Śatv-āstu</i>.—Ed.]</p><p><sup id="fn-1-6">6</sup> Apparently <i>martyulōkē</i> is intended. <sup id="fn-1-7">7</sup> [The original has <i>varnna</i>.—Ed.]</p><p><sup id="fn-1-8">8</sup> <i>va</i> ia written below the line. <sup id="fn-1-9">9</sup> Correct <i>Pratimā</i>.</p><p><sup id="fn-1-10">10</sup> Correct <i>bhaktānām</i> (?). [The original reads <i>bhaktyārnāh</i>.—Ed.]</p></div>
+<p class="plate-note"><a href="#plate-1">Plate 1</a> is bound after this page.</p></section>
 <section class="pg pg-page" role="tabpanel" data-i="1"><div class="page" id="p-331">p. 331 · PDF 437</div>
 <p>Mr. K. V. Subrahmanya Aiyar for many suggestions, and for the kind encouragement given to me in preparing this paper.</p>
 <p>The slab on which the inscription is engraved measures 8' 2" by 2' 6". There are 49 lines of writing on it. The stone had been planed and ruled before the letters were engraved. The writing, which has been well executed, is in a fairly good state of preservation—the average size of the letters being about 1 inch in height. The <b>characters</b> used in the record are Grantha and Tamiļ. They agree, on the whole, with those of the Tamiļ inscriptions of the contemporary Chōļa kings on the mainland of South India. The following facts, however, are noteworthy. The <i>pullī</i> or <i>virāma</i> sign, which is generally not used in most of the Tamiļ inscriptions in the South India of the mediaeval age, is here invariably indicated by a small vertical stroke, written over the letter, <i>e.g. in vaļi vanda</i> (l. 7). The <i>anusvāra</i> is generally written over the letter, at its top. The first five lines consist of a <b>Sanskrit</b> verse in the <i>Šārdūlavikrīđita</i> metre, and the rest of the inscription is in <b>Tamiļ</b> prose, where, however, there is a great admixture of Sanskrit words. In the Sanskrit portion the rules of <i>sandhi</i> have not been observed in one place, <i>i.e. *kārshīt+śrī</i> (l. 2). It is interesting to note that, in the Tamiļ passage, the following <b>old Sinhalese words</b> are used with <b>Tamiļ inflexions</b> in some cases:—</p>
@@ -309,7 +336,12 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <p>Out of the <b>places</b> mentioned in this record, <b>Anurādhapura</b> is the well-known capital of the ancient Sinhalese kings. <b>Arumana</b> has already been identified with Rāmañnadēsa, <i>i.e.</i> Lower Burma. <b>Pulanari</b>, also called Vijayarājapura in the inscription, evidently after King Vijayabāhu I, is the same as Poionnaruwa (Pulastipura)<sup class="fn"><a href="#fn-7-3">3</a></sup>, and was the mediaeval Sinhalese Capital. In Chōļa inscriptions found in Ceylon this city is also called Jananāthamaṅgalam. There are extensive ruins of the many monasteries, palaces and other public buildings with which it was adorned in the days of its splendour.</p>
 <h3 id="text"><h4>TEXT.</h4></h3>
 <div class="lines"><ol style="list-style-type: none;"><li>1 Švasti Šriļ [||*] <b>Larnkāyārn</b> Jina-danta-dhātu-bhavanam yad=Dēva-</li><li>2 sēnādhipō=kārshīt śrī-Vijayādibāhunṛivar-ādēś[ā]-</li><li>3 t Pulastēh purē [|*] <b>Vēļaikkāra</b>-samā[hritā]n tad=api ta-</li><li>4 t-paryyanta-dēvālayān Vēļaikkāra-balāni pā-</li><li>5 ntu<sup class="fn"><a href="#fn-7-4">4</a></sup> nitarām=ā-kalpa-sandhēr=bhuvi [||*] Namō <b>Buddhāya</b> [||*]</li><li>6 Šrī-Larnkā-dvīpattu <b>Sūrya-varnśattu</b> Ikshvāku[vi]-</li><li>7 n vaļi-vanda anēka-šatru-vijayam paṇṇi <b>Anur[ā]-</b></li><li>8 <b>dhapuram</b> pukku Buddha-śāsanam rakshikka vēṇđi sa-</li><li>9 ṅgha-niyōgattāl tiru-muđī-śūđi <b>Arumanattilni-</b></li><li>10 ṇrum saṅgattārai aļaippittu mūṇru nikāya-</li><li>11 ttu saṅgha-śuddhi paṇṇuvittu mūṇru tulābhāram</li><li>12 mūṇru nikāyattukku kuđuttu daśa-rāja-dharmattāl</li><li>13 aiñbatt-ayy-āṇđu <b>Ilaṅgai-</b>muļudum oru-kuđai-ni[la]-</li><li>14 ṛri=ttiruv-irājyañ-cheyd-aruļi eļupattu mūv-āṇđu tiru-na-</li><li>15 kshatrañ=cheluttina Kō-śrī-<b>Saṅghabōdhi-vatmar-āṇa</b> chakravarttī-</li><li>16 ga] śrī-Vijayabāhudēvar=anuvāgal <b>Dē[va]-sēnevirattar-</b></li></ol></div>
-<div class="notes"><p><sup id="fn-7-1">1</sup> <i>A. R. on Epigraphy</i> for 1913 p 109.</p><p><sup id="fn-7-2">2</sup> <i>Ibid</i> for 1913, p. 97.</p><p><sup id="fn-7-3">3</sup> This is a name in which at least we see the Puranic allusion to Pulasti Brahmā, an ancestor of Rāvaṇa, the giant king of Ceylon.</p><p><sup id="fn-7-4">4</sup> <i>S. I. I.</i> Texts Vol. IV, No. 1396 reads <i>yūntu</i>.</p></div></section>
+<div class="notes"><p><sup id="fn-7-1">1</sup> <i>A. R. on Epigraphy</i> for 1913 p 109.</p><p><sup id="fn-7-2">2</sup> <i>Ibid</i> for 1913, p. 97.</p><p><sup id="fn-7-3">3</sup> This is a name in which at least we see the Puranic allusion to Pulasti Brahmā, an ancestor of Rāvaṇa, the giant king of Ceylon.</p><p><sup id="fn-7-4">4</sup> <i>S. I. I.</i> Texts Vol. IV, No. 1396 reads <i>yūntu</i>.</p></div>
+<p class="plate-note"><a href="#plate-2">Plate 2</a> is bound after this page.</p>
+<p class="plate-note"><a href="#plate-3">Plate 3</a> is bound after this page.</p>
+<p class="plate-note"><a href="#plate-4">Plate 4</a> is bound after this page.</p>
+<p class="plate-note"><a href="#plate-5">Plate 5</a> is bound after this page.</p>
+<p class="plate-note"><a href="#plate-6">Plate 6</a> is bound after this page.</p></section>
 <section class="pg pg-page" role="tabpanel" data-i="7"><div class="page" id="p-337">p. 337 · PDF 455</div>
 <div class="lines"><p>17 kku niyögittu=<b>Ppulanariy-āṇa</b> Vijayarājapurattu eđup-<br/>18 pitta Mülasthānam-āgiya <b>Abhayagiri-mahā-vihārattu</b> agr-ā-<br/>19 yatanam-āṇa<sup class="fn"><a href="#fn-8-1">1</a></sup> Uttorulmülaiyil müv-ulagukkuñ=chikāmañi-<br/>20 y-āgiya <b>Daladā-Pātra-dhātu-svāmidēvargaļukku</b> nitya=vāsa-bhavana-<br/>21 m-āṇa pratham-ābhishēgattukku mañgala-griham-āṇa āttānđu-<br/>22 dörun=tiru-nayana-möksham pañni añjaṇa nīrükkum<br/>23 kaññlaān=cheyyum mañgala-mahā-śilāmaya-Buddha-<br/>24 dēvarkku gandhakutiy-āṇa <b>Daladāy-pperum-balli</b> uñga-<br/>25 ļ rakshay-āga vēnđum=eñrü sakala-śāstr-āgama-śil-ā-<br/>26 chāra-sampannar-āṇa Rāja-guru Uturulmulaiyil <b>Vyāriñi Mu-</b><br/>27 <b>galan Mahāsthavirar</b> rāj-āmatyaröđun=küđa eļundaruliy=i-<br/>28 rundu eñgaļai alaittu aruli-chcheydamaiyil Mā-tantirat-<br/>29 tön=küđi eñgaļukku mütädaigal-āy-ulļa <b>Valañjeyaraiyum</b> e-<br/>30 ñgaļöđu küđivarum=<b>Nagarattär-ulļittöraiyum=kütti</b> Münřu-<br/>31 kai-ttiru-Vēlaikkārą Daladāy-pperum-balliy-eñrü<br/>32 tiru-nāmañ=chätti eñgaļ=ařam-āy eñgaļ käval-āy nirka-<br/>33 vēnđum=eñrü ařañ-gävalukku pađai-ppađaiyäl<sup class="fn"><a href="#fn-8-2">2</a></sup> ör[ö]-<br/>34 śēvagaraiyum örö-vēli nilamum=iťtu=kkuđuttu i-p-<br/>35 palli nökkina ürgaļum pariväramum panđäramum abha-<br/>36 yam-pukkäraiyum patťuñ=ketťuñ-käkkak=kađavõm=āga-<br/>37 vum alivupatť-iđañgal<sup class="fn"><a href="#fn-8-3">3</a></sup> alivu śörndum eñgaļ anva-<br/>38 yam=ulļadañaiyum=eññänřum=idukku vēnđuvañav-e-<br/>39 llän=cheyvõm=āgavum pañniṇa inda vyavasthai chandr-ā-<br/>40 dityavarai nirřad-āga=kkaiy-vinäv=ěrři=chchembiluñ=kalli-<br/>41 lum vetťuvittu=kkuđuttõm Valañgai Iđañgai Ši-<br/>42 rudanam Pilļaigaļdanam Vađugar Malaiyälar Parivärak=<br/>43 kondam pala-kalañaiyum-ulļitta tiru-Velaikkāra-<br/>44 rõm [||*] Ippađi tirambuvänüm tiramba=chcholluvänu-<br/>45 m tiramba chchammadippänüm Mā-tantirattukku=ppilaitta<br/>46 pađai-ppagaiyan pañcha-mahā-pätakañ-cheydänüm tēvar-<br/>47 püdar-mä-tavattörkku=kkuđuttaṇa kollüm kođum-<br/>48 päviyum Buddha-Dharmma-Sañgha-ratnañgaļukku=ppilaittä-<br/>49 num pugun=naragam puguvän [||*] Ařa=mařavařka [*] Svasti Šrih [||*]</p></div>
 <h3 id="translation"><h4>TRANSLATION.</h4></h3>
@@ -321,7 +353,13 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <p>(Ll. 25-39.) As the <b>Mahāsthavira Vyāriṇi</b><sup class="fn"><a href="#fn-9-5">5</a></sup> <b>Mugalan</b>, the royal preceptor, well versed in all the sciences and scriptures, of good conduct and behaviour, who, being gloriously seated in the <b>Uturulmuļa</b> (monastery) along with the ministers of the king was pleased to call us to his presence and said “The great temple of the Tooth Relic should be under your protection,” we, of the <b>Mahātantra</b>, having called together the <b>Vaļañjiyar</b>, who are our leaders, and the <b>Nagarattār</b> and others, who always accompany us, gave it the sacred name of “<i>Mūņru-kai-tiru-vēļaikkāraṇ Daladāy-pperumpallī</i>” (<i>i.e.</i> the great temple of the Tooth Relic of the Vēļaikkāras of the three hands), and to make it remain as our charity and under our protection, assigned for the protection of this charity one servant and one <i>vēli</i> of land (<i>for ķis maintenance</i>), from each regiment ; and bound ourselves to protect the villages under the supervision of this temple (<i>pallī</i>), its servants and treasures, as well as the men seeking its shelter, even though (<i>we may</i>) suffer ruin or loss ; and to always provide for all the requirements of this (<i>temple</i>), so long as our community continues to exist, repairing such parts (<i>of the temple</i>) as get dilapidated.</p>
 <p>(Ll. 39-44.) In order that the agreement thus given may last as long as the Moon and the Sun (endure), we, the exalted Vēļaikkāras, consisting of the Valaņgai, Iđaņgai, Širudanam, Pilļai-gaļdanam, Vađugar, Malaiyālar, Parivārakkondam and various other classes of workmen (<i>pala-kalaṇai</i>) attested it (<i>i.e.</i> the agreement) with our own hands, and caused it to be engraved on copper and stone.</p>
 <p>(Ll. 44-49.) Whose acts against this, or acquiesces in doing wrong to this, shall enter the hell wherein fall those enemies of the (<i>Vēļaikkāra</i>) regiments, who have wronged the <b>Mahātantra</b>, those who have committed the five great sins,<sup class="fn"><a href="#fn-9-6">6</a></sup> those heinous sinners who have robbed what have been given to gods, <i>bhūtas</i>, and the great ascetics, and those who have wronged the (<i>three</i>) gems, (<i>to wit</i>), the <i>Buddha</i>, the <i>Dharma</i>, and the <i>Sañgha</i>. Forget not charity ! Hail ! Prosperity !</p>
-<div class="notes"><p><sup id="fn-9-1">1</sup> <i>Tulābhāra</i> is weighing one's self against gold or other precious substances and giving away the same in charity.</p><p><sup id="fn-9-2">2</sup> The ten principles of regal duty as explained in Pali books are, charity (<i>dāna</i>), piety (<i>sīla</i>), liberality (<i>parichchāga</i>), rectitude (<i>ajjavam</i>), gentleness (<i>majjava</i>), religious austerity (<i>tapam</i>), freedom from wrath (<i>akkōdhō</i>), humanity (<i>avihimsā</i>), forbearance (<i>khanti</i>), and the state of having no enmity (<i>avirōdhatā</i>).</p><p><sup id="fn-9-3">3</sup> The correct reading <i>Nuvaragal</i> in place of <i>anuvāgal</i> is due to Codrington.</p><p><sup id="fn-9-4">4</sup> <i>Gandhakuti</i> (perfumed chamber) was the name given to the part of the <i>vihāra</i> occupied by the Buddha himself, when he was alive.</p><p><sup id="fn-9-5">5</sup> It is doubtful whether <i>Vyāriṇi</i> formed a part of the name of the monk. No such name is met with any-where as the name of a Buddhist monk. I am not able to give any other explanation of this word.</p><p><sup id="fn-9-6">6</sup> The five great sins according to the Buddhists are :—(1) the murdering of one's father, (2) the murdering of one's mother, (3) killing an arhat or saint, (4) shedding the blood of a Buddha, (5) causing schism in the Order. According to the Hindu Law-books they are :—(1) killing a Bršhmaṇa, (2) drinking intoxicating liquor, (3) theft, (4) committing adultery with the wife of a religious teacher, and (5) associating with any one guilty of these crimes.</p></div></section></div></main>
+<div class="notes"><p><sup id="fn-9-1">1</sup> <i>Tulābhāra</i> is weighing one's self against gold or other precious substances and giving away the same in charity.</p><p><sup id="fn-9-2">2</sup> The ten principles of regal duty as explained in Pali books are, charity (<i>dāna</i>), piety (<i>sīla</i>), liberality (<i>parichchāga</i>), rectitude (<i>ajjavam</i>), gentleness (<i>majjava</i>), religious austerity (<i>tapam</i>), freedom from wrath (<i>akkōdhō</i>), humanity (<i>avihimsā</i>), forbearance (<i>khanti</i>), and the state of having no enmity (<i>avirōdhatā</i>).</p><p><sup id="fn-9-3">3</sup> The correct reading <i>Nuvaragal</i> in place of <i>anuvāgal</i> is due to Codrington.</p><p><sup id="fn-9-4">4</sup> <i>Gandhakuti</i> (perfumed chamber) was the name given to the part of the <i>vihāra</i> occupied by the Buddha himself, when he was alive.</p><p><sup id="fn-9-5">5</sup> It is doubtful whether <i>Vyāriṇi</i> formed a part of the name of the monk. No such name is met with any-where as the name of a Buddhist monk. I am not able to give any other explanation of this word.</p><p><sup id="fn-9-6">6</sup> The five great sins according to the Buddhists are :—(1) the murdering of one's father, (2) the murdering of one's mother, (3) killing an arhat or saint, (4) shedding the blood of a Buddha, (5) causing schism in the Order. According to the Hindu Law-books they are :—(1) killing a Bršhmaṇa, (2) drinking intoxicating liquor, (3) theft, (4) committing adultery with the wife of a religious teacher, and (5) associating with any one guilty of these crimes.</p></div></section>
+<section class="pg pg-plate" role="tabpanel" data-i="9"><div class="page" id="plate-1">Plate 1 · PDF page 435, bound after p. 330</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p435.webp" alt="Plate 1"></figure></section>
+<section class="pg pg-plate" role="tabpanel" data-i="10"><div class="page" id="plate-2">Plate 2 · PDF page 447, bound after p. 336</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p447.webp" alt="Plate 2"></figure></section>
+<section class="pg pg-plate" role="tabpanel" data-i="11"><div class="page" id="plate-3">Plate 3 · PDF page 448, bound after p. 336</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p448.webp" alt="Plate 3"></figure></section>
+<section class="pg pg-plate" role="tabpanel" data-i="12"><div class="page" id="plate-4">Plate 4 · PDF page 449, bound after p. 336</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p449.webp" alt="Plate 4"></figure></section>
+<section class="pg pg-plate" role="tabpanel" data-i="13"><div class="page" id="plate-5">Plate 5 · PDF page 451, bound after p. 336</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p451.webp" alt="Plate 5"></figure></section>
+<section class="pg pg-plate" role="tabpanel" data-i="14"><div class="page" id="plate-6">Plate 6 · PDF page 452, bound after p. 336</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p452.webp" alt="Plate 6"></figure></section></div></main>
 <footer>Generated 19 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
 Feedback: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">this form</a>.</footer>
 </div>
@@ -355,6 +393,48 @@ function markHtml(text, term, mode){ // escaped text with <mark>s
   r.forEach(function(x){ out+=e(text.slice(at,x[0]))+'<mark>'+e(text.slice(x[0],x[1]))+'</mark>'; at=x[1]; });
   return out+e(text.slice(at));
 }
+
+var SEARCH_BASE=window.SEARCH_BASE||'search/', SEARCH_TEXT={};
+var SEARCH_FROM_DISK=location.protocol==='file:';
+var DISK_NOTE='The full-text search needs the page opened through a local server '
+  +'(python -m http.server in this folder, then http://localhost:8000/), not from disk.';
+function loadOne(ed){   // an edition's text: from the cache, else fetched (a missing file: none)
+  if (SEARCH_TEXT[ed]) return Promise.resolve(SEARCH_TEXT[ed]);
+  return fetch(SEARCH_BASE+ed+'.json').then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(recs){ SEARCH_TEXT[ed]=recs; return recs; }, function(){ SEARCH_TEXT[ed]=[]; return []; });
+}
+// ---- the search pop-up (user, 2026-11-19), shared by the indexes and Advanced Search: the
+// search starts on the button or Enter only, the controls are off while it runs, the pop-up
+// shows progress and Cancel, then the count with OK; a cancelled search keeps what it found
+var BUSY=null;
+function busyEls(){
+  if (BUSY) return BUSY;
+  var b=document.getElementById('busy');
+  BUSY={box:b, title:b.querySelector('h2'), msg:b.querySelector('.meta'), bar:b.querySelector('.busy-bar div'),
+        cancel:b.querySelector('.cancel'), ok:b.querySelector('.ok'), job:null, onOk:null};
+  BUSY.cancel.addEventListener('click', function(){ if (BUSY.job){ BUSY.job.cancelled=true; BUSY.msg.textContent='Stopping…'; } });
+  BUSY.ok.addEventListener('click', function(){ BUSY.box.hidden=true; if (BUSY.onOk) BUSY.onOk(); });
+  return BUSY;
+}
+function busyOpen(title){ var b=busyEls(); b.job={cancelled:false}; b.title.textContent=title; b.msg.textContent='';
+  b.bar.style.width='0'; b.cancel.hidden=false; b.ok.hidden=true; b.box.hidden=false; return b.job; }
+function busyProgress(frac, msg){ var b=busyEls(); b.bar.style.width=Math.round(Math.min(1,frac)*100)+'%'; b.msg.textContent=msg; }
+function busyDone(msg, onOk){ var b=busyEls(); b.job=null; b.title.textContent='Search finished'; b.bar.style.width='100%';
+  b.msg.textContent=msg; b.cancel.hidden=true; b.ok.hidden=false; b.onOk=onOk||null; b.ok.focus(); }
+function busyClose(){ var b=busyEls(); b.job=null; b.box.hidden=true; }
+function setControls(els, on){ els.forEach(function(el){ if (el) el.disabled=!on; }); }
+// the editions' text one at a time, with progress; cb(how many loaded, cancelled?)
+function loadWithProgress(eds, label, job, cb){
+  var k=0;
+  (function next(){
+    if (job.cancelled || k>=eds.length) return cb(k, job.cancelled);
+    busyProgress(k/eds.length, 'Loading '+label(eds[k])+' ('+(k+1)+' of '+eds.length+')…');
+    loadOne(eds[k]).then(function(){ k++; setTimeout(next, 0); });
+  })();
+}
+// Enter in the box runs the search, as the button does
+function searchOnEnter(box, run){ box.addEventListener('keydown', function(e){
+  if (e.key==='Enter'){ e.preventDefault(); if (!busyEls().job) run(); } }); }
 window.CAT_TERMS={};
 // page tabs: one page shown at a time; #plate-N / #fig-N and search matches open their tab
 var panels=Array.prototype.slice.call(document.querySelectorAll('section.pg'));
@@ -365,10 +445,12 @@ function showTab(i){
   tabBtns.forEach(function(b,k){ b.setAttribute('aria-selected', k===i ? 'true' : 'false'); });
 }
 function showFor(el){ var p=el && el.closest('section.pg'); if (p) showTab(+p.dataset.i); }
-tabBtns.forEach(function(b){ b.addEventListener('click', function(){ showTab(+b.dataset.i); window.scrollTo(0,0); }); });
+var onTab=null; // set by the search marks below: the hits bar follows the page the reader opens
+tabBtns.forEach(function(b){ b.addEventListener('click', function(){ showTab(+b.dataset.i); window.scrollTo(0,0);
+  if (onTab) onTab(+b.dataset.i); }); });
 showTab(0);
 function toHash(){ if (location.hash){ var el=document.getElementById(location.hash.slice(1));
-  if (el){ showFor(el); el.scrollIntoView({block:'start'}); } } }
+  if (el){ showFor(el); el.scrollIntoView({block:'start'}); var p=el.closest('section.pg'); if (p && onTab) onTab(+p.dataset.i); } } }
 window.addEventListener('hashchange', toHash);
 toHash();
 // footnote pop-ups: a mark opens its note beside it; a click elsewhere or Esc closes it
@@ -394,7 +476,8 @@ document.addEventListener('click', function(e){
 });
 document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop(); });
 (function(){
-  var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat');
+  var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat'),
+      titleOnly=ps.get('in')==='title';
   // what to mark: the search term, and the chosen category's matched words (CAT_TERMS)
   var finds=[]; if (term) finds.push([term,mode]);
   if (cat && window.CAT_TERMS && CAT_TERMS[cat]) CAT_TERMS[cat].forEach(function(t){ finds.push([t,'embedded']); });
@@ -403,7 +486,8 @@ document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop
     r.sort(function(a,b){return a[0]-b[0];}); var out=[];
     r.forEach(function(x){ if (out.length && x[0]<out[out.length-1][1]) { out[out.length-1][1]=Math.max(out[out.length-1][1],x[1]); } else out.push(x.slice()); });
     return out; }
-  var main=document.querySelector('main'), walker=document.createTreeWalker(main, NodeFilter.SHOW_TEXT), nodes=[], n;
+  // a title-only search marks the title alone, as that is all it searched
+  var main=document.querySelector('main'), root=(titleOnly && main.querySelector('.ah-title')) || main, walker=document.createTreeWalker(root, NodeFilter.SHOW_TEXT), nodes=[], n;
   while ((n=walker.nextNode())) if (!n.parentNode.closest('.hits')) nodes.push(n);
   var marks=[];
   nodes.forEach(function(node){
@@ -417,11 +501,21 @@ document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop
   var i=0, label=document.createElement('span');
   // every tab holding a match gets the yellow has-match style (as in the inscription popups)
   marks.forEach(function(m){ var p=m.closest('section.pg'); if (p && tabBtns[+p.dataset.i]) tabBtns[+p.dataset.i].classList.add('has-match'); });
-  function go(k){ if (!marks.length) return; marks[i].classList.remove('on'); i=(k+marks.length)%marks.length;
-    showFor(marks[i]); marks[i].classList.add('on'); marks[i].scrollIntoView({block:'center'});
-    label.textContent=' '+(i+1)+' of '+marks.length+' ';}
+  // between: the reader opened a page with no match; i is then the first match after it
+  var between=false, tabOf=function(m){ var p=m.closest('section.pg'); return p ? +p.dataset.i : -1; };
+  function setOn(k){ marks[i].classList.remove('on'); i=k; between=false; marks[i].classList.add('on');
+    label.textContent=' '+(i+1)+' of '+marks.length+' '; }
+  function go(k){ if (!marks.length) return; setOn((k+marks.length)%marks.length);
+    showFor(marks[i]); marks[i].scrollIntoView({block:'center'}); }
   var prev=document.createElement('button'); prev.textContent='◀ previous'; prev.onclick=function(){go(i-1);};
-  var next=document.createElement('button'); next.textContent='next ▶'; next.onclick=function(){go(i+1);};
+  var next=document.createElement('button'); next.textContent='next ▶'; next.onclick=function(){go(between?i:i+1);};
+  onTab=function(t){ if (!marks.length) return;
+    var j=-1; marks.some(function(m,k){ if (tabOf(m)===t){ j=k; return true; } return false; });
+    if (j>=0) return setOn(j);   // the page's first match; the reader is at its top, so no scroll
+    marks[i].classList.remove('on');
+    var after=-1; marks.some(function(m,k){ if (tabOf(m)>t){ after=k; return true; } return false; });
+    i=after>=0 ? after : 0; between=true;
+    label.textContent=' – of '+marks.length+' (none on this page) '; };
   bar.appendChild(document.createTextNode((term?'"'+term+'"':'')+(term&&cat?' + ':'')+(cat?'category '+cat:'')+': ')); bar.appendChild(prev); bar.appendChild(label); bar.appendChild(next);
   main.insertBefore(bar, main.firstChild);
   if (marks.length) go(0); else label.textContent=' no match on this page ';

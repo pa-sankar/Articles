@@ -69,6 +69,8 @@ h1.ah-title { font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem;
               line-height: 1.25; margin: .45rem 0 .3rem; }
 .ah-author { font-variant: small-caps; font-size: 1.05rem; }
 .ah-ref { color: var(--muted); font-size: .82rem; margin-top: .35rem; }
+.ext-icon { margin-left: .2em; vertical-align: -1px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 h2.printed-title { font-size: 1.1rem; line-height: 1.35; margin: .4rem 0; }
 .page { display:flex; gap:.5rem; align-items:center; color:var(--muted); font-size:.8rem; margin:1.6rem 0 .6rem; }
 .page::before, .page::after { content:""; flex:1; border-top:1px solid var(--line); }
@@ -133,8 +135,26 @@ table.idx { border-collapse: collapse; width: 100%; font-size: 14px; font-family
 .filter-dd-opt[hidden] { display: none; }
 .filter-dd-opt span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .filter-dd-opt .n { font-style: normal; font-size: .75rem; color: var(--text-dim); }
-.filter-dd-opt-unavailable { opacity: .4; cursor: not-allowed; }
-.filter-dd-opt-unavailable:hover { background: none; }
+.filter-dd-opt-gone { display: none !important; }
+button.go { padding: 8px 16px; font: inherit; font-weight: 600; border-radius: 7px; cursor: pointer;
+  border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+button:disabled, input:disabled, select:disabled { opacity: .5; cursor: default; }
+.partial { margin: .6rem 0; padding: .5rem .8rem; border-radius: 7px; font-size: .9rem; font-weight: 600;
+  background: #fff3cd; color: #6b4e00; border: 1px solid #e6c766; }
+.partial[hidden] { display: none; }
+.busy { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center;
+  justify-content: center; z-index: 100; }
+.busy[hidden] { display: none; }
+.busy-box { background: var(--surface); color: var(--text); border-radius: 10px; padding: 1.2rem 1.4rem;
+  width: min(26rem, 92vw); box-shadow: var(--shadow); }
+.busy-box h2 { font-size: 1.05rem; margin: 0 0 .6rem; }
+.busy-bar { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; margin: .6rem 0; }
+.busy-bar div { height: 100%; width: 0; background: var(--accent); transition: width .15s; }
+.busy-box .meta { min-height: 1.3em; }
+.busy-actions { display: flex; justify-content: flex-end; gap: .5rem; margin-top: .8rem; }
+.busy-actions button { padding: 6px 16px; font: inherit; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+.busy-actions button.ok { border-color: var(--accent); background: var(--accent); color: #fff; }
 .filter-dd-actions { display: flex; justify-content: flex-end; }
 .filter-dd-clear { padding: 4px 10px; cursor: pointer; background: none; border: 1px solid var(--border);
   border-radius: 6px; color: var(--text-dim); font-family: inherit; font-size: 12.5px; }
@@ -247,6 +267,12 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
   .card h3 { margin: 0 0 0.3rem 0; font-size: 1rem; }
   .card p { margin: 0; color: var(--text-dim); }
   .card.soon { opacity: 0.85; }
+  .card .src { margin-top: .4rem; font-size: .85rem; }
+  .src-list { padding-left: 1.2rem; } .src-list li { margin: .25rem 0; }
+  ol.how { padding-left: 1.4rem; } ol.how li { margin-bottom: 1rem; }
+  ol.how h3 { font-size: 1rem; margin: 0 0 .2rem; } ol.how p { margin: 0; }
+  .ext-icon { margin-left: .2em; vertical-align: -1px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .badge {
     display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.03em;
     text-transform: uppercase; color: var(--accent-copper-strong); background: var(--surface-2);
@@ -267,7 +293,7 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <div class="brand">Project InscriptionSearch: Articles</div>
 <div class="titlebar"><h1><a href="../../" class="home-link" title="Home"><img src="../../images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> Epigraphia Indica</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
 <main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a></p>
-<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. XVIII · No. 4</div><h1 class="ah-title">Kanyakumari inscription of Vira-Rajendra-deva</h1><div class="ah-author">T. A. Gopinatha Rao</div><div class="ah-ref">Printed p. 21 · PDF pp. 27–73</div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 21</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 22</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 23</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 24</button><button type="button" class="tab t-page" role="tab" data-i="4">p. 25</button><button type="button" class="tab t-page" role="tab" data-i="5">p. 26</button><button type="button" class="tab t-page" role="tab" data-i="6">p. 27</button><button type="button" class="tab t-page" role="tab" data-i="7">p. 28</button><button type="button" class="tab t-page" role="tab" data-i="8">p. 29</button><button type="button" class="tab t-page" role="tab" data-i="9">p. 30</button><button type="button" class="tab t-page" role="tab" data-i="10">p. 31</button><button type="button" class="tab t-page" role="tab" data-i="11">p. 32</button><button type="button" class="tab t-page" role="tab" data-i="12">p. 33</button><button type="button" class="tab t-page" role="tab" data-i="13" title="page number not read from the scan; counted from the pages around it">p. 34</button><button type="button" class="tab t-page" role="tab" data-i="14">p. 35</button><button type="button" class="tab t-page" role="tab" data-i="15">p. 36</button><button type="button" class="tab t-page" role="tab" data-i="16">p. 37</button><button type="button" class="tab t-page" role="tab" data-i="17">p. 38</button><button type="button" class="tab t-page" role="tab" data-i="18">p. 39</button><button type="button" class="tab t-page" role="tab" data-i="19">p. 40</button><button type="button" class="tab t-page" role="tab" data-i="20">p. 41</button><button type="button" class="tab t-page" role="tab" data-i="21">p. 42</button><button type="button" class="tab t-page" role="tab" data-i="22">p. 43</button><button type="button" class="tab t-page" role="tab" data-i="23">p. 44</button><button type="button" class="tab t-page" role="tab" data-i="24">p. 45</button><button type="button" class="tab t-page" role="tab" data-i="25">p. 46</button><button type="button" class="tab t-page" role="tab" data-i="26">p. 47</button><button type="button" class="tab t-page" role="tab" data-i="27">p. 48</button><button type="button" class="tab t-page" role="tab" data-i="28">p. 49</button><button type="button" class="tab t-page" role="tab" data-i="29">p. 50</button><button type="button" class="tab t-page" role="tab" data-i="30">p. 51</button><button type="button" class="tab t-page" role="tab" data-i="31">p. 52</button><button type="button" class="tab t-page" role="tab" data-i="32">p. 53</button><button type="button" class="tab t-page" role="tab" data-i="33">p. 54</button><button type="button" class="tab t-page" role="tab" data-i="34">p. 55</button><span class=tsep></span><span class="tg">Plates</span><button type="button" class="tab t-plate" role="tab" data-i="35">Plate 1</button><button type="button" class="tab t-plate" role="tab" data-i="36">Plate 2</button><button type="button" class="tab t-plate" role="tab" data-i="37">Plate 3</button><button type="button" class="tab t-plate" role="tab" data-i="38">Plate 4</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page" id="p-21">p. 21 · PDF 27</div>
+<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. XVIII · No. 4</div><h1 class="ah-title">Kanyakumari inscription of Vira-Rajendra-deva</h1><div class="ah-author">T. A. Gopinatha Rao</div><div class="ah-ref">Printed p. 21 · PDF pp. 27–73 · <a href="https://archive.org/details/mpl.411.754.epi.18.944" class="src-link" target="_blank" rel="noopener" title="Opens archive.org in a new tab">Source scan<svg class="ext-icon" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" focusable="false"><path d="M9 2h5v5M14 2 7.5 8.5M12 9.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only"> (opens archive.org in a new tab)</span></a></div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 21</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 22</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 23</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 24</button><button type="button" class="tab t-page" role="tab" data-i="4">p. 25</button><button type="button" class="tab t-page" role="tab" data-i="5">p. 26</button><button type="button" class="tab t-page" role="tab" data-i="6">p. 27</button><button type="button" class="tab t-page" role="tab" data-i="7">p. 28</button><button type="button" class="tab t-page" role="tab" data-i="8">p. 29</button><button type="button" class="tab t-page" role="tab" data-i="9">p. 30</button><button type="button" class="tab t-page" role="tab" data-i="10">p. 31</button><button type="button" class="tab t-page" role="tab" data-i="11">p. 32</button><button type="button" class="tab t-page" role="tab" data-i="12">p. 33</button><button type="button" class="tab t-page" role="tab" data-i="13" title="page number not read from the scan; counted from the pages around it">p. 34</button><button type="button" class="tab t-page" role="tab" data-i="14">p. 35</button><button type="button" class="tab t-page" role="tab" data-i="15">p. 36</button><button type="button" class="tab t-page" role="tab" data-i="16">p. 37</button><button type="button" class="tab t-page" role="tab" data-i="17">p. 38</button><button type="button" class="tab t-page" role="tab" data-i="18">p. 39</button><button type="button" class="tab t-page" role="tab" data-i="19">p. 40</button><button type="button" class="tab t-page" role="tab" data-i="20">p. 41</button><button type="button" class="tab t-page" role="tab" data-i="21">p. 42</button><button type="button" class="tab t-page" role="tab" data-i="22">p. 43</button><button type="button" class="tab t-page" role="tab" data-i="23">p. 44</button><button type="button" class="tab t-page" role="tab" data-i="24">p. 45</button><button type="button" class="tab t-page" role="tab" data-i="25">p. 46</button><button type="button" class="tab t-page" role="tab" data-i="26">p. 47</button><button type="button" class="tab t-page" role="tab" data-i="27">p. 48</button><button type="button" class="tab t-page" role="tab" data-i="28">p. 49</button><button type="button" class="tab t-page" role="tab" data-i="29">p. 50</button><button type="button" class="tab t-page" role="tab" data-i="30">p. 51</button><button type="button" class="tab t-page" role="tab" data-i="31">p. 52</button><button type="button" class="tab t-page" role="tab" data-i="32">p. 53</button><button type="button" class="tab t-page" role="tab" data-i="33">p. 54</button><button type="button" class="tab t-page" role="tab" data-i="34">p. 55</button><span class=tsep></span><span class="tg">Plates</span><button type="button" class="tab t-plate" role="tab" data-i="35">Plate 1</button><button type="button" class="tab t-plate" role="tab" data-i="36">Plate 2</button><button type="button" class="tab t-plate" role="tab" data-i="37">Plate 3</button><button type="button" class="tab t-plate" role="tab" data-i="38">Plate 4</button><button type="button" class="tab t-plate" role="tab" data-i="39">Plate 5</button><button type="button" class="tab t-plate" role="tab" data-i="40">Plate 6</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page" id="p-21">p. 21 · PDF 27</div>
 <h2 class="printed-title">No. 4.—KANYAKUMARI INSCRIPTION OF VIRA-RAJENDRA-DEVA.</h2>
 <p class="byline"><p>BY THE LATE T. A. GOPINATHA RAO, M.A., TRIVANDRUM.</p></p>
 <p>The village of <b>Kanyākumāri</b>, as everyone knows, is situated in the extreme south of India and is a very ancient place of great reputation. It was known to early Greek writers under the names of <i>Komaria Akron</i>, or Cape Komaria, as Ptolemy calls it, or simply Komarei, as described by the author of the <i>Periplus</i>. The latter says: "After Bakare occurs the mountain Pyrrhos (or the Red) towards the south, near another district of the country called Paralia (where the pearl-fisheries are which belong to king Pandion), and a city of the name of Kolkhoi . . . . Next to this is another place called Komar, where is the Cape of the same name and a haven. Those who wish to consecrate the closing part of their lives to religion come hither and bathe and engage themselves to celibacy. This is also done by women; since it is related that the goddess once on a time resided at the place and bathed."<sup class="fn"><a href="#fn-1-1">1</a></sup> Paralia mentioned in this extract is the name of the river Paṇaṛiyāṣu, which! waters a portion of S. Travancore and empties itself into the Kuṛittuṇai river. I have shown elsewhere that the land watered by the Paṇaṛiyāṣu was the country belonging to the powerful dynasty of Āy kings, who had their capital at Kōṭṭāṣu, which is mentioned by Ptolemy under the name of 'Kotiara Metropolis' and 'Kottara' by Pliny. From time immemorial, the Pāṇdyas were the guardians of Kanyākumāri and the temple in it; one of their distinguishing titles being Kanṇi-kāvalaṇ, the guardian of Kanṇi (<i>i.e.</i> Kanyākumāri).</p>
@@ -398,7 +424,8 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <section class="pg pg-page" role="tabpanel" data-i="17"><div class="page" id="p-38">p. 38 · PDF 46</div>
 <div class="lines"><p>160 ब्रुधविपदां व्यापदान्दानवोनां रामं<br/>161 कामं कथयति जनस्सत्गुण[१*]नान्निधा[नं]<sup class="fn"><a href="#fn-18-1">1</a></sup> ॥—[२७*]<br/>162 अस्मिन्व[शे]जनि विदञ्चयन्नोजसा [रा]जबृ-<br/>163 न्द[ञ्चो]की नाम क्षितिपतिरतिस्फीतराज-<br/>164 न्यकालः [१*] यस्याशेषामवनिमवतो<sup class="fn"><a href="#fn-18-2">2</a></sup><br/>165 राजधानीमिव स्नां लीलोया-<br/>166 <sup>३</sup>नैस्तुलनमदधन्सर्वतः कानना[नि] ॥—[२८*]<br/>167 विहरन् स हरप्रभः कदाचिन्मुनिबुद्धा<sup class="fn"><a href="#fn-18-4">4</a></sup>-<br/>168 ध्युषि[तेषु का]ननेषु [१*] अनयद्विबु-<br/>169 धाश्रयो विहारप्रतिलब्धाव-<sup class="fn"><a href="#fn-18-5">5</a></sup><br/>170 सरा[णि] वासरा[णि] ॥—[२९*] कदाचन मृग-<br/>171 व्रजप्रमथनप्र[भु]ल्लादरञ्चचार<sup>6</sup><br/>172 [वि]पिनान्तरेष्वनतिभूरिसैन्यः [क्ष]-<br/>173 मी [१*] तदा स मृगरूपिणा भटिति केन-<br/>174 चिद्रक्षसा [हतो] हरितमन्वगात्<br/>175 प्रकृतिदक्षिणो दक्षिणाम् ॥—[३०*] मृग-<br/>176 न्तमनु[ग]च्छता प्रजविना शनैर्वा-<sup class="fn"><a href="#fn-18-7">7</a></sup><br/>177 जिना पृथुद्रमसमाकुलं विपि-<br/>178 नमन्यदासादित<sup class="fn"><a href="#fn-18-8">8</a></sup> [१*] न्त<sup>9</sup>मन्वयुरनारतं प्र-<br/>179 विततप्रयाणोन्मुखा जवेन र-<br/>180 भसोत्पतत्पृथुवरूथिनीना-<sup class="fn"><a href="#fn-18-10">10</a></sup><br/>181 यक्काः ॥—[३१*] तं हत्वा रजनिचरं स तत्र<br/>182 भूपः कावेरीमनु विचचार भूरिचा-<br/>183 रः [१*] क्षीरांभोनिधिमथनात् सुरै-<br/>184 रवाप्तम् पीयूषम् भुवि सलिलच्छला-<br/>185 [द्वहन्तीम्] ॥—[३२*] तत्र [स्ना]त्वा · · · · द्विजे-</p></div>
 <div class="notes"><p><sup id="fn-18-1">1</sup> Read सद्गुणानां निधानम्.</p><p><sup id="fn-18-2">2</sup> The secondary ā symbol of the letter tō is in the next line.</p><p><sup id="fn-18-3">3</sup> The ai symbol of nai is at the end of the preceding line.</p><p><sup id="fn-18-4">4</sup> The secondary ā symbol is engraved in the next line.</p><p><sup id="fn-18-5">5</sup> V looks like ब.</p><p><sup id="fn-18-7">7</sup> The secondary ā symbol is in the next line.</p><p><sup id="fn-18-8">8</sup> Read तम्.</p><p><sup id="fn-18-10">10</sup> The secondary ā symbol is in the next line.</p><p><sup id="fn-18-•">•</sup> Read प्रफुल्लादरथचार.</p><p><sup>•</sup> Read त<sup id="fn-18-०">०</sup>.</p></div>
-<p class="plate-note"><a href="#plate-3">Plate 3</a> is bound after this page.</p></section>
+<p class="plate-note"><a href="#plate-3">Plate 3</a> is bound after this page.</p>
+<p class="plate-note"><a href="#plate-4">Plate 4</a> is bound after this page.</p></section>
 <section class="pg pg-page" role="tabpanel" data-i="18"><div class="page" id="p-39">p. 39 · PDF 49</div>
 <p><i>Third Pillar : Second Side.</i></p>
 <div class="lines"><p>186 [भ्यो] नापश्यत्तान्वश्यचित्त-<br/>187 स्वदानोम् [*] आर्यावर्ताद्विप्रवर्या-<br/>188 [नेनका]<sup class="fn"><a href="#fn-19-1">1</a></sup>नानीयाध्यावासयामा-<br/>189 [म्] तीरे ॥—[३३*] विपिनमखिलं श्रित्वा<sup class="fn"><a href="#fn-19-2">2</a></sup><br/>190 पूर्गैश्वकार वनम्महत्तदनु वि-<br/>191 [दधे धी]रस्मारं सनागलताकुल-<br/>192 [म्] [*] उपवनचयैरन्यैः कवेर-<sup class="fn"><a href="#fn-19-3">3</a></sup><br/>193 सुतातटद्वयवसुमतीमेकच्छाया-<br/>194 मनेकफलां व्यधात् ॥—[३४*] अमरस-<br/>195 रि[ति] स्नानम् भूयस्तपश्चरणञ्जना<br/>196 विदधति तटे तस्याः क्वच्छ्रात्तिविष्टप-<br/>197 काम्यया [*] इह विरचितं स्नानं [घोरं]<br/>198 तपश्च सुरालयादपि शुभतरे व[ा-<br/>199 से व]ासं स्थिरोकुरुते सताम् ॥—[३५*] अन्वशा-<br/>200 त्तमनु राजकेसरी वासराधिप इवा-<br/>201 समयुतिः [*] चोक्तभूपतनयो नयात्<sup class="fn"><a href="#fn-19-4">4</a></sup><br/>202 [विभुः] चोणिमाजलधि <sup class="fn"><a href="#fn-19-5">5</a></sup>वाहिताहितः ॥—[३६*]<br/>203 त[सुत]स्तु परकेसरी वृपो मत्स-<br/>204 री [तम]निवार्यशासनः [*] सत्सखः<br/>205 . . . . . तासुरनिका-<br/>206 रमयिमः ॥[३७*] अस्मिन्वंशे मृत्युजिव्रा-<br/>207 म राजा मृत्योर्जेता पातितारातिव-<br/>208 [र्गः 1*] [रे]जे<sup class="fn"><a href="#fn-19-6">6</a></sup> यज्ञैराज्ञया च प्रका-<sup class="fn"><a href="#fn-19-7">7</a></sup><br/>209 म[न्देवां]च्छ[चू]न्तोषयन्<sup class="fn"><a href="#fn-19-8">8</a></sup> भेषयं-<br/>210 [च] ॥—[३८*] अस्मिन्वंशे वीरसेनाभिधा-<br/>211 [नो जा]तो नीताशेषलोकाहित-<br/>212 [स] [*] रेजे राजा तेजसा भानुतु-</p></div>
@@ -426,7 +453,8 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <h3 id="fifth-pillar-second-side"><p><i>Fifth Pillar: Second Side.</i></p></h3>
 <div class="lines"><p>335 दुदर्जान नरनाथो राजराजाभि-<br/>336 धानः [*] [मदन*]रुचिरदेहः काम्त-<br/>337 [ने*]चोरविन्दो [धनद इति] परं [यत्रा]-<sup class="fn"><a href="#fn-24-7">7</a></sup><br/>338 जराजेन तुल्यः ॥—[६५*] संजहार स-<br/>339 मरे स पार्श्विवानुज्जहार विप-<br/>340 दस्स भूतकात् [*] आजहार च मखान-<br/>341 <sup>८</sup>नेकशो व्याजहार [च] [स*] सूनृत . . त<sup>९</sup> ॥—[६६*]<br/>342 सत्याश्रये स्थिर[त]रे बत राजरा-<br/>343 जे सत्याश्रयः किल पलायत मग्द-</p></div>
 <div class="notes"><p><sup id="fn-24-1">1</sup> Read चपित.</p><p><sup id="fn-24-2">2</sup> One of the secondary <i>ē</i> symbols is in the next line: Read क्षपत.</p><p><sup id="fn-24-3">3</sup> Read °भृदुहा.</p><p><sup id="fn-24-4">4</sup> Read °द्विरिम.</p><p><sup id="fn-24-5">5</sup> Read श्लेषांक्षार</p><p><sup id="fn-24-6">6</sup> Read नेचारविन्दो.</p><p><sup id="fn-24-7">7</sup> Read यो राज°.</p><p><sup id="fn-24-8">8</sup> The <i>ē</i> of <i>nē</i> is in the preceding line.</p><p><sup id="fn-24-9">9</sup> Could the passage here be read अः सूनृता गिरः ?</p></div>
-<p class="plate-note"><a href="#plate-4">Plate 4</a> is bound after this page.</p></section>
+<p class="plate-note"><a href="#plate-5">Plate 5</a> is bound after this page.</p>
+<p class="plate-note"><a href="#plate-6">Plate 6</a> is bound after this page.</p></section>
 <section class="pg pg-page" role="tabpanel" data-i="24"><div class="page" id="p-45">p. 45 · PDF 57</div>
 <div class="lines"><p>344 बुद्धिर्नत्या<sup class="fn"><a href="#fn-25-1">1</a></sup> जयन्ति स[भ]या रिपव-<br/>345 स्तमाजौ न त्याजयत्ययमसूनरि-<br/>346 भिघ्रिश्रयस्तैः<sup class="fn"><a href="#fn-25-2">2</a></sup> ॥—[६७] तस्य स्तुरन[त]-<sup class="fn"><a href="#fn-25-3">3</a></sup><br/>347 स्य शासिता पाकशासन इवारि-<br/>348 शासन: [*] शंबरारि<sup class="fn"><a href="#fn-25-4">4</a></sup>[रु*]चिराकृतिर्नृप-<br/>349 स्मम्बभूव मधु[रान्त]काभिधः ॥—[६८*]<br/>350 अजयदजितवोर्यैः[*] . . . . . शालो<sup class="fn"><a href="#fn-25-5">5</a></sup><br/>351 विजय इव स[मस्तान्] कुन्तकानामधी-<br/>352 शान् [*] अहरत स[किरीटं] क्षत्रियाणान्नि-<br/>353 हन्तुः<sup class="fn"><a href="#fn-25-6">6</a></sup> . . . . . [जामदग्न्य]-<br/>354 [स्य] वीर्यात् ॥[६९*] जहार हारन्तुहि-<br/>355 नांशका[न्तं] . . . . . तोर्विक्रम-<sup class="fn"><a href="#fn-25-7">7</a></sup><br/>356 निर्जितारि: [*] विहारभूमिं निजसै-<sup class="fn"><a href="#fn-25-8">8</a></sup><br/>357 निकानां स चाकरोत् संय-<br/>358 ति मान्यकेटम् ॥[७०*] स्वसेनाधीशा-<br/>359 नप्रतिष्ठतकुलूतोत्कलप(ति)-<br/>360 ति: कलिंगान्विंशेन्द्रैस्स[ह]<sup class="fn"><a href="#fn-25-9">9</a></sup><br/>361 बहक्कवीर्यान्विदक्कयन् [*] स [गंगा]-<br/>362 मुतज्जं<sup class="fn"><a href="#fn-25-10">10</a></sup>न्निजकरिघटापाति[त*]तटाम्<sup class="fn"><a href="#fn-25-11">11</a></sup><br/>363 घटैज्जंहे<sup class="fn"><a href="#fn-25-12">12</a></sup> भूभृन्मकुटनिहि-<br/>364 <sup class="fn"><a href="#fn-25-13">13</a></sup>तैरुद्धृतजलाम् ॥[७१*] उह्नंघिताम्बु-<br/>365 धिभिरु[द्व]नबाहुवीर्यैर्नि[र्द्व]त-<br/>366 [वैरि]नरनाथ[बल]प्रपद्यै-<br/>367 स्तै[न्यै:*]<sup class="fn"><a href="#fn-25-14">14</a></sup> कटाहमद[ह]यमन्यै<sup>15</sup> राजेन्द्र-</p></div>
 <div class="notes"><sup id="fn-25-1">1</sup> Read बुद्धिःन०.<sup id="fn-25-2">2</sup> Read °श्रिशतसैः.<sup id="fn-25-3">3</sup> The letter त is engraved below the line.<sup id="fn-25-4">4</sup> Read शन्बरारि.<sup id="fn-25-5">5</sup> [The missing syllables may be read [शौर्य*]सौन्दर्य.—Ed.]<sup id="fn-25-6">6</sup> [The gap after this word may be filled with the syllables प्रभलभिहळराज०.<sup id="fn-25-7">7</sup> [The gap contains the syllables शतक्.—Ed.]<sup id="fn-25-8">8</sup> The ai symbols are in this line and सु in the next line.<sup id="fn-25-9">9</sup> [Possibly वंगेन्द्रै was meant.—Ed.]<sup id="fn-25-10">10</sup> Read मुक्तज्जं०. [The correct reading is अत(स)ज्जं०.—Ed.]<sup id="fn-25-11">11</sup> Read तदृत.<sup id="fn-25-12">12</sup> Read षटैर्जंसे.<sup id="fn-25-13">13</sup> The ai symbols are at the end of the previous line.<sup id="fn-25-14">14</sup> Read °पद्यै:[*]सैन्यै:.<sup>5</sup> Read मदहयददाज्ञा०.</div></section>
@@ -532,15 +560,25 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <div class="notes"><p><sup id="fn-35-1">1</sup> [Mr. K. V. S. Aiyar reads in l. 426 <i>mummadi</i> and translates: ' who saw the back of Āhavavalla three times —Ed.]</p></div></section>
 <section class="pg pg-plate" role="tabpanel" data-i="35"><div class="page" id="plate-1">Plate 1 · PDF page 41, bound after p. 34</div><h3 id="kanyakumari-inscription-of-vira-rajendra"><p>Kanyakumari Inscription of Vira-Rajendra : the 7th year.</p></h3>
 <div class="caption"><p><i>First Pillar : Front.</i></p></div>
-<div class="caption"><p><i>First Pillar : Back.</i></p></div></section>
+<figure><img loading="lazy" src="../../images/EpInd_XVIII/p41_f1.webp" alt="Plate"></figure>
+<div class="caption"><p><i>First Pillar : Back.</i></p></div>
+<figure><img loading="lazy" src="../../images/EpInd_XVIII/p41_f2.webp" alt="Plate"></figure></section>
 <section class="pg pg-plate" role="tabpanel" data-i="36"><div class="page" id="plate-2">Plate 2 · PDF page 42, bound after p. 34</div><div class="caption"><p><i>Second Pillar: Front.</i></p></div>
-<div class="caption"><p><i>Second Pillar: Back.</i></p></div></section>
+<figure><img loading="lazy" src="../../images/EpInd_XVIII/p42_f1.webp" alt="Plate"></figure>
+<div class="caption"><p><i>Second Pillar: Back.</i></p></div>
+<figure><img loading="lazy" src="../../images/EpInd_XVIII/p42_f2.webp" alt="Plate"></figure></section>
 <section class="pg pg-plate" role="tabpanel" data-i="37"><div class="page" id="plate-3">Plate 3 · PDF page 47, bound after p. 38</div><h3 id="kanyakumari-inscription-of-vira-rajendra-2"><h1>Kanyakumari Inscription of Vira-Rajendra : the 7th year.</h1></h3>
 <div class="caption"><p><i>Third Pillar : Front.</i></p></div>
 <div class="caption"><p><i>Third Pillar : Back.</i></p></div>
-<table><tr><td>146</td><td>186</td></tr><tr><td>148</td><td>188</td></tr><tr><td>150</td><td>190</td></tr><tr><td>152</td><td>192</td></tr><tr><td>154</td><td>154</td></tr><tr><td>194</td><td>194</td></tr><tr><td>156</td><td>156</td></tr><tr><td>196</td><td>196</td></tr><tr><td>158</td><td>198</td></tr><tr><td>160</td><td>200</td></tr><tr><td>182</td><td>202</td></tr><tr><td>164</td><td>204</td></tr><tr><td>186</td><td>206</td></tr><tr><td>188</td><td>208</td></tr><tr><td>170</td><td>210</td></tr><tr><td>172</td><td>212</td></tr><tr><td>174</td><td>214</td></tr><tr><td>176</td><td>216</td></tr><tr><td>178</td><td>178</td></tr><tr><td>218</td><td>218</td></tr><tr><td>180</td><td>180</td></tr><tr><td>220</td><td>220</td></tr><tr><td>182</td><td>182</td></tr><tr><td>222</td><td>222</td></tr></table></section>
-<section class="pg pg-plate" role="tabpanel" data-i="38"><div class="page" id="plate-4">Plate 4 · PDF page 56, bound after p. 44</div><div class="caption"><p><i>Sixth Pillar: Front.</i></p></div>
-<div class="caption"><p><i>Sixth Pillar: Back.</i></p></div></section></div></main>
+<figure><img loading="lazy" src="../../images/EpInd_XVIII/p47_f1.webp" alt="Plate"></figure>
+<table><tr><td>146</td><td>186</td></tr><tr><td>148</td><td>188</td></tr><tr><td>150</td><td>190</td></tr><tr><td>152</td><td>192</td></tr><tr><td>154</td><td>154</td></tr><tr><td>194</td><td>194</td></tr><tr><td>156</td><td>156</td></tr><tr><td>196</td><td>196</td></tr><tr><td>158</td><td>198</td></tr><tr><td>160</td><td>200</td></tr><tr><td>182</td><td>202</td></tr><tr><td>164</td><td>204</td></tr><tr><td>186</td><td>206</td></tr><tr><td>188</td><td>208</td></tr><tr><td>170</td><td>210</td></tr><tr><td>172</td><td>212</td></tr><tr><td>174</td><td>214</td></tr><tr><td>176</td><td>216</td></tr><tr><td>178</td><td>178</td></tr><tr><td>218</td><td>218</td></tr><tr><td>180</td><td>180</td></tr><tr><td>220</td><td>220</td></tr><tr><td>182</td><td>182</td></tr><tr><td>222</td><td>222</td></tr></table>
+<figure><img loading="lazy" src="../../images/EpInd_XVIII/p47_f2.webp" alt="Plate"></figure></section>
+<section class="pg pg-plate" role="tabpanel" data-i="38"><div class="page" id="plate-4">Plate 4 · PDF page 48, bound after p. 38</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p48.webp" alt="Plate 4"></figure></section>
+<section class="pg pg-plate" role="tabpanel" data-i="39"><div class="page" id="plate-5">Plate 5 · PDF page 55, bound after p. 44</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p55.webp" alt="Plate 5"></figure></section>
+<section class="pg pg-plate" role="tabpanel" data-i="40"><div class="page" id="plate-6">Plate 6 · PDF page 56, bound after p. 44</div><div class="caption"><p><i>Sixth Pillar: Front.</i></p></div>
+<figure><img loading="lazy" src="../../images/EpInd_XVIII/p56_f1.webp" alt="Plate"></figure>
+<div class="caption"><p><i>Sixth Pillar: Back.</i></p></div>
+<figure><img loading="lazy" src="../../images/EpInd_XVIII/p56_f2.webp" alt="Plate"></figure></section></div></main>
 <footer>Generated 19 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
 Feedback: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">this form</a>.</footer>
 </div>
@@ -574,6 +612,48 @@ function markHtml(text, term, mode){ // escaped text with <mark>s
   r.forEach(function(x){ out+=e(text.slice(at,x[0]))+'<mark>'+e(text.slice(x[0],x[1]))+'</mark>'; at=x[1]; });
   return out+e(text.slice(at));
 }
+
+var SEARCH_BASE=window.SEARCH_BASE||'search/', SEARCH_TEXT={};
+var SEARCH_FROM_DISK=location.protocol==='file:';
+var DISK_NOTE='The full-text search needs the page opened through a local server '
+  +'(python -m http.server in this folder, then http://localhost:8000/), not from disk.';
+function loadOne(ed){   // an edition's text: from the cache, else fetched (a missing file: none)
+  if (SEARCH_TEXT[ed]) return Promise.resolve(SEARCH_TEXT[ed]);
+  return fetch(SEARCH_BASE+ed+'.json').then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(recs){ SEARCH_TEXT[ed]=recs; return recs; }, function(){ SEARCH_TEXT[ed]=[]; return []; });
+}
+// ---- the search pop-up (user, 2026-11-19), shared by the indexes and Advanced Search: the
+// search starts on the button or Enter only, the controls are off while it runs, the pop-up
+// shows progress and Cancel, then the count with OK; a cancelled search keeps what it found
+var BUSY=null;
+function busyEls(){
+  if (BUSY) return BUSY;
+  var b=document.getElementById('busy');
+  BUSY={box:b, title:b.querySelector('h2'), msg:b.querySelector('.meta'), bar:b.querySelector('.busy-bar div'),
+        cancel:b.querySelector('.cancel'), ok:b.querySelector('.ok'), job:null, onOk:null};
+  BUSY.cancel.addEventListener('click', function(){ if (BUSY.job){ BUSY.job.cancelled=true; BUSY.msg.textContent='Stopping…'; } });
+  BUSY.ok.addEventListener('click', function(){ BUSY.box.hidden=true; if (BUSY.onOk) BUSY.onOk(); });
+  return BUSY;
+}
+function busyOpen(title){ var b=busyEls(); b.job={cancelled:false}; b.title.textContent=title; b.msg.textContent='';
+  b.bar.style.width='0'; b.cancel.hidden=false; b.ok.hidden=true; b.box.hidden=false; return b.job; }
+function busyProgress(frac, msg){ var b=busyEls(); b.bar.style.width=Math.round(Math.min(1,frac)*100)+'%'; b.msg.textContent=msg; }
+function busyDone(msg, onOk){ var b=busyEls(); b.job=null; b.title.textContent='Search finished'; b.bar.style.width='100%';
+  b.msg.textContent=msg; b.cancel.hidden=true; b.ok.hidden=false; b.onOk=onOk||null; b.ok.focus(); }
+function busyClose(){ var b=busyEls(); b.job=null; b.box.hidden=true; }
+function setControls(els, on){ els.forEach(function(el){ if (el) el.disabled=!on; }); }
+// the editions' text one at a time, with progress; cb(how many loaded, cancelled?)
+function loadWithProgress(eds, label, job, cb){
+  var k=0;
+  (function next(){
+    if (job.cancelled || k>=eds.length) return cb(k, job.cancelled);
+    busyProgress(k/eds.length, 'Loading '+label(eds[k])+' ('+(k+1)+' of '+eds.length+')…');
+    loadOne(eds[k]).then(function(){ k++; setTimeout(next, 0); });
+  })();
+}
+// Enter in the box runs the search, as the button does
+function searchOnEnter(box, run){ box.addEventListener('keydown', function(e){
+  if (e.key==='Enter'){ e.preventDefault(); if (!busyEls().job) run(); } }); }
 window.CAT_TERMS={};
 // page tabs: one page shown at a time; #plate-N / #fig-N and search matches open their tab
 var panels=Array.prototype.slice.call(document.querySelectorAll('section.pg'));
@@ -584,10 +664,12 @@ function showTab(i){
   tabBtns.forEach(function(b,k){ b.setAttribute('aria-selected', k===i ? 'true' : 'false'); });
 }
 function showFor(el){ var p=el && el.closest('section.pg'); if (p) showTab(+p.dataset.i); }
-tabBtns.forEach(function(b){ b.addEventListener('click', function(){ showTab(+b.dataset.i); window.scrollTo(0,0); }); });
+var onTab=null; // set by the search marks below: the hits bar follows the page the reader opens
+tabBtns.forEach(function(b){ b.addEventListener('click', function(){ showTab(+b.dataset.i); window.scrollTo(0,0);
+  if (onTab) onTab(+b.dataset.i); }); });
 showTab(0);
 function toHash(){ if (location.hash){ var el=document.getElementById(location.hash.slice(1));
-  if (el){ showFor(el); el.scrollIntoView({block:'start'}); } } }
+  if (el){ showFor(el); el.scrollIntoView({block:'start'}); var p=el.closest('section.pg'); if (p && onTab) onTab(+p.dataset.i); } } }
 window.addEventListener('hashchange', toHash);
 toHash();
 // footnote pop-ups: a mark opens its note beside it; a click elsewhere or Esc closes it
@@ -613,7 +695,8 @@ document.addEventListener('click', function(e){
 });
 document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop(); });
 (function(){
-  var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat');
+  var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat'),
+      titleOnly=ps.get('in')==='title';
   // what to mark: the search term, and the chosen category's matched words (CAT_TERMS)
   var finds=[]; if (term) finds.push([term,mode]);
   if (cat && window.CAT_TERMS && CAT_TERMS[cat]) CAT_TERMS[cat].forEach(function(t){ finds.push([t,'embedded']); });
@@ -622,7 +705,8 @@ document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop
     r.sort(function(a,b){return a[0]-b[0];}); var out=[];
     r.forEach(function(x){ if (out.length && x[0]<out[out.length-1][1]) { out[out.length-1][1]=Math.max(out[out.length-1][1],x[1]); } else out.push(x.slice()); });
     return out; }
-  var main=document.querySelector('main'), walker=document.createTreeWalker(main, NodeFilter.SHOW_TEXT), nodes=[], n;
+  // a title-only search marks the title alone, as that is all it searched
+  var main=document.querySelector('main'), root=(titleOnly && main.querySelector('.ah-title')) || main, walker=document.createTreeWalker(root, NodeFilter.SHOW_TEXT), nodes=[], n;
   while ((n=walker.nextNode())) if (!n.parentNode.closest('.hits')) nodes.push(n);
   var marks=[];
   nodes.forEach(function(node){
@@ -636,11 +720,21 @@ document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop
   var i=0, label=document.createElement('span');
   // every tab holding a match gets the yellow has-match style (as in the inscription popups)
   marks.forEach(function(m){ var p=m.closest('section.pg'); if (p && tabBtns[+p.dataset.i]) tabBtns[+p.dataset.i].classList.add('has-match'); });
-  function go(k){ if (!marks.length) return; marks[i].classList.remove('on'); i=(k+marks.length)%marks.length;
-    showFor(marks[i]); marks[i].classList.add('on'); marks[i].scrollIntoView({block:'center'});
-    label.textContent=' '+(i+1)+' of '+marks.length+' ';}
+  // between: the reader opened a page with no match; i is then the first match after it
+  var between=false, tabOf=function(m){ var p=m.closest('section.pg'); return p ? +p.dataset.i : -1; };
+  function setOn(k){ marks[i].classList.remove('on'); i=k; between=false; marks[i].classList.add('on');
+    label.textContent=' '+(i+1)+' of '+marks.length+' '; }
+  function go(k){ if (!marks.length) return; setOn((k+marks.length)%marks.length);
+    showFor(marks[i]); marks[i].scrollIntoView({block:'center'}); }
   var prev=document.createElement('button'); prev.textContent='◀ previous'; prev.onclick=function(){go(i-1);};
-  var next=document.createElement('button'); next.textContent='next ▶'; next.onclick=function(){go(i+1);};
+  var next=document.createElement('button'); next.textContent='next ▶'; next.onclick=function(){go(between?i:i+1);};
+  onTab=function(t){ if (!marks.length) return;
+    var j=-1; marks.some(function(m,k){ if (tabOf(m)===t){ j=k; return true; } return false; });
+    if (j>=0) return setOn(j);   // the page's first match; the reader is at its top, so no scroll
+    marks[i].classList.remove('on');
+    var after=-1; marks.some(function(m,k){ if (tabOf(m)>t){ after=k; return true; } return false; });
+    i=after>=0 ? after : 0; between=true;
+    label.textContent=' – of '+marks.length+' (none on this page) '; };
   bar.appendChild(document.createTextNode((term?'"'+term+'"':'')+(term&&cat?' + ':'')+(cat?'category '+cat:'')+': ')); bar.appendChild(prev); bar.appendChild(label); bar.appendChild(next);
   main.insertBefore(bar, main.firstChild);
   if (marks.length) go(0); else label.textContent=' no match on this page ';

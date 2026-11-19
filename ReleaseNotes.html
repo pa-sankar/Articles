@@ -69,6 +69,8 @@ h1.ah-title { font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem;
               line-height: 1.25; margin: .45rem 0 .3rem; }
 .ah-author { font-variant: small-caps; font-size: 1.05rem; }
 .ah-ref { color: var(--muted); font-size: .82rem; margin-top: .35rem; }
+.ext-icon { margin-left: .2em; vertical-align: -1px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 h2.printed-title { font-size: 1.1rem; line-height: 1.35; margin: .4rem 0; }
 .page { display:flex; gap:.5rem; align-items:center; color:var(--muted); font-size:.8rem; margin:1.6rem 0 .6rem; }
 .page::before, .page::after { content:""; flex:1; border-top:1px solid var(--line); }
@@ -133,8 +135,26 @@ table.idx { border-collapse: collapse; width: 100%; font-size: 14px; font-family
 .filter-dd-opt[hidden] { display: none; }
 .filter-dd-opt span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .filter-dd-opt .n { font-style: normal; font-size: .75rem; color: var(--text-dim); }
-.filter-dd-opt-unavailable { opacity: .4; cursor: not-allowed; }
-.filter-dd-opt-unavailable:hover { background: none; }
+.filter-dd-opt-gone { display: none !important; }
+button.go { padding: 8px 16px; font: inherit; font-weight: 600; border-radius: 7px; cursor: pointer;
+  border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+button:disabled, input:disabled, select:disabled { opacity: .5; cursor: default; }
+.partial { margin: .6rem 0; padding: .5rem .8rem; border-radius: 7px; font-size: .9rem; font-weight: 600;
+  background: #fff3cd; color: #6b4e00; border: 1px solid #e6c766; }
+.partial[hidden] { display: none; }
+.busy { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center;
+  justify-content: center; z-index: 100; }
+.busy[hidden] { display: none; }
+.busy-box { background: var(--surface); color: var(--text); border-radius: 10px; padding: 1.2rem 1.4rem;
+  width: min(26rem, 92vw); box-shadow: var(--shadow); }
+.busy-box h2 { font-size: 1.05rem; margin: 0 0 .6rem; }
+.busy-bar { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; margin: .6rem 0; }
+.busy-bar div { height: 100%; width: 0; background: var(--accent); transition: width .15s; }
+.busy-box .meta { min-height: 1.3em; }
+.busy-actions { display: flex; justify-content: flex-end; gap: .5rem; margin-top: .8rem; }
+.busy-actions button { padding: 6px 16px; font: inherit; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+.busy-actions button.ok { border-color: var(--accent); background: var(--accent); color: #fff; }
 .filter-dd-actions { display: flex; justify-content: flex-end; }
 .filter-dd-clear { padding: 4px 10px; cursor: pointer; background: none; border: 1px solid var(--border);
   border-radius: 6px; color: var(--text-dim); font-family: inherit; font-size: 12.5px; }
@@ -247,6 +267,12 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
   .card h3 { margin: 0 0 0.3rem 0; font-size: 1rem; }
   .card p { margin: 0; color: var(--text-dim); }
   .card.soon { opacity: 0.85; }
+  .card .src { margin-top: .4rem; font-size: .85rem; }
+  .src-list { padding-left: 1.2rem; } .src-list li { margin: .25rem 0; }
+  ol.how { padding-left: 1.4rem; } ol.how li { margin-bottom: 1rem; }
+  ol.how h3 { font-size: 1rem; margin: 0 0 .2rem; } ol.how p { margin: 0; }
+  .ext-icon { margin-left: .2em; vertical-align: -1px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .badge {
     display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.03em;
     text-transform: uppercase; color: var(--accent-copper-strong); background: var(--surface-2);
@@ -266,8 +292,8 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <div class="wrap narrow">
 <div class="brand">Project InscriptionSearch: Articles</div>
 <div class="titlebar"><h1><a href="./" class="home-link" title="Home"><img src="images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> Evolution</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
-<main><p class="about">What has changed on the Articles site, newest first.</p><h2>Coming soon</h2><div class="card soon"><h3>Mysore Archaeological Reports <span class="badge">Coming soon</span></h3><p>The yearly reports of the Mysore Archaeological Department: monuments, numismatics, manuscripts and the copper-plate grants discussed each year. Being added to the site.</p></div>
-<div class="card soon"><h3>Corpus Inscriptionum Indicarum <span class="badge">Coming soon</span></h3><p>The Archaeological Survey of India's corpus series: Aśoka, the Kharoshthi and Bhārhut inscriptions, the Guptas, the Kalachuri-Chedi era and more, each volume with its editor's introduction and every inscription edited in full. Being added to the site.</p></div><h2>18 November 2026: details pop-up</h2><ul><li>The AI tab is now called <strong>Extracted from article</strong> and lists the values only.</li><li>A category filter now carries into the article: <strong>Read the article</strong> opens it with the category's words marked and the pages holding them flagged in yellow.</li></ul><h2>18 November 2026: Vols. III and V added</h2><ul><li><strong>Epigraphia Indica, Vol. III</strong> (1894-95): 48 articles, and <strong>Vol. V</strong> (1898-99): 26 articles, in full text with their plates and figures, searchable together with Vol. XVIII.</li><li>Their details pop-ups carry the dynasty, king, date, place, language and script picked out by AI from each article's introduction, with the editor's own words.</li><li>Vol. III No. 13 begins on printed p. 76: pp. 74-75 are missing from our scan.</li></ul><h2>18 November 2026: Vol. XVIII completed</h2><ul><li><strong>Footnotes open where they are marked</strong>: click a footnote number in the text to read the note beside it.</li><li><strong>Click a row for the article's details</strong>: pages, plates, images, categories, and the dynasty, king, date, place, language and script picked out by AI from its introduction, each with the editor's own words. The table keeps the main columns only.</li><li><strong>Filter lists</strong> for volume, author, dynasty, king, century, place, language and script, as on the Inscriptions site: include or exclude, narrowing each other, with a line saying what is applied. A filter adds its column to the table.</li><li>No. 28 now opens on its first page, printed pp. 260-261, which our scan lacks; it was read from another copy of the volume. The same leaf completes No. 27.</li><li>Nine plates that had been shown as text pages are now shown as plates, and every page carries its printed number.</li></ul><h2>18 November 2026</h2><p>The Articles site opens, as the twin of Project InscriptionSearch.</p><ul><li><strong>Epigraphia Indica, Vol. XVIII</strong> (1925): 115 articles in full text, with their plates and figures, each printed page on its own tab with its footnotes.</li><li>Full-text search with three match widths, accents and capitals optional, and the Inscriptions site's categories (hero-stones, Bhairava, Rāmānuja and others) as a filter.</li></ul></main>
+<main><p class="about">What has changed on the Articles site, newest first.</p><h2>Coming soon</h2><div class="card soon"><h3>Mysore Archaeological Reports <span class="badge">Coming soon</span></h3><p>The yearly reports of the Mysore Archaeological Department: monuments, numismatics, manuscripts and the copper-plate grants discussed each year. Being added to the site.</p><p class="src"><a href="Sources.html#mar">The scans being read</a></p></div>
+<div class="card soon"><h3>Corpus Inscriptionum Indicarum <span class="badge">Coming soon</span></h3><p>The Archaeological Survey of India's corpus series: Aśoka, the Kharoshthi and Bhārhut inscriptions, the Guptas, the Kalachuri-Chedi era and more, each volume with its editor's introduction and every inscription edited in full. Being added to the site.</p><p class="src"><a href="Sources.html#cii">The scans being read</a></p></div><h2>19 November 2026: search, sources and how it was made</h2><ul><li><strong>Advanced Search</strong> searches every article on the site at once; it can search the <strong>titles only</strong>, and a click anywhere on a result opens the article.</li><li>In an article opened from a search, the match counter follows the page you open.</li><li><strong>Sources</strong>: every scanned volume, linked to its page on archive.org; each article links its own scan too.</li><li><strong>How were the volumes processed?</strong>: the steps from scan to article, with every AI step marked.</li></ul><h2>18 November 2026: details pop-up</h2><ul><li>The AI tab is now called <strong>Extracted from article</strong> and lists the values only.</li><li>A category filter now carries into the article: <strong>Read the article</strong> opens it with the category's words marked and the pages holding them flagged in yellow.</li></ul><h2>18 November 2026: Vols. III and V added</h2><ul><li><strong>Epigraphia Indica, Vol. III</strong> (1894-95): 48 articles, and <strong>Vol. V</strong> (1898-99): 26 articles, in full text with their plates and figures, searchable together with Vol. XVIII.</li><li>Their details pop-ups carry the dynasty, king, date, place, language and script picked out by AI from each article's introduction, with the editor's own words.</li><li>Vol. III No. 13 begins on printed p. 76: pp. 74-75 are missing from our scan.</li></ul><h2>18 November 2026: Vol. XVIII completed</h2><ul><li><strong>Footnotes open where they are marked</strong>: click a footnote number in the text to read the note beside it.</li><li><strong>Click a row for the article's details</strong>: pages, plates, images, categories, and the dynasty, king, date, place, language and script picked out by AI from its introduction, each with the editor's own words. The table keeps the main columns only.</li><li><strong>Filter lists</strong> for volume, author, dynasty, king, century, place, language and script, as on the Inscriptions site: include or exclude, narrowing each other, with a line saying what is applied. A filter adds its column to the table.</li><li>No. 28 now opens on its first page, printed pp. 260-261, which our scan lacks; it was read from another copy of the volume. The same leaf completes No. 27.</li><li>Nine plates that had been shown as text pages are now shown as plates, and every page carries its printed number.</li></ul><h2>18 November 2026</h2><p>The Articles site opens, as the twin of Project InscriptionSearch.</p><ul><li><strong>Epigraphia Indica, Vol. XVIII</strong> (1925): 115 articles in full text, with their plates and figures, each printed page on its own tab with its footnotes.</li><li>Full-text search with three match widths, accents and capitals optional, and the Inscriptions site's categories (hero-stones, Bhairava, Rāmānuja and others) as a filter.</li></ul></main>
 <footer>Generated 19 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
 Feedback: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">this form</a>.</footer>
 </div>

@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How were the volumes processed? — Project InscriptionSearch: Articles</title>
+<meta name="description" content="How the Articles site was made: scans, OCR, assembly, and where AI is used.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Project InscriptionSearch: Articles">
+<meta property="og:title" content="How were the volumes processed? — Project InscriptionSearch: Articles">
+<meta property="og:description" content="How the Articles site was made: scans, OCR, assembly, and where AI is used.">
+<meta property="og:url" content="https://pa-sankar.github.io/Articles/HowItWorks.html">
+<meta property="og:image" content="https://pa-sankar.github.io/Articles/images/articles-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How were the volumes processed? — Project InscriptionSearch: Articles">
+<meta name="twitter:description" content="How the Articles site was made: scans, OCR, assembly, and where AI is used.">
+<meta name="twitter:image" content="https://pa-sankar.github.io/Articles/images/articles-image.jpg">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2213%22>📜</text></svg>">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap">
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-TXX3D8HF"></script>
+<script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'GT-TXX3D8HF', {'page_group': 'articles'});</script>
+<style>
+  :root {
+    --bg: #f6f2e9; --surface: #ffffff; --surface-2: #efe9da;
+    --text: #2b2a24; --text-dim: #6b6759; --border: #ddd4bd;
+    --accent: #5f7a5a; --accent-strong: #3f5a3c;
+    --accent-copper: #a6612f; --accent-copper-strong: #7d431c;
+    --shadow: 0 1px 2px rgba(43,42,36,0.06), 0 8px 24px rgba(43,42,36,0.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c1b16; --surface: #24231c; --surface-2: #2c2a21;
+      --text: #ece7d8; --text-dim: #a29d8b; --border: #45422f;
+      --accent: #8caa84; --accent-strong: #a9c6a1;
+      --accent-copper: #d18a52; --accent-copper-strong: #e2a06c;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c1b16; --surface: #24231c; --surface-2: #2c2a21;
+    --text: #ece7d8; --text-dim: #a29d8b; --border: #45422f;
+    --accent: #8caa84; --accent-strong: #a9c6a1;
+    --accent-copper: #d18a52; --accent-copper-strong: #e2a06c;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; padding: 3rem 1rem 4rem;
+    background: var(--bg); color: var(--text); line-height: 1.6;
+  }
+  a { color: var(--accent-strong); }
+  a:hover { color: var(--accent); }
+  .home-link { text-decoration: none; color: var(--accent-strong); margin-right: 0.3rem; }
+  .home-link:hover { color: var(--accent); }
+
+mark { background: var(--mark); color: inherit; border-radius: 2px; }
+mark.on { background: var(--mark-on); }
+.meta { color: var(--muted); font-size: .9rem; }
+h1 { font-size: 1.5rem; line-height: 1.3; margin: .2rem 0; }
+h3 { font-size: 1.05rem; margin: 1.4rem 0 .4rem; letter-spacing: .02em; }
+.byline { font-variant: small-caps; color: var(--muted); }
+.art-head { margin: .6rem 0 1.2rem; padding-bottom: .9rem; border-bottom: 1px solid var(--line); }
+.ah-corpus { font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); font-weight: 600; }
+.ah-vol { font-size: 1rem; font-weight: 600; margin-top: .25rem; }
+.ah-part { font-weight: 400; color: var(--muted); }
+h1.ah-title { font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem; font-weight: 600;
+              line-height: 1.25; margin: .45rem 0 .3rem; }
+.ah-author { font-variant: small-caps; font-size: 1.05rem; }
+.ah-ref { color: var(--muted); font-size: .82rem; margin-top: .35rem; }
+.ext-icon { margin-left: .2em; vertical-align: -1px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+h2.printed-title { font-size: 1.1rem; line-height: 1.35; margin: .4rem 0; }
+.page { display:flex; gap:.5rem; align-items:center; color:var(--muted); font-size:.8rem; margin:1.6rem 0 .6rem; }
+.page::before, .page::after { content:""; flex:1; border-top:1px solid var(--line); }
+.lines { font-size: .95rem; }
+.notes { background: var(--note); border-radius: 4px; padding: .4rem .8rem; font-size: .85rem; margin: .8rem 0; }
+.notes p { margin: .25rem 0; }
+figure { margin: 1rem 0; text-align: center; }
+figure img { max-width: 100%; border: 1px solid var(--line); }
+figcaption, .caption { color: var(--muted); font-size: .85rem; }
+.art table { border-collapse: collapse; font-size: .9rem; margin: .8rem 0; display:block; overflow-x:auto; }
+.art td, .art th { border: 1px solid var(--line); padding: .2rem .4rem; vertical-align: top; }
+.warn { border-left: 3px solid var(--accent); padding-left: .7rem; }
+/* the index's controls, table and row pop-up: the Inscriptions corpus pages' own look
+   (scripts/inscriptions_table_html.py), on the site's tokens (user, 2026-11-18) */
+.search, .dd-bar { margin-bottom: .75rem; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+input[type=search] { padding: 8px 13px; width: 20rem; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; box-sizing: border-box; }
+select { padding: 8px 10px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; }
+input[type=search]:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  box-shadow: var(--shadow); }
+table.idx { border-collapse: collapse; width: 100%; font-size: 14px; font-family: 'Segoe UI', system-ui, sans-serif; }
+.idx th, .idx td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);
+  padding: 10px 12px; text-align: left; vertical-align: top; overflow-wrap: break-word; }
+.idx th:last-child, .idx td:last-child { border-right: none; }
+.idx th { background: var(--surface-2); color: var(--text-dim); position: sticky; top: 0; z-index: 1;
+  text-transform: uppercase; letter-spacing: .04em; font-size: 11.5px; white-space: nowrap; cursor: pointer; user-select: none; }
+.idx th[aria-sort=ascending]::after { content: " ▲"; } .idx th[aria-sort=descending]::after { content: " ▼"; }
+.idx tbody tr:nth-child(even) { background: var(--surface-2); }
+.idx tbody tr:last-child td { border-bottom: none; }
+.idx tbody tr { cursor: pointer; }
+.count { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin: 0.5rem 0; }
+.pager { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--muted); font-size: 13px; }
+.pager button { padding: 5px 12px; cursor: pointer; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text); font-family: inherit; font-size: 13px; }
+.pager button:disabled { cursor: default; opacity: 0.4; }
+.pager select { padding: 5px 8px; font-size: 13px; }
+.idx tbody tr:hover { background: var(--surface-2); }
+.idx td.num { text-align: right; white-space: nowrap; }
+.idx td.attr { font-size: .85rem; }
+.idx th.ai::after { content: " AI"; font-size: .65rem; color: var(--accent-copper-strong); vertical-align: super; }
+.filter-dd { position: relative; display: inline-block; }
+.filter-dd-btn { padding: 8px 14px; cursor: pointer; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-family: inherit; font-size: 14px; text-align: left;
+  min-width: 8rem; max-width: 14rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filter-dd-btn:hover { border-color: var(--accent); }
+.filter-dd.active .filter-dd-btn { border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
+.filter-dd-panel { position: absolute; top: calc(100% + 4px); left: 0; z-index: 50; width: 16rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  box-shadow: var(--shadow); padding: .6rem; display: flex; flex-direction: column; gap: .5rem; }
+.filter-dd-panel[hidden] { display: none; }
+.filter-dd-mode { display: flex; gap: .9rem; font-size: .82rem; color: var(--text-dim); }
+.filter-dd-mode label { display: flex; align-items: center; gap: .3rem; cursor: pointer; }
+.filter-dd-search { padding: 5px 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+  color: var(--text); font-family: inherit; font-size: 13px; width: 100%; box-sizing: border-box; }
+.filter-dd-hint { font-size: 11px; color: var(--text-dim); margin: -2px 2px 2px; }
+.filter-dd-options { max-height: 14rem; overflow-y: auto; display: flex; flex-direction: column; }
+.filter-dd-opt { display: flex; align-items: center; gap: .5rem; padding: 3px 4px; border-radius: 4px;
+  font-size: .85rem; cursor: pointer; }
+.filter-dd-opt:hover { background: var(--surface-2); }
+.filter-dd-opt[hidden] { display: none; }
+.filter-dd-opt span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filter-dd-opt .n { font-style: normal; font-size: .75rem; color: var(--text-dim); }
+.filter-dd-opt-gone { display: none !important; }
+button.go { padding: 8px 16px; font: inherit; font-weight: 600; border-radius: 7px; cursor: pointer;
+  border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+button:disabled, input:disabled, select:disabled { opacity: .5; cursor: default; }
+.partial { margin: .6rem 0; padding: .5rem .8rem; border-radius: 7px; font-size: .9rem; font-weight: 600;
+  background: #fff3cd; color: #6b4e00; border: 1px solid #e6c766; }
+.partial[hidden] { display: none; }
+.busy { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center;
+  justify-content: center; z-index: 100; }
+.busy[hidden] { display: none; }
+.busy-box { background: var(--surface); color: var(--text); border-radius: 10px; padding: 1.2rem 1.4rem;
+  width: min(26rem, 92vw); box-shadow: var(--shadow); }
+.busy-box h2 { font-size: 1.05rem; margin: 0 0 .6rem; }
+.busy-bar { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; margin: .6rem 0; }
+.busy-bar div { height: 100%; width: 0; background: var(--accent); transition: width .15s; }
+.busy-box .meta { min-height: 1.3em; }
+.busy-actions { display: flex; justify-content: flex-end; gap: .5rem; margin-top: .8rem; }
+.busy-actions button { padding: 6px 16px; font: inherit; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+.busy-actions button.ok { border-color: var(--accent); background: var(--accent); color: #fff; }
+.filter-dd-actions { display: flex; justify-content: flex-end; }
+.filter-dd-clear { padding: 4px 10px; cursor: pointer; background: none; border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text-dim); font-family: inherit; font-size: 12.5px; }
+.filter-dd-clear:hover { color: var(--text); border-color: var(--accent); }
+.active-filters-summary { background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+  padding: .5rem .9rem; margin-bottom: .75rem; font-size: .85rem; color: var(--text); line-height: 1.6; }
+.active-filters-summary[hidden] { display: none; }
+.active-filters-summary strong { color: var(--text-dim); font-weight: 600; }
+.row-hint { font-style: italic; }
+body.noscroll { overflow: hidden; }
+.remarks-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center;
+  justify-content: center; z-index: 1000; padding: 1.5rem; }
+.remarks-modal-overlay[hidden] { display: none; }
+.remarks-modal-box { background: var(--surface); color: var(--text); border-radius: 10px; max-width: 44rem; width: 100%;
+  max-height: 80vh; overflow-y: auto; padding: 1.5rem; position: relative; box-shadow: var(--shadow);
+  font-family: 'Segoe UI', system-ui, sans-serif; box-sizing: border-box; }
+.remarks-modal-close { position: absolute; top: .5rem; right: .7rem; font-size: 1.3rem; line-height: 1;
+  background: none; border: none; cursor: pointer; color: var(--text-dim); }
+.remarks-modal-close:hover { color: var(--text); }
+.row-detail-box { max-width: 56rem; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
+.row-detail-box .remarks-modal-close { top: .5rem; right: .7rem; z-index: 2; }
+.row-detail-header { flex: none; padding: 1.5rem 3rem .7rem 1.5rem; margin-bottom: .4rem; border-bottom: 1px solid var(--border); }
+.row-detail-title { font-size: 1.1rem; font-weight: 600; line-height: 1.35; margin-bottom: .3rem; }
+.row-detail-idline { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.row-detail-id-text { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9rem; color: var(--text); }
+.row-detail-cite { color: var(--text-dim); font-size: .85rem; }
+.row-detail-read { margin-left: auto; font-size: .85rem; }
+.row-detail-body { flex: 1 1 auto; overflow-y: auto; padding: 0 1.5rem 1.5rem; }
+.row-detail-field { display: grid; grid-template-columns: 9rem 1fr; gap: .4rem .75rem; padding: .3rem 0;
+  border-bottom: 1px solid var(--border); align-items: baseline; }
+.row-detail-field:last-child { border-bottom: none; }
+.row-detail-label { color: var(--text-dim); font-size: .8rem; text-transform: uppercase; letter-spacing: .03em; font-weight: 600; }
+.row-detail-value { line-height: 1.5; overflow-wrap: break-word; }
+.row-detail-na { color: var(--text-dim); font-style: italic; }
+.row-detail-quote { color: var(--text-dim); font-size: .85rem; margin-top: .15rem; }
+.v-derived { color: var(--accent-copper-strong); font-style: italic; }
+.row-detail-tabs { margin-top: 1.1rem; }
+.row-detail-tab-bar { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .6rem; }
+.row-detail-tab-btn { font: inherit; font-size: .85rem; padding: .35rem .8rem; border: 1px solid var(--border);
+  border-radius: 999px; background: var(--surface-2); color: var(--text-dim); cursor: pointer; }
+.row-detail-tab-btn.active { border-color: var(--accent); color: var(--accent-strong); font-weight: 600; }
+.row-detail-tab-btn.has-match { background: #fff3a0; color: #000; }
+.match-nav { margin-left: auto; display: flex; align-items: center; gap: .4rem; font-size: .82rem; color: var(--text-dim); }
+.match-nav[hidden], .match-nav button[hidden] { display: none; }
+.match-nav button { font: inherit; font-size: .82rem; padding: .25rem .7rem; border: 1px solid var(--border);
+  border-radius: 999px; background: var(--surface); color: var(--text); cursor: pointer; }
+.match-nav button:hover { border-color: var(--accent); }
+mark.current { background: #ffb347; outline: 2px solid #e08a00; }
+.row-detail-tab-content { line-height: 1.6; font-size: .95rem; background: var(--surface-2); border-radius: 6px;
+  padding: .8rem 1rem; }
+.ai-badge { font-size: .65rem; color: var(--accent-copper-strong); border: 1px solid var(--accent-copper);
+  border-radius: 3px; padding: 0 .25rem; vertical-align: middle; cursor: help; text-transform: none; letter-spacing: 0; }
+  @media (max-width: 640px) { input[type=search] { width: 100%; } .row-detail-field { grid-template-columns: 1fr; } }
+.snip { color: var(--muted); font-size: .85rem; margin-top: .2rem; }
+.hits { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: .4rem 0;
+  font-size: .9rem; z-index: 1; }
+.hits button { font: inherit; }
+.tabs { display: flex; flex-wrap: wrap; gap: .3rem; margin: 1rem 0 .4rem; position: sticky; top: 0;
+  background: var(--bg); padding: .3rem 0; z-index: 1; border-bottom: 1px solid var(--line); }
+.tab { font: inherit; font-size: .85rem; padding: .15rem .55rem; border: 1px solid var(--line);
+  border-radius: 4px; background: transparent; color: var(--fg); cursor: pointer; }
+.tab[aria-selected=true] { border-color: var(--accent); color: var(--accent); font-weight: bold; }
+.tg { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted);
+  align-self: center; margin-right: .1rem; }
+.tsep { width: .8rem; }
+.tab.t-plate { border-color: #c98d5c; background: #f7e7d8; color: #7d431c; }
+.tab.t-image { border-color: #8fae88; background: #e4eee0; color: #3f5a3c; }
+  .tab.t-image { background: #243021; color: #a9c6a1; border-color: #4d6448; } }
+.tab.t-plate[aria-selected=true], .tab.t-image[aria-selected=true] { border-width: 2px; }
+.plate-note { font-size: .85rem; color: var(--muted); font-style: italic; }
+figure.big img { max-height: 85vh; }
+.tab.has-match { background: #fff3a0; color: #000; }
+sup.fn a { text-decoration: none; padding: 0 .15em; }
+.fn-pop { position: absolute; z-index: 20; max-width: min(28rem, 90vw); background: var(--note);
+  border: 1px solid var(--line); border-radius: 4px; padding: .3rem .7rem; font-size: .85rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2); }
+.fn-pop p { margin: .2rem 0; }
+.hits ~ .tabs, .hits + .art .tabs { top: 2.4rem; }
+  .wrap { max-width: 72rem; margin: 0 auto; }
+  .wrap.narrow { max-width: 50rem; }
+  body { padding: 1.5rem 1rem 4rem; }
+  .brand {
+    font-family: 'Cinzel', Georgia, 'Times New Roman', serif; font-weight: 600;
+    font-size: 12.5px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--accent-copper-strong); margin: 0 0 4px;
+  }
+  .titlebar {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 8px 18px; padding-bottom: 16px; margin-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .titlebar h1 { font-size: 22px; margin: 0; font-weight: 700; }
+  .subscribe-btn {
+    display: inline-block; font-size: 0.85rem; font-weight: 600;
+    padding: 0.4rem 1rem; border-radius: 999px; text-decoration: none;
+    background: var(--accent-copper); color: #fff;
+  }
+  .subscribe-btn:hover { background: var(--accent-copper-strong); color: #fff; }
+  .source-notice { margin: 1rem 0; padding: 1rem 1.25rem; border: 2px solid #b7791f; border-radius: 6px;
+    background: #fff4d6; color: #4a3500; font-size: 1.05rem; line-height: 1.5; }
+  .about { color: var(--text); max-width: 62rem; }
+  .filters-help { color: var(--text-dim); font-size: 0.85rem; line-height: 1.5; margin-bottom: 0.75rem; max-width: 62rem; }
+  .filters-help strong { color: var(--text); }
+  .card {
+    display: block; border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem;
+    margin: 0.75rem 0; background: var(--surface); box-shadow: var(--shadow); color: inherit; text-decoration: none;
+  }
+  a.card:hover { border-color: var(--accent); }
+  a.card:hover h3 { color: var(--accent-strong); }
+  .card h3 { margin: 0 0 0.3rem 0; font-size: 1rem; }
+  .card p { margin: 0; color: var(--text-dim); }
+  .card.soon { opacity: 0.85; }
+  .card .src { margin-top: .4rem; font-size: .85rem; }
+  .src-list { padding-left: 1.2rem; } .src-list li { margin: .25rem 0; }
+  ol.how { padding-left: 1.4rem; } ol.how li { margin-bottom: 1rem; }
+  ol.how h3 { font-size: 1rem; margin: 0 0 .2rem; } ol.how p { margin: 0; }
+  .ext-icon { margin-left: .2em; vertical-align: -1px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .badge {
+    display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.03em;
+    text-transform: uppercase; color: var(--accent-copper-strong); background: var(--surface-2);
+    border: 1px solid var(--border); border-radius: 999px; padding: 0.1rem 0.6rem; margin-left: 0.4rem;
+    vertical-align: middle;
+  }
+  footer { margin-top: 30px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-dim); }
+  /* the review pages' styles (build_article_pages.CSS) on the site's tokens */
+  :root { --fg: var(--text); --muted: var(--text-dim); --line: var(--border); --note: var(--surface-2);
+    --mark: #ffe58a; --mark-on: #ffb020; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --mark: #7a6420; --mark-on: #b07a10; } }
+  .art { font: 17px/1.65 Georgia, "Noto Serif", serif; }
+  .art h1 { font-size: 1.45rem; line-height: 1.3; }
+</style>
+</head>
+<body>
+<div class="wrap narrow">
+<div class="brand">Project InscriptionSearch: Articles</div>
+<div class="titlebar"><h1><a href="./" class="home-link" title="Home"><img src="images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> How were the volumes processed?</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
+<main><p class="about">How the printed volumes became the searchable articles on this site. <span class="ai-badge">AI</span> marks a step done by an AI model, <span class="badge">Machine</span> one done by a script following fixed rules.</p><div class="source-notice" role="note"><strong>Please verify before you quote.</strong> These articles were read from the scanned volumes by machine (OCR) and put back together page by page. Mistakes may remain, most of all in Devanagari and other Indic script, and in the small footnote numbers. Please check the printed volume before using the text.</div><ol class="how"><li><h3>Finding the scans </h3><p>Each volume was found on archive.org. Where several copies exist, the highest-resolution complete one was picked; a page missing from it is read from another copy and the article says so. The <a href="Sources.html">Sources</a> page links every scan.</p></li><li><h3>Profiling every page <span class="badge">Machine</span></h3><p>A script measures each page: text, plate, blank or cover; one or two columns; its resolution. Plates stay page images from here on, never read as text.</p></li><li><h3>Cutting columns <span class="badge">Machine</span></h3><p>A two-column page is cut along its gutter, band by band, so the reading order (left column before right) is fixed before any text is read.</p></li><li><h3>Reading the text <span class="ai-badge">AI</span></h3><p>Pages are read by <strong>Surya</strong>, an open-source machine-learning OCR model, on a rented GPU. It keeps diacritics (ā, ṭ, ś) that older OCR drops. A few CII pages were read by Google's <strong>Gemini</strong> instead, where Surya had no reading.</p></li><li><h3>Checking the reading <span class="ai-badge">AI</span></h3><p><strong>Claude</strong> (Anthropic's AI model) reads a sample of pages against the scans for each volume and flags dropped lines and misread characters. A page that fails is read again; a recurring misreading (an <em>!</em> for <em>ḷ</em> at a word's end) is corrected by rule and logged for review.</p></li><li><h3>Putting the articles together <span class="badge">Machine</span></h3><p>The volume's own table of contents is the master list: number, title, author, first page. Each article runs from its heading to the next one; running heads are dropped; footnotes are attached to the page they print on, numbered by their marks in the text. Every page keeps its printed number and its PDF page.</p></li><li><h3>Plates and figures <span class="badge">Machine</span></h3><p>Plates are kept as images of the whole page, each on its own tab. Drawings inside the text are cut out and shown where they print. Web copies are compressed.</p></li><li><h3>Categories <span class="badge">Machine</span></h3><p>The Inscriptions site's term lists (hero-stones, Bhairava, Rāmānuja and others) are matched against each article, the same way as for the inscriptions.</p></li><li><h3>Dynasty, king, date, place, language, script <span class="ai-badge">AI</span></h3><p>Gemini reads each article's introduction, the part where the editor states these facts in plain English, and returns each value with the sentence it came from. A value whose sentence is not in the article is rejected. The century is computed from the date, not asked. These values carry the <span class="ai-badge">AI</span> badge on the site.</p></li><li><h3>Mysore Archaeological Reports <span class="badge">Machine</span></h3><p>Each year's report is one article, by the Director who signed it. Its sections (Part, district, village, monument) come from the report's own contents and are found in the text by their headings and printed pages.</p></li></ol><p class="meta">Questions or corrections: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">the feedback form</a>.</p></main>
+<footer>Generated 19 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
+Feedback: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">this form</a>.</footer>
+</div>
+<script>var s=document.getElementById('subscribeLink'); if (s) s.addEventListener('click', function(){ if (typeof gtag==='function') gtag('event','subscribe_click'); });</script>
+</body>
+</html>

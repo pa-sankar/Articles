@@ -69,6 +69,8 @@ h1.ah-title { font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem;
               line-height: 1.25; margin: .45rem 0 .3rem; }
 .ah-author { font-variant: small-caps; font-size: 1.05rem; }
 .ah-ref { color: var(--muted); font-size: .82rem; margin-top: .35rem; }
+.ext-icon { margin-left: .2em; vertical-align: -1px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 h2.printed-title { font-size: 1.1rem; line-height: 1.35; margin: .4rem 0; }
 .page { display:flex; gap:.5rem; align-items:center; color:var(--muted); font-size:.8rem; margin:1.6rem 0 .6rem; }
 .page::before, .page::after { content:""; flex:1; border-top:1px solid var(--line); }
@@ -133,8 +135,26 @@ table.idx { border-collapse: collapse; width: 100%; font-size: 14px; font-family
 .filter-dd-opt[hidden] { display: none; }
 .filter-dd-opt span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .filter-dd-opt .n { font-style: normal; font-size: .75rem; color: var(--text-dim); }
-.filter-dd-opt-unavailable { opacity: .4; cursor: not-allowed; }
-.filter-dd-opt-unavailable:hover { background: none; }
+.filter-dd-opt-gone { display: none !important; }
+button.go { padding: 8px 16px; font: inherit; font-weight: 600; border-radius: 7px; cursor: pointer;
+  border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+button:disabled, input:disabled, select:disabled { opacity: .5; cursor: default; }
+.partial { margin: .6rem 0; padding: .5rem .8rem; border-radius: 7px; font-size: .9rem; font-weight: 600;
+  background: #fff3cd; color: #6b4e00; border: 1px solid #e6c766; }
+.partial[hidden] { display: none; }
+.busy { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center;
+  justify-content: center; z-index: 100; }
+.busy[hidden] { display: none; }
+.busy-box { background: var(--surface); color: var(--text); border-radius: 10px; padding: 1.2rem 1.4rem;
+  width: min(26rem, 92vw); box-shadow: var(--shadow); }
+.busy-box h2 { font-size: 1.05rem; margin: 0 0 .6rem; }
+.busy-bar { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; margin: .6rem 0; }
+.busy-bar div { height: 100%; width: 0; background: var(--accent); transition: width .15s; }
+.busy-box .meta { min-height: 1.3em; }
+.busy-actions { display: flex; justify-content: flex-end; gap: .5rem; margin-top: .8rem; }
+.busy-actions button { padding: 6px 16px; font: inherit; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+.busy-actions button.ok { border-color: var(--accent); background: var(--accent); color: #fff; }
 .filter-dd-actions { display: flex; justify-content: flex-end; }
 .filter-dd-clear { padding: 4px 10px; cursor: pointer; background: none; border: 1px solid var(--border);
   border-radius: 6px; color: var(--text-dim); font-family: inherit; font-size: 12.5px; }
@@ -247,6 +267,12 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
   .card h3 { margin: 0 0 0.3rem 0; font-size: 1rem; }
   .card p { margin: 0; color: var(--text-dim); }
   .card.soon { opacity: 0.85; }
+  .card .src { margin-top: .4rem; font-size: .85rem; }
+  .src-list { padding-left: 1.2rem; } .src-list li { margin: .25rem 0; }
+  ol.how { padding-left: 1.4rem; } ol.how li { margin-bottom: 1rem; }
+  ol.how h3 { font-size: 1rem; margin: 0 0 .2rem; } ol.how p { margin: 0; }
+  .ext-icon { margin-left: .2em; vertical-align: -1px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .badge {
     display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.03em;
     text-transform: uppercase; color: var(--accent-copper-strong); background: var(--surface-2);
@@ -267,7 +293,7 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <div class="brand">Project InscriptionSearch: Articles</div>
 <div class="titlebar"><h1><a href="../../" class="home-link" title="Home"><img src="../../images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> Epigraphia Indica</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
 <main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a></p>
-<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. III · No. 18</div><h1 class="ah-title">Bahâḷ inscription of the Yâdava king Siṅghaṇa ; Śaka-Saṁvat 1144</h1><div class="ah-author">F. Kielhorn</div><div class="ah-ref">Printed p. 110 · PDF pp. 142–145</div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 110</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 111</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 112</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 113</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page" id="p-110">p. 110 · PDF 142</div>
+<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. III · No. 18</div><h1 class="ah-title">Bahâḷ inscription of the Yâdava king Siṅghaṇa ; Śaka-Saṁvat 1144</h1><div class="ah-author">F. Kielhorn</div><div class="ah-ref">Printed p. 110 · PDF pp. 142–145 · <a href="https://archive.org/details/mpl.411.754.epi.3.207" class="src-link" target="_blank" rel="noopener" title="Opens archive.org in a new tab">Source scan<svg class="ext-icon" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" focusable="false"><path d="M9 2h5v5M14 2 7.5 8.5M12 9.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only"> (opens archive.org in a new tab)</span></a></div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 110</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 111</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 112</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 113</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page" id="p-110">p. 110 · PDF 142</div>
 <h2 class="printed-title">No. 18.— BAHAL INSCRIPTION OF THE YADAVA KING SINGHANA.</h2>
 SAKA-SAMVAT 1144.
 By F. KIELHORN, PH.D., C.I.E.; GÖTTINGEN.
@@ -320,6 +346,48 @@ function markHtml(text, term, mode){ // escaped text with <mark>s
   r.forEach(function(x){ out+=e(text.slice(at,x[0]))+'<mark>'+e(text.slice(x[0],x[1]))+'</mark>'; at=x[1]; });
   return out+e(text.slice(at));
 }
+
+var SEARCH_BASE=window.SEARCH_BASE||'search/', SEARCH_TEXT={};
+var SEARCH_FROM_DISK=location.protocol==='file:';
+var DISK_NOTE='The full-text search needs the page opened through a local server '
+  +'(python -m http.server in this folder, then http://localhost:8000/), not from disk.';
+function loadOne(ed){   // an edition's text: from the cache, else fetched (a missing file: none)
+  if (SEARCH_TEXT[ed]) return Promise.resolve(SEARCH_TEXT[ed]);
+  return fetch(SEARCH_BASE+ed+'.json').then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(recs){ SEARCH_TEXT[ed]=recs; return recs; }, function(){ SEARCH_TEXT[ed]=[]; return []; });
+}
+// ---- the search pop-up (user, 2026-11-19), shared by the indexes and Advanced Search: the
+// search starts on the button or Enter only, the controls are off while it runs, the pop-up
+// shows progress and Cancel, then the count with OK; a cancelled search keeps what it found
+var BUSY=null;
+function busyEls(){
+  if (BUSY) return BUSY;
+  var b=document.getElementById('busy');
+  BUSY={box:b, title:b.querySelector('h2'), msg:b.querySelector('.meta'), bar:b.querySelector('.busy-bar div'),
+        cancel:b.querySelector('.cancel'), ok:b.querySelector('.ok'), job:null, onOk:null};
+  BUSY.cancel.addEventListener('click', function(){ if (BUSY.job){ BUSY.job.cancelled=true; BUSY.msg.textContent='Stopping…'; } });
+  BUSY.ok.addEventListener('click', function(){ BUSY.box.hidden=true; if (BUSY.onOk) BUSY.onOk(); });
+  return BUSY;
+}
+function busyOpen(title){ var b=busyEls(); b.job={cancelled:false}; b.title.textContent=title; b.msg.textContent='';
+  b.bar.style.width='0'; b.cancel.hidden=false; b.ok.hidden=true; b.box.hidden=false; return b.job; }
+function busyProgress(frac, msg){ var b=busyEls(); b.bar.style.width=Math.round(Math.min(1,frac)*100)+'%'; b.msg.textContent=msg; }
+function busyDone(msg, onOk){ var b=busyEls(); b.job=null; b.title.textContent='Search finished'; b.bar.style.width='100%';
+  b.msg.textContent=msg; b.cancel.hidden=true; b.ok.hidden=false; b.onOk=onOk||null; b.ok.focus(); }
+function busyClose(){ var b=busyEls(); b.job=null; b.box.hidden=true; }
+function setControls(els, on){ els.forEach(function(el){ if (el) el.disabled=!on; }); }
+// the editions' text one at a time, with progress; cb(how many loaded, cancelled?)
+function loadWithProgress(eds, label, job, cb){
+  var k=0;
+  (function next(){
+    if (job.cancelled || k>=eds.length) return cb(k, job.cancelled);
+    busyProgress(k/eds.length, 'Loading '+label(eds[k])+' ('+(k+1)+' of '+eds.length+')…');
+    loadOne(eds[k]).then(function(){ k++; setTimeout(next, 0); });
+  })();
+}
+// Enter in the box runs the search, as the button does
+function searchOnEnter(box, run){ box.addEventListener('keydown', function(e){
+  if (e.key==='Enter'){ e.preventDefault(); if (!busyEls().job) run(); } }); }
 window.CAT_TERMS={};
 // page tabs: one page shown at a time; #plate-N / #fig-N and search matches open their tab
 var panels=Array.prototype.slice.call(document.querySelectorAll('section.pg'));
@@ -330,10 +398,12 @@ function showTab(i){
   tabBtns.forEach(function(b,k){ b.setAttribute('aria-selected', k===i ? 'true' : 'false'); });
 }
 function showFor(el){ var p=el && el.closest('section.pg'); if (p) showTab(+p.dataset.i); }
-tabBtns.forEach(function(b){ b.addEventListener('click', function(){ showTab(+b.dataset.i); window.scrollTo(0,0); }); });
+var onTab=null; // set by the search marks below: the hits bar follows the page the reader opens
+tabBtns.forEach(function(b){ b.addEventListener('click', function(){ showTab(+b.dataset.i); window.scrollTo(0,0);
+  if (onTab) onTab(+b.dataset.i); }); });
 showTab(0);
 function toHash(){ if (location.hash){ var el=document.getElementById(location.hash.slice(1));
-  if (el){ showFor(el); el.scrollIntoView({block:'start'}); } } }
+  if (el){ showFor(el); el.scrollIntoView({block:'start'}); var p=el.closest('section.pg'); if (p && onTab) onTab(+p.dataset.i); } } }
 window.addEventListener('hashchange', toHash);
 toHash();
 // footnote pop-ups: a mark opens its note beside it; a click elsewhere or Esc closes it
@@ -359,7 +429,8 @@ document.addEventListener('click', function(e){
 });
 document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop(); });
 (function(){
-  var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat');
+  var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat'),
+      titleOnly=ps.get('in')==='title';
   // what to mark: the search term, and the chosen category's matched words (CAT_TERMS)
   var finds=[]; if (term) finds.push([term,mode]);
   if (cat && window.CAT_TERMS && CAT_TERMS[cat]) CAT_TERMS[cat].forEach(function(t){ finds.push([t,'embedded']); });
@@ -368,7 +439,8 @@ document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop
     r.sort(function(a,b){return a[0]-b[0];}); var out=[];
     r.forEach(function(x){ if (out.length && x[0]<out[out.length-1][1]) { out[out.length-1][1]=Math.max(out[out.length-1][1],x[1]); } else out.push(x.slice()); });
     return out; }
-  var main=document.querySelector('main'), walker=document.createTreeWalker(main, NodeFilter.SHOW_TEXT), nodes=[], n;
+  // a title-only search marks the title alone, as that is all it searched
+  var main=document.querySelector('main'), root=(titleOnly && main.querySelector('.ah-title')) || main, walker=document.createTreeWalker(root, NodeFilter.SHOW_TEXT), nodes=[], n;
   while ((n=walker.nextNode())) if (!n.parentNode.closest('.hits')) nodes.push(n);
   var marks=[];
   nodes.forEach(function(node){
@@ -382,11 +454,21 @@ document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop
   var i=0, label=document.createElement('span');
   // every tab holding a match gets the yellow has-match style (as in the inscription popups)
   marks.forEach(function(m){ var p=m.closest('section.pg'); if (p && tabBtns[+p.dataset.i]) tabBtns[+p.dataset.i].classList.add('has-match'); });
-  function go(k){ if (!marks.length) return; marks[i].classList.remove('on'); i=(k+marks.length)%marks.length;
-    showFor(marks[i]); marks[i].classList.add('on'); marks[i].scrollIntoView({block:'center'});
-    label.textContent=' '+(i+1)+' of '+marks.length+' ';}
+  // between: the reader opened a page with no match; i is then the first match after it
+  var between=false, tabOf=function(m){ var p=m.closest('section.pg'); return p ? +p.dataset.i : -1; };
+  function setOn(k){ marks[i].classList.remove('on'); i=k; between=false; marks[i].classList.add('on');
+    label.textContent=' '+(i+1)+' of '+marks.length+' '; }
+  function go(k){ if (!marks.length) return; setOn((k+marks.length)%marks.length);
+    showFor(marks[i]); marks[i].scrollIntoView({block:'center'}); }
   var prev=document.createElement('button'); prev.textContent='◀ previous'; prev.onclick=function(){go(i-1);};
-  var next=document.createElement('button'); next.textContent='next ▶'; next.onclick=function(){go(i+1);};
+  var next=document.createElement('button'); next.textContent='next ▶'; next.onclick=function(){go(between?i:i+1);};
+  onTab=function(t){ if (!marks.length) return;
+    var j=-1; marks.some(function(m,k){ if (tabOf(m)===t){ j=k; return true; } return false; });
+    if (j>=0) return setOn(j);   // the page's first match; the reader is at its top, so no scroll
+    marks[i].classList.remove('on');
+    var after=-1; marks.some(function(m,k){ if (tabOf(m)>t){ after=k; return true; } return false; });
+    i=after>=0 ? after : 0; between=true;
+    label.textContent=' – of '+marks.length+' (none on this page) '; };
   bar.appendChild(document.createTextNode((term?'"'+term+'"':'')+(term&&cat?' + ':'')+(cat?'category '+cat:'')+': ')); bar.appendChild(prev); bar.appendChild(label); bar.appendChild(next);
   main.insertBefore(bar, main.firstChild);
   if (marks.length) go(0); else label.textContent=' no match on this page ';

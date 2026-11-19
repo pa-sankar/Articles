@@ -69,6 +69,8 @@ h1.ah-title { font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem;
               line-height: 1.25; margin: .45rem 0 .3rem; }
 .ah-author { font-variant: small-caps; font-size: 1.05rem; }
 .ah-ref { color: var(--muted); font-size: .82rem; margin-top: .35rem; }
+.ext-icon { margin-left: .2em; vertical-align: -1px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 h2.printed-title { font-size: 1.1rem; line-height: 1.35; margin: .4rem 0; }
 .page { display:flex; gap:.5rem; align-items:center; color:var(--muted); font-size:.8rem; margin:1.6rem 0 .6rem; }
 .page::before, .page::after { content:""; flex:1; border-top:1px solid var(--line); }
@@ -133,8 +135,26 @@ table.idx { border-collapse: collapse; width: 100%; font-size: 14px; font-family
 .filter-dd-opt[hidden] { display: none; }
 .filter-dd-opt span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .filter-dd-opt .n { font-style: normal; font-size: .75rem; color: var(--text-dim); }
-.filter-dd-opt-unavailable { opacity: .4; cursor: not-allowed; }
-.filter-dd-opt-unavailable:hover { background: none; }
+.filter-dd-opt-gone { display: none !important; }
+button.go { padding: 8px 16px; font: inherit; font-weight: 600; border-radius: 7px; cursor: pointer;
+  border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+button:disabled, input:disabled, select:disabled { opacity: .5; cursor: default; }
+.partial { margin: .6rem 0; padding: .5rem .8rem; border-radius: 7px; font-size: .9rem; font-weight: 600;
+  background: #fff3cd; color: #6b4e00; border: 1px solid #e6c766; }
+.partial[hidden] { display: none; }
+.busy { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center;
+  justify-content: center; z-index: 100; }
+.busy[hidden] { display: none; }
+.busy-box { background: var(--surface); color: var(--text); border-radius: 10px; padding: 1.2rem 1.4rem;
+  width: min(26rem, 92vw); box-shadow: var(--shadow); }
+.busy-box h2 { font-size: 1.05rem; margin: 0 0 .6rem; }
+.busy-bar { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; margin: .6rem 0; }
+.busy-bar div { height: 100%; width: 0; background: var(--accent); transition: width .15s; }
+.busy-box .meta { min-height: 1.3em; }
+.busy-actions { display: flex; justify-content: flex-end; gap: .5rem; margin-top: .8rem; }
+.busy-actions button { padding: 6px 16px; font: inherit; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+.busy-actions button.ok { border-color: var(--accent); background: var(--accent); color: #fff; }
 .filter-dd-actions { display: flex; justify-content: flex-end; }
 .filter-dd-clear { padding: 4px 10px; cursor: pointer; background: none; border: 1px solid var(--border);
   border-radius: 6px; color: var(--text-dim); font-family: inherit; font-size: 12.5px; }
@@ -247,6 +267,12 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
   .card h3 { margin: 0 0 0.3rem 0; font-size: 1rem; }
   .card p { margin: 0; color: var(--text-dim); }
   .card.soon { opacity: 0.85; }
+  .card .src { margin-top: .4rem; font-size: .85rem; }
+  .src-list { padding-left: 1.2rem; } .src-list li { margin: .25rem 0; }
+  ol.how { padding-left: 1.4rem; } ol.how li { margin-bottom: 1rem; }
+  ol.how h3 { font-size: 1rem; margin: 0 0 .2rem; } ol.how p { margin: 0; }
+  .ext-icon { margin-left: .2em; vertical-align: -1px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .badge {
     display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.03em;
     text-transform: uppercase; color: var(--accent-copper-strong); background: var(--surface-2);
@@ -267,17 +293,19 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <div class="brand">Project InscriptionSearch: Articles</div>
 <div class="titlebar"><h1><a href="../../" class="home-link" title="Home"><img src="../../images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> Epigraphia Indica</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
 <main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a></p>
-<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. XVIII · No. 21<span class=ah-part> · Part IV</span></div><h1 class="ah-title">Two copper-plate grants of Krishnadevaraya</h1><div class="ah-author">T. A. Gopinatha Rao And K. Amrita Rao</div><div class="ah-ref">Printed p. 160 · PDF pp. 210–224</div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 160</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 161</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 162</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 163</button><button type="button" class="tab t-page" role="tab" data-i="4">p. 164</button><button type="button" class="tab t-page" role="tab" data-i="5">p. 165</button><button type="button" class="tab t-page" role="tab" data-i="6">p. 166</button><button type="button" class="tab t-page" role="tab" data-i="7">p. 167</button><button type="button" class="tab t-page" role="tab" data-i="8">p. 168</button><button type="button" class="tab t-page" role="tab" data-i="9">p. 169</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page" id="p-160">p. 160 · PDF 210</div>
+<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. XVIII · No. 21<span class=ah-part> · Part IV</span></div><h1 class="ah-title">Two copper-plate grants of Krishnadevaraya</h1><div class="ah-author">T. A. Gopinatha Rao And K. Amrita Rao</div><div class="ah-ref">Printed p. 160 · PDF pp. 210–224 · <a href="https://archive.org/details/mpl.411.754.epi.18.944" class="src-link" target="_blank" rel="noopener" title="Opens archive.org in a new tab">Source scan<svg class="ext-icon" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" focusable="false"><path d="M9 2h5v5M14 2 7.5 8.5M12 9.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only"> (opens archive.org in a new tab)</span></a></div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 160</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 161</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 162</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 163</button><button type="button" class="tab t-page" role="tab" data-i="4">p. 164</button><button type="button" class="tab t-page" role="tab" data-i="5">p. 165</button><button type="button" class="tab t-page" role="tab" data-i="6">p. 166</button><button type="button" class="tab t-page" role="tab" data-i="7">p. 167</button><button type="button" class="tab t-page" role="tab" data-i="8">p. 168</button><button type="button" class="tab t-page" role="tab" data-i="9">p. 169</button><span class=tsep></span><span class="tg">Plates</span><button type="button" class="tab t-plate" role="tab" data-i="10">Plate 1</button><button type="button" class="tab t-plate" role="tab" data-i="11">Plate 2</button><button type="button" class="tab t-plate" role="tab" data-i="12">Plate 3</button><span class=tsep></span><span class="tg">Images</span><button type="button" class="tab t-image" role="tab" data-i="13">Image 1</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page" id="p-160">p. 160 · PDF 210</div>
 <h2 class="printed-title">No. 21.—TWO COPPER-PLATE GRANTS OF KRISHNADEVARAYÁ.</h2>
 <p class="byline"><p>BY THE LATE T. A. GOPINATHA RAO, M.A., TRIVANDRUM, AND K. AMRITA RAO, M.A., MADRAS.</p></p>
 <p>The two inscriptions edited below are engraved upon two sets of <b>copper-plates</b> belonging to the <b>Raṅganāthasvāmin</b> temple at <b>Śrīraṅgam</b>. They are edited for the first time from impressions prepared under the supervision of one of us.</p>
 <h3 id="a-inscription-of-saka-samvat-1436">A.—INSCRIPTION OF SAKA-SAMVAT 1436.</h3>
 <p>This record (No. 23 of the <i>Madras Epigraphist's Copper-plate Collection</i> for 1905-06) is engraved upon three plates, which are strung together on a ring which bears a circular seal. On the seal are shaped in half relief a boar, the sun and the moon—the usual Vījayanagara emblems. The first side of the first plate and the second side of the third are left without writing, and the rims of the plates are raised. The writing is consequently very well preserved. The plates are numbered with the Telugu-Kannaḍa numerals 1, 2 and 3 engraved on the second side of the first, and on the first side of the second and third plates respectively, to the right of the ring-hole.</p>
 <p>The <b>alphabet</b> in which the epigraph is written is <b>Nandināgari</b>, and the <b>lānguage Sanskrit</b>. At the end of the inscription is the word <i>Śrī-Virūpāksha</i>, the sign-manual of the king, written in the Telugu-Kannaḍa alphabet. The inscription almost always employs the <i>anus-vāra</i>, wherever the nasals have to be used. The <i>t</i> in conjunct consonants is usually doubled unnecessarily, as in <i>prattyūha</i> in ll. 4 and 52, in <i>kīrttyā</i> in ll. 28 and 44, in <i>vrajēdittyā</i><sup>2</sup> in l. 45, in <i>āvarttyā</i><sup>3</sup> in l. 55, in <i>ittyuktō</i> in l. 60, <i>ittyādi</i> in l. 62 and <i>nīttyā</i> in l. 65. There occur also omissions of letters in some places, due to the carelessness of the engraver, e.g., <i>t</i> in <i>vyatānti</i> in</p>
-<div class="notes"><p><sup id="fn-1-1">1</sup> My attention has been kindly drawn to the existence of the first <i>dā</i> in this word by Mr. H. Krishna Sastri. The meaning of the compound is uncertain. It may perhaps be interpreted as <i>ārya-yādava-dārāḥ</i>, the wife of the noble Yādava, who ever he was.</p></div></section>
+<div class="notes"><p><sup id="fn-1-1">1</sup> My attention has been kindly drawn to the existence of the first <i>dā</i> in this word by Mr. H. Krishna Sastri. The meaning of the compound is uncertain. It may perhaps be interpreted as <i>ārya-yādava-dārāḥ</i>, the wife of the noble Yādava, who ever he was.</p></div>
+<p class="plate-note"><a href="#plate-1">Plate 1</a> is bound after this page.</p></section>
 <section class="pg pg-page" role="tabpanel" data-i="1"><div class="page" id="p-161">p. 161 · PDF 213</div>
 <p>l. 21, <i>āt</i> in <i>Nṛisimhēndrāt</i> in l. 25, <i>t</i> in <i>akārshīt</i> in l. 31, the secondary <i>ā</i> symbol in <i>yā</i> in <i>hirainṇyā</i> n l. 40, <i>t</i> in <i>lārigalyatānīt</i> in l. 41 and so on; these omissions are supplied in the transcript with an asterisk. The <i>visarga</i> is also omitted in a large number of instauces where it is wanted, and there again it is inserted similarly in our transcript. Besides these cases, there are here and there verbal errors, and the corrections of these are effected in foot-notes.</p>
 <p>In both the records the genealogy of the king <b>Kṛishnadēvarāya</b> is given as follows :—</p>
+<figure id="figin-1"><img loading="lazy" src="../../images/EpInd_XVIII/p213_f1.webp" alt="Image 1"><figcaption><a href="#fig-1">Image 1</a></figcaption></figure>
 <p>The record is dated <b>Ś. 1436</b>, which corresponds to the cyclic year Bhāva, in the reign of <b>Kṛishnadēva-Mahārāya</b> of Vijayanagara. In this year, on a Wednesday which coincided with the <b>Gō-dvādaśī</b> <i>tithi</i> in the month <b>Kārttika</b>, the <i>nakshatra</i> for that day being <b>Bharanī</b>, the king granted the village of <b>Eṇṇakuḍi</b> to the <b>Brāhmaṇa Allāla-Bhaṭṭa</b>. Regarding this date the Hon'ble Mr. L. D. Swamikkannu Pillai, Dewan Bahadur, writes :—</p>
 <p>“Ś. 1436, Bhāva, Wednesday, Gō-dvādaśī-<i>tithi</i> in the month Kārtika, Bharaṇi <i>nakshatra</i>. Āśvina Śukla Dvādaśī is called Gō-dvādaśī (<i>Ind. Ephemeris</i>, p. XIX); but in A.D. 1514-15=Ś. 1436, Bhāva, Āśvina Śu. 12 fell on Saturday, 30th September, 1514, and the <i>nakshatra</i> was Śatabhishaj. The day intended was probably Mārgaśira Śu. 12, Wednesday, 29th November, A.D. 1514, when the <i>nakshatra</i> was Bharaṇi.”</p>
 <p>The name <i>Gō-dvādaśī</i> occurs in other documents also. We meet with it, for instance, in the ancient record of the Āy chieftain, Vikramāditya Varaguṇa (<i>Trav. Arch. Series</i>, Vol. 1, p. 192); what observances there are on this particular <i>dvādaśī</i> is not known. On the date specified the king <b>Kṛishnadēvarāya</b>, being in the presence of the god Virṇpāksha in the temple at Vijayanagara (Hampi), standing upon the bank of the Tungabhadrā and near the hill <b>Hēmakūṭa</b>, granted the village of <b>Eṇṇakuḍi</b> under the name of <b>Kṛishncrāyapuram</b> to <b>Allāla-Bhaṭṭa</b>, son of <b>Varadarājārya</b>, of the Ātrēya <i>gōtra</i>, of the Āpastamba <i>sūtra</i> and of the <b>Yajus śākhā</b>, who was a master in the six systems of philosophy. The occasion on which this</p></section>
@@ -292,7 +320,9 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <p>[Metres: v. 28, <i>Sragdharā</i>; vv. 29-45<sup class="fn"><a href="#fn-3-1">1</a></sup>, 47<sup class="fn"><a href="#fn-3-1">1</a></sup>/<sub>2</sub>-50<sup class="fn"><a href="#fn-3-1">1</a></sup>/<sub>2</sub>, <i>Anushṭubh</i>; v. 46<sup class="fn"><a href="#fn-3-1">1</a></sup>/<sub>2</sub>, <i>Gīti</i>; v. 51<sup class="fn"><a href="#fn-3-1">1</a></sup>/<sub>2</sub>, <i>Śālinī</i>.]</p>
 <p><i>Second Plate: Second Side.</i></p>
 <div class="lines"><p>63 * * * * * * * * * * * * * * * * * * * * &lt;|904|&gt; सुखै[१*]दा[यं:]<br/>64 [स]धोभि: स विजयनगरे रत्नसिंहासनस्तः<sup class="fn"><a href="#fn-3-2">2</a></sup> क्षापालान् क्षणराय-<br/>65 क्षितिपतिरधरोक्षरय नोक्षा वृगादीत्<sup class="fn"><a href="#fn-3-3">3</a></sup> [१*] आ पूर्वाद्रेरयास्त(ः)क्षितिधर-</p></div>
-<div class="notes"><p><sup id="fn-3-1">1</sup> From inked impressions prepared under the supervision of Mr. T. A. Gopinatha Rao.</p><p><sup id="fn-3-2">2</sup> Read ख.:</p><p><sup id="fn-3-3">3</sup> Read न.</p></div></section>
+<div class="notes"><p><sup id="fn-3-1">1</sup> From inked impressions prepared under the supervision of Mr. T. A. Gopinatha Rao.</p><p><sup id="fn-3-2">2</sup> Read ख.:</p><p><sup id="fn-3-3">3</sup> Read न.</p></div>
+<p class="plate-note"><a href="#plate-2">Plate 2</a> is bound after this page.</p>
+<p class="plate-note"><a href="#plate-3">Plate 3</a> is bound after this page.</p></section>
 <section class="pg pg-page" role="tabpanel" data-i="3"><div class="page" id="p-163">p. 163 · PDF 217</div>
 <div class="lines"><p>66 कठकादा च हेमाचलाता<sup>1</sup>(।)दा सेतोरर्थिसार्थः()श्रियमिह बहलीकृत्य<br/>67 कोर्त्या समिधे() ॥[२८*] शालिवाहननिनंते<sup>2</sup> शकाब्दे सचतु[:*]शतैः<br/>षट्टि<sup>3</sup>[श]-<br/>68 ता च संयुक्तैः संख्याते दशभि[:*] शतैः ॥[२९*] भावसंवत्सरे मास-<br/>कार्तिके बुधवा-<br/>69 सरे । गोद्वादस्यां *च पुण्यायां भरण्यां समये शुभे ॥[३०*] तृंग-<br/>भद्रापग[।]-<br/>70 तीरे हेमकृष्टोपशीभिते । श्रीविरूपाक्षदेवस्य संनिधौ मुक्ति[दा]-<br/>71 इ*नि ॥[३१*] आत्रेयगोत्रजाताय वरापस्तंबसु*त्रिणे । यशस्विने यज्ञु[:*]-<br/>72 शाखा[ध्या]यिने गुणशा[लि]ने ॥[३२*] ष[ड्]र्शन्यंबुधेः पारदृश्यने शृ*त-<br/>73 शोभिने । श्रीमद्वरदराजार्यसुनवे सुनृ*तोक्तये ।[३३*] गोसहश्य<sup>10</sup>मह[।]-<br/>74 दाने विश्रुते शुभदायिनि । आचार्य्याय विशुंधा<sup>11</sup>य वाचार्य्याय म-<br/>75 हाल्लने ॥[३४*] पुरु[षा]यै<sup>12</sup> सरस्वत्यै पुं<sup>13</sup>ण्यशीलाय धीमते । अल्लाल-<br/>76 भद्रवेषाय शेषाय गुरवे धिया ।[। ३५*] चीलमंडलराज्यांत[र्भू]तदक्षि-<br/>77 णरोधसि । पुण्ये(।) कवेरकन्याया दृश्यमाननिजस्थितिं ।[। ३६*] आरु<sup>14</sup>-<br/>78 रुचावडेरंतर्भावं चापि समाश्री<sup>15</sup>तं । विख्यातमुद्यपोंडश्रीची[लं]-<sup>16</sup><br/>79 [द्र]वञ्जना[डु]के ।[। ३७*] तस्यैव पश्चिमो भाग इति ख्यातिमुपाश्रीतं<sup>17</sup>[।] [र]-</p></div>
 <p><i>Third Plate : First Side.</i></p>
@@ -359,7 +389,11 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <p>[V. 44 states that Sabhāpati composed the document at the command of Kṛishṇadāva-Mahārāya.]</p>
 <p>[V. 45. Allots one share to the engraver of the <i>śīsana</i>, Mallaṇāchārya, son of Viranā-chārya.]</p>
 <p>(L. 98.) <i>Śrī-Virūpāksha</i>, (the sign-manual of the king.)</p>
-<div class="notes"><p><sup id="fn-10-1">1</sup> Read °सेतु नृ. <sup id="fn-10-2">2</sup> Read काले पालनीयो. <sup id="fn-10-3">3</sup> Read तान्. <sup id="fn-10-4">4</sup> Read °वेदान्.</p><p><sup id="fn-10-5">5</sup> Read °उक्तवान्मुदसम्बुद्धं तदिदं तामशाखिन्.</p><p><sup id="fn-10-6">6</sup> Read °तमिका. <sup id="fn-10-7">7</sup> Read वृत्ति. <sup id="fn-10-8">8</sup> Written in Telugu-Kannada airpuvev. <sup id="fn-10-9">9</sup> विरुपाच.</p></div></section></div></main>
+<div class="notes"><p><sup id="fn-10-1">1</sup> Read °सेतु नृ. <sup id="fn-10-2">2</sup> Read काले पालनीयो. <sup id="fn-10-3">3</sup> Read तान्. <sup id="fn-10-4">4</sup> Read °वेदान्.</p><p><sup id="fn-10-5">5</sup> Read °उक्तवान्मुदसम्बुद्धं तदिदं तामशाखिन्.</p><p><sup id="fn-10-6">6</sup> Read °तमिका. <sup id="fn-10-7">7</sup> Read वृत्ति. <sup id="fn-10-8">8</sup> Written in Telugu-Kannada airpuvev. <sup id="fn-10-9">9</sup> विरुपाच.</p></div></section>
+<section class="pg pg-plate" role="tabpanel" data-i="10"><div class="page" id="plate-1">Plate 1 · PDF page 211, bound after p. 160</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p211.webp" alt="Plate 1"></figure></section>
+<section class="pg pg-plate" role="tabpanel" data-i="11"><div class="page" id="plate-2">Plate 2 · PDF page 215, bound after p. 162</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p215.webp" alt="Plate 2"></figure></section>
+<section class="pg pg-plate" role="tabpanel" data-i="12"><div class="page" id="plate-3">Plate 3 · PDF page 216, bound after p. 162</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p216.webp" alt="Plate 3"></figure></section>
+<section class="pg pg-image" role="tabpanel" data-i="13"><div class="page">Image 1</div><figure id="fig-1" class="big"><img loading="lazy" src="../../images/EpInd_XVIII/p213_f1.webp" alt="Image 1"><figcaption>Image 1 (printed on p. 161)</figcaption></figure></section></div></main>
 <footer>Generated 19 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
 Feedback: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">this form</a>.</footer>
 </div>
@@ -393,6 +427,48 @@ function markHtml(text, term, mode){ // escaped text with <mark>s
   r.forEach(function(x){ out+=e(text.slice(at,x[0]))+'<mark>'+e(text.slice(x[0],x[1]))+'</mark>'; at=x[1]; });
   return out+e(text.slice(at));
 }
+
+var SEARCH_BASE=window.SEARCH_BASE||'search/', SEARCH_TEXT={};
+var SEARCH_FROM_DISK=location.protocol==='file:';
+var DISK_NOTE='The full-text search needs the page opened through a local server '
+  +'(python -m http.server in this folder, then http://localhost:8000/), not from disk.';
+function loadOne(ed){   // an edition's text: from the cache, else fetched (a missing file: none)
+  if (SEARCH_TEXT[ed]) return Promise.resolve(SEARCH_TEXT[ed]);
+  return fetch(SEARCH_BASE+ed+'.json').then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(recs){ SEARCH_TEXT[ed]=recs; return recs; }, function(){ SEARCH_TEXT[ed]=[]; return []; });
+}
+// ---- the search pop-up (user, 2026-11-19), shared by the indexes and Advanced Search: the
+// search starts on the button or Enter only, the controls are off while it runs, the pop-up
+// shows progress and Cancel, then the count with OK; a cancelled search keeps what it found
+var BUSY=null;
+function busyEls(){
+  if (BUSY) return BUSY;
+  var b=document.getElementById('busy');
+  BUSY={box:b, title:b.querySelector('h2'), msg:b.querySelector('.meta'), bar:b.querySelector('.busy-bar div'),
+        cancel:b.querySelector('.cancel'), ok:b.querySelector('.ok'), job:null, onOk:null};
+  BUSY.cancel.addEventListener('click', function(){ if (BUSY.job){ BUSY.job.cancelled=true; BUSY.msg.textContent='Stopping…'; } });
+  BUSY.ok.addEventListener('click', function(){ BUSY.box.hidden=true; if (BUSY.onOk) BUSY.onOk(); });
+  return BUSY;
+}
+function busyOpen(title){ var b=busyEls(); b.job={cancelled:false}; b.title.textContent=title; b.msg.textContent='';
+  b.bar.style.width='0'; b.cancel.hidden=false; b.ok.hidden=true; b.box.hidden=false; return b.job; }
+function busyProgress(frac, msg){ var b=busyEls(); b.bar.style.width=Math.round(Math.min(1,frac)*100)+'%'; b.msg.textContent=msg; }
+function busyDone(msg, onOk){ var b=busyEls(); b.job=null; b.title.textContent='Search finished'; b.bar.style.width='100%';
+  b.msg.textContent=msg; b.cancel.hidden=true; b.ok.hidden=false; b.onOk=onOk||null; b.ok.focus(); }
+function busyClose(){ var b=busyEls(); b.job=null; b.box.hidden=true; }
+function setControls(els, on){ els.forEach(function(el){ if (el) el.disabled=!on; }); }
+// the editions' text one at a time, with progress; cb(how many loaded, cancelled?)
+function loadWithProgress(eds, label, job, cb){
+  var k=0;
+  (function next(){
+    if (job.cancelled || k>=eds.length) return cb(k, job.cancelled);
+    busyProgress(k/eds.length, 'Loading '+label(eds[k])+' ('+(k+1)+' of '+eds.length+')…');
+    loadOne(eds[k]).then(function(){ k++; setTimeout(next, 0); });
+  })();
+}
+// Enter in the box runs the search, as the button does
+function searchOnEnter(box, run){ box.addEventListener('keydown', function(e){
+  if (e.key==='Enter'){ e.preventDefault(); if (!busyEls().job) run(); } }); }
 window.CAT_TERMS={};
 // page tabs: one page shown at a time; #plate-N / #fig-N and search matches open their tab
 var panels=Array.prototype.slice.call(document.querySelectorAll('section.pg'));
@@ -403,10 +479,12 @@ function showTab(i){
   tabBtns.forEach(function(b,k){ b.setAttribute('aria-selected', k===i ? 'true' : 'false'); });
 }
 function showFor(el){ var p=el && el.closest('section.pg'); if (p) showTab(+p.dataset.i); }
-tabBtns.forEach(function(b){ b.addEventListener('click', function(){ showTab(+b.dataset.i); window.scrollTo(0,0); }); });
+var onTab=null; // set by the search marks below: the hits bar follows the page the reader opens
+tabBtns.forEach(function(b){ b.addEventListener('click', function(){ showTab(+b.dataset.i); window.scrollTo(0,0);
+  if (onTab) onTab(+b.dataset.i); }); });
 showTab(0);
 function toHash(){ if (location.hash){ var el=document.getElementById(location.hash.slice(1));
-  if (el){ showFor(el); el.scrollIntoView({block:'start'}); } } }
+  if (el){ showFor(el); el.scrollIntoView({block:'start'}); var p=el.closest('section.pg'); if (p && onTab) onTab(+p.dataset.i); } } }
 window.addEventListener('hashchange', toHash);
 toHash();
 // footnote pop-ups: a mark opens its note beside it; a click elsewhere or Esc closes it
@@ -432,7 +510,8 @@ document.addEventListener('click', function(e){
 });
 document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop(); });
 (function(){
-  var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat');
+  var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat'),
+      titleOnly=ps.get('in')==='title';
   // what to mark: the search term, and the chosen category's matched words (CAT_TERMS)
   var finds=[]; if (term) finds.push([term,mode]);
   if (cat && window.CAT_TERMS && CAT_TERMS[cat]) CAT_TERMS[cat].forEach(function(t){ finds.push([t,'embedded']); });
@@ -441,7 +520,8 @@ document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop
     r.sort(function(a,b){return a[0]-b[0];}); var out=[];
     r.forEach(function(x){ if (out.length && x[0]<out[out.length-1][1]) { out[out.length-1][1]=Math.max(out[out.length-1][1],x[1]); } else out.push(x.slice()); });
     return out; }
-  var main=document.querySelector('main'), walker=document.createTreeWalker(main, NodeFilter.SHOW_TEXT), nodes=[], n;
+  // a title-only search marks the title alone, as that is all it searched
+  var main=document.querySelector('main'), root=(titleOnly && main.querySelector('.ah-title')) || main, walker=document.createTreeWalker(root, NodeFilter.SHOW_TEXT), nodes=[], n;
   while ((n=walker.nextNode())) if (!n.parentNode.closest('.hits')) nodes.push(n);
   var marks=[];
   nodes.forEach(function(node){
@@ -455,11 +535,21 @@ document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop
   var i=0, label=document.createElement('span');
   // every tab holding a match gets the yellow has-match style (as in the inscription popups)
   marks.forEach(function(m){ var p=m.closest('section.pg'); if (p && tabBtns[+p.dataset.i]) tabBtns[+p.dataset.i].classList.add('has-match'); });
-  function go(k){ if (!marks.length) return; marks[i].classList.remove('on'); i=(k+marks.length)%marks.length;
-    showFor(marks[i]); marks[i].classList.add('on'); marks[i].scrollIntoView({block:'center'});
-    label.textContent=' '+(i+1)+' of '+marks.length+' ';}
+  // between: the reader opened a page with no match; i is then the first match after it
+  var between=false, tabOf=function(m){ var p=m.closest('section.pg'); return p ? +p.dataset.i : -1; };
+  function setOn(k){ marks[i].classList.remove('on'); i=k; between=false; marks[i].classList.add('on');
+    label.textContent=' '+(i+1)+' of '+marks.length+' '; }
+  function go(k){ if (!marks.length) return; setOn((k+marks.length)%marks.length);
+    showFor(marks[i]); marks[i].scrollIntoView({block:'center'}); }
   var prev=document.createElement('button'); prev.textContent='◀ previous'; prev.onclick=function(){go(i-1);};
-  var next=document.createElement('button'); next.textContent='next ▶'; next.onclick=function(){go(i+1);};
+  var next=document.createElement('button'); next.textContent='next ▶'; next.onclick=function(){go(between?i:i+1);};
+  onTab=function(t){ if (!marks.length) return;
+    var j=-1; marks.some(function(m,k){ if (tabOf(m)===t){ j=k; return true; } return false; });
+    if (j>=0) return setOn(j);   // the page's first match; the reader is at its top, so no scroll
+    marks[i].classList.remove('on');
+    var after=-1; marks.some(function(m,k){ if (tabOf(m)>t){ after=k; return true; } return false; });
+    i=after>=0 ? after : 0; between=true;
+    label.textContent=' – of '+marks.length+' (none on this page) '; };
   bar.appendChild(document.createTextNode((term?'"'+term+'"':'')+(term&&cat?' + ':'')+(cat?'category '+cat:'')+': ')); bar.appendChild(prev); bar.appendChild(label); bar.appendChild(next);
   main.insertBefore(bar, main.firstChild);
   if (marks.length) go(0); else label.textContent=' no match on this page ';

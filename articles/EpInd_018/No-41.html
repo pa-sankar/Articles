@@ -69,6 +69,8 @@ h1.ah-title { font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem;
               line-height: 1.25; margin: .45rem 0 .3rem; }
 .ah-author { font-variant: small-caps; font-size: 1.05rem; }
 .ah-ref { color: var(--muted); font-size: .82rem; margin-top: .35rem; }
+.ext-icon { margin-left: .2em; vertical-align: -1px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 h2.printed-title { font-size: 1.1rem; line-height: 1.35; margin: .4rem 0; }
 .page { display:flex; gap:.5rem; align-items:center; color:var(--muted); font-size:.8rem; margin:1.6rem 0 .6rem; }
 .page::before, .page::after { content:""; flex:1; border-top:1px solid var(--line); }
@@ -133,8 +135,26 @@ table.idx { border-collapse: collapse; width: 100%; font-size: 14px; font-family
 .filter-dd-opt[hidden] { display: none; }
 .filter-dd-opt span { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .filter-dd-opt .n { font-style: normal; font-size: .75rem; color: var(--text-dim); }
-.filter-dd-opt-unavailable { opacity: .4; cursor: not-allowed; }
-.filter-dd-opt-unavailable:hover { background: none; }
+.filter-dd-opt-gone { display: none !important; }
+button.go { padding: 8px 16px; font: inherit; font-weight: 600; border-radius: 7px; cursor: pointer;
+  border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+button:disabled, input:disabled, select:disabled { opacity: .5; cursor: default; }
+.partial { margin: .6rem 0; padding: .5rem .8rem; border-radius: 7px; font-size: .9rem; font-weight: 600;
+  background: #fff3cd; color: #6b4e00; border: 1px solid #e6c766; }
+.partial[hidden] { display: none; }
+.busy { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center;
+  justify-content: center; z-index: 100; }
+.busy[hidden] { display: none; }
+.busy-box { background: var(--surface); color: var(--text); border-radius: 10px; padding: 1.2rem 1.4rem;
+  width: min(26rem, 92vw); box-shadow: var(--shadow); }
+.busy-box h2 { font-size: 1.05rem; margin: 0 0 .6rem; }
+.busy-bar { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; margin: .6rem 0; }
+.busy-bar div { height: 100%; width: 0; background: var(--accent); transition: width .15s; }
+.busy-box .meta { min-height: 1.3em; }
+.busy-actions { display: flex; justify-content: flex-end; gap: .5rem; margin-top: .8rem; }
+.busy-actions button { padding: 6px 16px; font: inherit; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+.busy-actions button.ok { border-color: var(--accent); background: var(--accent); color: #fff; }
 .filter-dd-actions { display: flex; justify-content: flex-end; }
 .filter-dd-clear { padding: 4px 10px; cursor: pointer; background: none; border: 1px solid var(--border);
   border-radius: 6px; color: var(--text-dim); font-family: inherit; font-size: 12.5px; }
@@ -247,6 +267,12 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
   .card h3 { margin: 0 0 0.3rem 0; font-size: 1rem; }
   .card p { margin: 0; color: var(--text-dim); }
   .card.soon { opacity: 0.85; }
+  .card .src { margin-top: .4rem; font-size: .85rem; }
+  .src-list { padding-left: 1.2rem; } .src-list li { margin: .25rem 0; }
+  ol.how { padding-left: 1.4rem; } ol.how li { margin-bottom: 1rem; }
+  ol.how h3 { font-size: 1rem; margin: 0 0 .2rem; } ol.how p { margin: 0; }
+  .ext-icon { margin-left: .2em; vertical-align: -1px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .badge {
     display: inline-block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.03em;
     text-transform: uppercase; color: var(--accent-copper-strong); background: var(--surface-2);
@@ -267,7 +293,7 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <div class="brand">Project InscriptionSearch: Articles</div>
 <div class="titlebar"><h1><a href="../../" class="home-link" title="Home"><img src="../../images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> Epigraphia Indica</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
 <main><div class="art"><p class="meta"><a href="../../EpInd-Articles.html">Epigraphia Indica</a></p>
-<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. XVIII · No. 41<span class=ah-part> · Part VIII</span></div><h1 class="ah-title">Garavapadu grant of Ganapatideva : Saka-Samvat 1182</h1><div class="ah-author">C. R. Krishnamacharlu</div><div class="ah-ref">Printed p. 346 · PDF pp. 468–482</div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 346</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 347</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 348</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 349</button><button type="button" class="tab t-page" role="tab" data-i="4">p. 350</button><button type="button" class="tab t-page" role="tab" data-i="5" title="page number not read from the scan; counted from the pages around it">p. 351</button><button type="button" class="tab t-page" role="tab" data-i="6">p. 352</button><button type="button" class="tab t-page" role="tab" data-i="7">p. 353</button><button type="button" class="tab t-page" role="tab" data-i="8">p. 354</button><button type="button" class="tab t-page" role="tab" data-i="9">p. 385</button><button type="button" class="tab t-page" role="tab" data-i="10" title="page number not read from the scan; counted from the pages around it">p. 386</button><button type="button" class="tab t-page" role="tab" data-i="11" title="page number not read from the scan; counted from the pages around it">p. 387</button><button type="button" class="tab t-page" role="tab" data-i="12" title="page number not read from the scan; counted from the pages around it">p. 388</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page" id="p-346">p. 346 · PDF 468</div>
+<header class="art-head"><div class="ah-corpus">Epigraphia Indica</div><div class="ah-vol">Vol. XVIII · No. 41<span class=ah-part> · Part VIII</span></div><h1 class="ah-title">Garavapadu grant of Ganapatideva : Saka-Samvat 1182</h1><div class="ah-author">C. R. Krishnamacharlu</div><div class="ah-ref">Printed p. 346 · PDF pp. 468–482 · <a href="https://archive.org/details/mpl.411.754.epi.18.944" class="src-link" target="_blank" rel="noopener" title="Opens archive.org in a new tab">Source scan<svg class="ext-icon" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" focusable="false"><path d="M9 2h5v5M14 2 7.5 8.5M12 9.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only"> (opens archive.org in a new tab)</span></a></div></header><div class="tabs" role="tablist"><span class="tg">Pages</span><button type="button" class="tab t-page" role="tab" data-i="0">p. 346</button><button type="button" class="tab t-page" role="tab" data-i="1">p. 347</button><button type="button" class="tab t-page" role="tab" data-i="2">p. 348</button><button type="button" class="tab t-page" role="tab" data-i="3">p. 349</button><button type="button" class="tab t-page" role="tab" data-i="4">p. 350</button><button type="button" class="tab t-page" role="tab" data-i="5" title="page number not read from the scan; counted from the pages around it">p. 351</button><button type="button" class="tab t-page" role="tab" data-i="6">p. 352</button><button type="button" class="tab t-page" role="tab" data-i="7">p. 353</button><button type="button" class="tab t-page" role="tab" data-i="8">p. 354</button><button type="button" class="tab t-page" role="tab" data-i="9">p. 385</button><button type="button" class="tab t-page" role="tab" data-i="10" title="page number not read from the scan; counted from the pages around it">p. 386</button><button type="button" class="tab t-page" role="tab" data-i="11" title="page number not read from the scan; counted from the pages around it">p. 387</button><button type="button" class="tab t-page" role="tab" data-i="12" title="page number not read from the scan; counted from the pages around it">p. 388</button><span class=tsep></span><span class="tg">Plates</span><button type="button" class="tab t-plate" role="tab" data-i="13">Plate 1</button><button type="button" class="tab t-plate" role="tab" data-i="14">Plate 2</button><span class=tsep></span><span class="tg">Images</span><button type="button" class="tab t-image" role="tab" data-i="15">Image 1</button></div><section class="pg pg-page" role="tabpanel" data-i="0"><div class="page" id="p-346">p. 346 · PDF 468</div>
 <h2 class="printed-title">No. 41.—THE GARAVAPADU GRANT OF GANAPATIDEVA ; ŚAKA 1182.</h2>
 <p class="byline">By C. R. KRISHNAMACHARLU, B.A., OOTACAMUND.</p>
 <p>This grant is engraved on three <b>copper-plates</b> which were forwarded to the Assistant Archaeological Superintendent for Epigraphy, Southern Circle, Madras, in the year 1916, by M. R. Ry. M. Ramakrishnakavi, M.A., late of the Government Oriental Manuscripts Library, Madras, who had obtained them on loan from M. R. Ry. T. Achyuta Rao Pantulu, M.A., Deputy Inspector of Schools. No definite information as to their discovery is available. Their contents have been reviewed in the <i>Madras Epigraphical Report</i> for the year 1916-17.<sup class="fn"><a href="#fn-1-1">1</a></sup> The plates have since been acquired for the Madras Museum and deposited there.</p>
@@ -279,6 +305,7 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <section class="pg pg-page" role="tabpanel" data-i="1"><div class="page" id="p-347">p. 347 · PDF 469</div>
 <p>This inscription is the <b>second</b> copper-plate record, hitherto found, of the <b>Kākatiya</b> dynasty. The one already discovered also belongs to the time of King <b>Gaṇapati</b> and is published in the <i>Nellore Inscriptions</i>.<sup class="fn"><a href="#fn-2-1">1</a></sup> It is dated in the Śaka year 1176 corresponding to the cyclic year Ānanda and is thus six years earlier than the grant under notice.</p>
 <p>In verses 1 to 6 are praised in order Vighnarāja (<i>i.e.</i>, Vināyaka), Varāha, Sarasvatī,<sup class="fn"><a href="#fn-2-2">2</a></sup> the moon-crest of Śambhu, the Lord of Ambikā (<i>i.e.</i>, Śiva), and Vishṇu. Verse 7 gives the description of the Lotus coming out of the navel of Vishṇu from which was born the four-faced Brahmā (verse 8). Verses 9 and 10 state that from his eye came Āditya (<i>i.e.</i>, Sun) and from him came <b>Manu</b> who was a king that regulated the castes (<i>varṇas</i>) and (<i>their</i>) duties (<i>dharmas</i>) etc. The genealogy from Āditya given in the record is as follows:—</p>
+<figure id="figin-1"><img loading="lazy" src="../../images/EpInd_XVIII/p469_f1.webp" alt="Image 1"><figcaption><a href="#fig-1">Image 1</a></figcaption></figure>
 <p><b>Kalikāla-Chōla</b> is stated to have gone to the <b>Dakshiṇāpatha</b> in the course of a hunting expedition (verse 11). Alighting there upon a famous town called '<b>Kākati</b>' he pitched his extensive camp near it (verse 12). King <b>Durjjaya</b> who had the epithet <i>Raṇa-durjaya</i><sup class="fn"><a href="#fn-2-3">3</a></sup> (invincible in war) was the next notable member of this family by whom the line of the Kākati kings was first established (verse 13). Then is mentioned (verse 14) King <b>Prōla</b> <i>i.e.</i>, Prōla II according to the genealogy of the Mōṭupalli record of Gaṇapatidēva.<sup class="fn"><a href="#fn-2-4">4</a></sup> His son was <b>Rudra</b> (verse 15) who was succeeded by his younger brother <b>Mahādēva</b> whose elephants made a breach in the ramparts of the residence of the <b>Sēvuṇa</b> (king)<sup class="fn"><a href="#fn-2-5">5</a></sup> (verse 16). His son was King <b>Gaṇapatidēva</b> whose</p>
 <div class="notes"><p><sup id="fn-2-1">1</sup> Copper-plate No. 17.</p><p><sup id="fn-2-2">2</sup> The expression actually used is '<i>Sārasvatākhyam-tējah</i>' by which it is clear the author is glorifying the goddess Sarasvatī.</p><p><sup id="fn-2-3">3</sup> A Copper-plate grant of about the 7th century A.D. (No. 6 of Appendix A to the <i>Epigraphical Report</i> for 1916-17) mentions Mahārāja Raṇa-durjaya as the founder of the family to which king Prithivi-Mahārāja of the record belonged. He belonged to the Kāśyapa-gōtra. It may be recalled here that Karikāla-Chōla and his descendants claimed to belong to this <i>gōtra</i> and that the long inscription at Malkapuram refers to the Kākatiyas as Durjaya-Kshatriyas (<i>Epigraphical Report</i> for 1916-17, page 122, para. 32).</p><p><sup id="fn-2-4">4</sup> <i>Ep. Ind.</i>, Vol. XII, page 189. Prof. Hultzsch remarks here that 'the first king of this dynasty, Prōla I is not mentioned in any other Kākatiya inscription.' It may, however, be noted that he is the earlier of the two 'Prōlas' mentioned in No. 107 of the Madras Epigraphical Collection for 1902. From No. 204 of 1905 it is seen that Prōla II had two other sons, <i>viz.</i>, Harihara and Gaṇapati, not generally known. Of these Gaṇapati probably died at an early age.</p><p><sup id="fn-2-5">5</sup> This must be the Dēvagiri Yādava king Bhillama who reigned from A.D. 1187 to 1191 or Jaitugi I who reigned from A.D. 1191 to 1210 (<i>Bom. Gaz.</i>, Volume I, Part 2, page 519). Mahādēva's latest year would be A.D. 1197 or 1198.</p></div></section>
 <section class="pg pg-page" role="tabpanel" data-i="2"><div class="page" id="p-348">p. 348 · PDF 470</div>
@@ -299,7 +326,9 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <div class="lines"><p>4 'कुलशहा विन्नराजप्रणामाः ॥ [१*] भूतये भवतु वस्म वराहो भू-<br/>5 र्भभुवःस्वरधिदैवतमेकं । एकदापि यजनप्रवणानां भूपतित्वम्-<br/>6 पपादयते यः ॥ [२*] तेजस्वारस्वताख्यं हृदयसरसिजे वः<br/>7 ²प्रकाशेच शीतज्योतिर्मुक्तासुधांभोनिदि³गगनधुनोचंदनान-<br/>8 ⁴दनीयं । यस्मिन् संवित्वमुद्रे स्फुरति किमपरं निर्भरन्निस्सरं-<br/>9 ति स्फायन्मा[धु]र्यधृय्याः परिमक्तिदिशः श्लोककस्रोललेखाः ॥ [३*]<br/>10 अज्ञ[र]तवृद्धिक्षयसंविभागामराहुदंष्ट्रापरिभूतिभूमिं । अ-<br/>11 [मु]क्तमौग्धां सुकुटेन शंभोस्संभावितां ध्यायत चंद्रलेखां ॥ [४*] तं सं-<br/>12 ⁵भायरांबिकासह[च]रं सर्वेपि दर्व्वकिरालंकारांगमनंगदर्पदमनं<br/>13 श्रोचंद्र[चू]डामणिं । इ[च्छ]। यस्य चराचरच्छलभवह्वेविध्यलोकत्व-<br/>14 [यो]ष्टिस्थित्युप[सं]हृतिक्रममयक्रीडाकृतामेडना ॥ [५*] लक्ष्या चं-</p></div>
 <h3 id="second-plate-first-side"><p><i>Second Plate ; First Side.</i></p></h3>
 <div class="lines"><p>15 चत्कनकनिक[ष]च्छायया चारुवक्षासौदामन्या गतचपलतासौम्य-<br/>16 ⁶एवांबुवाहः । निर्मर्य्यादद्विपरथहयोद्दिक्त⁷ताटक्सम्[ध्यै]⁸ भू[त्यै] नि-<br/>17 त्यं भवतु पुरुषः पुं[ड]रोकेक्षणो वः ॥ [६*] अनातपायत्तनि[ज]प्रबोधं³मचं-<br/>18 द्रिकासंपदधीननिद्रं । सिष्टक्षतो विष्टपमाविरासोदमुथ नाभेररविंदमेकं ॥<br/>[७*] त-<br/>19 [स्मा]त्सरोजादुदभूत्स्वयंमृस्तत्साम्यरम्यैर्व्वदनैश्वतुर्भिः । दिशश्चतस्रो यु-<br/>20 [ग]पद्विवृखन् त[घै]व¹०सांगं चतुरोपि वेदान् ॥ [८*] अजनि नयनात्तस्या-<br/>दित्यस्त्रिलोक-<br/>21 विभूषणं तिमिर[प]टलद्रोहिज्योतिःपरिष्कृतमंडलः । कमलमिव यः का-<br/>22 ल्ये लोकं विकासयते परैरखिलममलैरष्टाभिहिंग्दलैरभितो वृतं ॥ [९*]<br/>तस्मात्मनुरभू-<br/>23 द्राजा ¹¹वर्णधर्मनियामकः । श्रावनीयः क्षितिभृतां देवानामिव वा-<br/>24 सवः ॥ [१०] तदभिजनजनिस्ततो [ध]रित्रीमशि[ष]दिमां कलिकाल-<br/>चोक्तदेवः [¹*]<br/>25 दिशि दिशि मृगयाच्छलेन खेलन्नुपगतवानय दक्षिणापधं¹² सः ॥ [११*]<br/>पुरं स</p></div>
-<div class="notes"><p>¹ Read कुलग्रह.</p><p>² Read प्रकाशेत.</p><p>³ Read °निधि.</p><p>⁴ Read °न्द.</p><p>⁵ Read °भावयतां.</p><p>⁶ Read °येवांबु.</p><p>⁷ Read °द्रिक्त.</p><p>⁸ Read °सृश्ये.</p><p>⁹ Read °धम्मचन्द्रि.</p><p>¹⁰ Read तथैव [and सांगांश°—Ed.]</p><p>¹² Read °पर्य.</p><p>¹¹ Read वर्णं [or वर्णं°.—Ed.]</p></div></section>
+<div class="notes"><p>¹ Read कुलग्रह.</p><p>² Read प्रकाशेत.</p><p>³ Read °निधि.</p><p>⁴ Read °न्द.</p><p>⁵ Read °भावयतां.</p><p>⁶ Read °येवांबु.</p><p>⁷ Read °द्रिक्त.</p><p>⁸ Read °सृश्ये.</p><p>⁹ Read °धम्मचन्द्रि.</p><p>¹⁰ Read तथैव [and सांगांश°—Ed.]</p><p>¹² Read °पर्य.</p><p>¹¹ Read वर्णं [or वर्णं°.—Ed.]</p></div>
+<p class="plate-note"><a href="#plate-1">Plate 1</a> is bound after this page.</p>
+<p class="plate-note"><a href="#plate-2">Plate 2</a> is bound after this page.</p></section>
 <section class="pg pg-page" role="tabpanel" data-i="5"><div class="page" id="p-351">p. 351 · PDF 475</div>
 <div class="lines"><p>26 काकतिरिति प्रख्यातं तत्र भूपतिः । प्राप्या[त्म]नस्तद्दिस्तीर्णं<sup class="fn"><a href="#fn-6-1">1</a></sup> स्कंधावारम-<br/>कल्पय-<br/>27 त् ॥ [१२*] आसीत्तदन्वये रा[जा] दुर्ज्ञयो रणदुर्ज्ञयः । यदुपज्ञं वदं-<br/>त्यस्य वं-<br/>28 श्यान् काकतिभूम्यतः ॥ [१३*] तत्संततो समुदभूत्प्रोलराजाभिधो नृपः ।<br/>29 प्रणामविमुखारातिराजन्यगजकेसरो ॥ [१४*] अलमक्षत तदीयो नंदनसं-<br/>30 ततिं तां शमितसकललाकोपद्रवो रुद्रदेवः । विदधदरतिमंतर्यंत्प्रता-<br/>31 पौर्व्वतापः प्रतिनृपजलराशीनंजसा संजहार ॥ [१५*] अशिषदखिलमु-<br/>र्व्वीचक्रमा-<br/>32 चक्रवालात्तदनु तदनुजन्मा श्रीमहादेवराजः । यदिभरदनवि[द्वः]<br/>33 <sup>२</sup>से[व्य]णावासवप्रः शरवणा(ण)भवभिन्नं निङ्गुते क्रौचमद्रिं ॥ [१६*] अथ गणप-</p></div>
 <p><i>Second Plate ; Second Side<sup class="fn"><a href="#fn-6-3">3</a></sup>.</i></p>
@@ -378,7 +407,10 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <table><tr><td>Allāla-Bhaṭṭa, <i>m.</i>,</td><td>.</td><td>.</td><td>.</td><td>161, 165, 164</td></tr><tr><td><b>alphabets—</b></td><td></td><td></td><td></td><td></td></tr><tr><td>Brāhmī,</td><td>.</td><td>.</td><td>.</td><td>158, 159, 317</td></tr><tr><td>Grantha,</td><td>.</td><td>.</td><td>5, 21, 22, 115, 331</td><td></td></tr><tr><td>Gupta Brāhmī,</td><td>.</td><td>.</td><td>.</td><td>18</td></tr><tr><td>Kannaḍa or Kanarese, 138, 171, 178, 182, 189,<br/>196, 199, 201, 205, 206, 207, 208, 212</td><td></td><td></td><td></td></tr><tr><td>Kharōshṭhī,</td><td>.</td><td>.</td><td>.</td><td>16, 20, 262</td></tr><tr><td>Nāgarī,</td><td>.</td><td>74, 100, 128, 219, 224, 284, 320</td><td></td><td></td></tr><tr><td>Nandi-Nāgarī,</td><td>.</td><td>.</td><td>.</td><td>138, 160, 165</td></tr><tr><td>Old Kanarese,</td><td>.</td><td>.</td><td>.</td><td>172</td></tr><tr><td>Pallava-Grantha,</td><td>.</td><td>.</td><td>.</td><td>146</td></tr><tr><td>Tamiļ,</td><td>.</td><td>.</td><td>5, 21, 22, 115, 138, 331</td><td></td></tr><tr><td>Telugu,</td><td>.</td><td>.</td><td>.</td><td>227, 346</td></tr><tr><td>Telugu-Kannaḍa,</td><td>.</td><td>.</td><td>.</td><td>165</td></tr><tr><td>Vaṭṭeļuttu,</td><td>.</td><td>.</td><td>.</td><td>340</td></tr><tr><td>Āmalapautika-grāma, <i>vi.</i>,</td><td>.</td><td>.</td><td>.</td><td>62, 63</td></tr><tr><td>Amarāvatī pillar inscription,</td><td>.</td><td>.</td><td>.</td><td>148</td></tr><tr><td>Amarēśa or °śvara (Indra),</td><td>.</td><td>.</td><td>.</td><td>41</td></tr><tr><td><i>amātya, official,</i></td><td>.</td><td>.</td><td>.</td><td>306</td></tr><tr><td>Ambarīsha, <i>myth. k.</i>,</td><td>.</td><td>.</td><td>.</td><td>76, 78</td></tr><tr><td>Amma (II) <b>or</b> Ammarāja II, <i>Chāļukya k.</i>, 227,<br/>231, 232, 233 &amp; <i>n.</i>, 234 &amp; <i>n.</i>, 315, 348</td><td></td><td></td><td></td></tr><tr><td>Ammarāja (I), <i>Chāļukya k.</i>,</td><td>.</td><td>.</td><td>.</td><td>229</td></tr><tr><td>Amnēnāryya, <i>m.</i>,</td><td>.</td><td>.</td><td>.</td><td>352, 355</td></tr><tr><td>Amōghakalaśa, <i>sur. of Vidyādharabhañjadē-</i><br/><i>va,</i></td><td>.</td><td>.</td><td>.</td><td>285, 286, 287, 297</td></tr><tr><td>Amōghavarsha I, <i>Rāshṭrakūṭa k.</i>, 105, 235, 237,<br/>238, 240, 241 &amp; <i>n.</i>, 242, 246, 247, 248, 249,<br/>251, 253, 254, 255, 256</td><td></td><td></td><td></td></tr><tr><td>Amōghavarshadēva, <i>s. a.</i> Amōghavarsha I,</td><td>.</td><td>.</td><td>.</td><td>257</td></tr><tr><td>Āmōhinī votive tablet of the year 72,</td><td>.</td><td>.</td><td>.</td><td>272</td></tr><tr><td>Amudasāgara <b>or</b> Amudasāgaramuni, <i>author</i> and<br/><i>Jaina teacher,</i></td><td>.</td><td>.</td><td>.</td><td>64, 65, 67, 68, 69</td></tr><tr><td>Amvasarasarā (=Ambasarabhiṭṭa (?)), <i>vi.</i>,</td><td>.</td><td>.</td><td>.</td><td>300</td></tr><tr><td>Anādiyuvan (Śiva),</td><td>.</td><td>.</td><td>.</td><td>140</td></tr><tr><td>Anaṅga (Cupid),</td><td>.</td><td>.</td><td>.</td><td>350, 353</td></tr><tr><td>Anantakanṭha-paṇdita, <i>m.</i>,</td><td>.</td><td>.</td><td>.</td><td>299</td></tr><tr><td>Anantapālarasa, <i>m.</i>,</td><td>.</td><td>.</td><td>.</td><td>189, 191, 193</td></tr><tr><td>Anantavarman, <i>Gaṅga k.</i>,</td><td>.</td><td>.</td><td>.</td><td>312</td></tr><tr><td>Anapāya, <i>Chōļa k.</i>,</td><td>.</td><td>.</td><td>.</td><td>68</td></tr><tr><td>Anapāya, <i>sur. of Kulōttuṅga II (?),</i></td><td>.</td><td>.</td><td>.</td><td>68</td></tr><tr><td>Ānartta, <i>co.</i>,</td><td>.</td><td>.</td><td>.</td><td>101, 104, 108, 112</td></tr><tr><td>ānatti (ājñaptī),</td><td>.</td><td>7, 8, 11, 14, 116, 121, 123, 259</td><td></td><td></td></tr></table>
 <table><tr><td>Aṇđava, <i>family</i>,</td><td>.</td><td>.</td><td>.</td><td>.</td><td>290</td></tr><tr><td>Aṇđēki, <i>s. a.</i> Addanki ?,</td><td>.</td><td>.</td><td>.</td><td>.</td><td>228</td></tr><tr><td>Aṇđēki, <i>vi.</i>,</td><td>.</td><td>.</td><td>.</td><td>228, 232,</td><td>234</td></tr><tr><td>Andhakēśvara, <i>god</i>,</td><td>.</td><td>.</td><td>.</td><td>.</td><td>189</td></tr><tr><td>Andhakēśvara, <i>s. a.</i> Madanēśvara,,</td><td>.</td><td>.</td><td>.</td><td>189</td><td></td></tr><tr><td>Andhakēśvara (Bhīmēśvara), <i>te.</i>,</td><td>.</td><td>.</td><td>.</td><td>170,</td><td>171</td></tr><tr><td>Andhāsura (Aṇdhāsura), <i>god</i>, 185, 186, 188, 189,<br/>190, 191, 192, 193, 194, 195, 196, 205, 206</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Andhāsura, <i>s. a.</i> Andhakēśvara, <i>te.</i>,</td><td>.</td><td>.</td><td>.</td><td>170</td><td></td></tr><tr><td>Āndhau inscriptions of Rudradāman I,</td><td>.</td><td>.</td><td>.</td><td>339</td><td></td></tr><tr><td>Āndhra, <i>co.</i>,</td><td>.</td><td>.</td><td>.</td><td>104, 105, 108,</td><td>112</td></tr><tr><td>āndhraka,</td><td>.</td><td>.</td><td>.</td><td>306</td><td></td></tr><tr><td>Ānduliyā (Andoolea), <i>vi.</i>,</td><td>.</td><td>.</td><td>.</td><td>62</td><td></td></tr><tr><td>Aṁgiras <i>or</i> Aṁgiras, <i>sage</i>, 6, 10, 13, 116, 120, 123,</td><td>150,<br/>151</td><td></td><td></td><td></td><td></td></tr><tr><td>Aṇījuvaṇṇam,</td><td>.</td><td>.</td><td>.</td><td>70</td><td></td></tr><tr><td>Aṇmaṇaṁguru <i>or</i> Aṇmaṇaṁguru, <i>vi.</i>,</td><td>228,</td><td>232,</td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td>234,</td><td>235</td></tr><tr><td><i>Annadā-maṁgala</i>, <i>work</i>,</td><td>.</td><td>.</td><td>.</td><td>62</td><td></td></tr><tr><td>Annamarāja, <i>Kākatīya prince</i>,</td><td>.</td><td>.</td><td>.</td><td>349</td><td></td></tr><tr><td>Aṇṇīgeri inscription,</td><td>.</td><td>.</td><td>.</td><td>201 <i>n.</i></td><td></td></tr><tr><td>An-si (Parthia), <i>co.</i>,</td><td>.</td><td>.</td><td>.</td><td>276, 278</td><td></td></tr><tr><td>āntahpurika, <i>official</i>,</td><td>.</td><td>.</td><td>.</td><td>221, 226</td><td></td></tr><tr><td>Antirigām, <i>vi.</i>,</td><td>.</td><td>.</td><td>.</td><td>302</td><td></td></tr><tr><td>Antirigām plates of Yaśabhaṇjadēva,</td><td></td><td>283,</td><td>284,</td><td>302</td><td></td></tr><tr><td>Āntrōli-Chhārōli copper plate grant of Kakka of<br/>Śaka 679,</td><td>.</td><td>.</td><td>.</td><td>238</td><td></td></tr><tr><td>Anupama, <i>sur. of Gōvinda III</i>,</td><td>.</td><td>.</td><td>.</td><td>247,</td><td>254</td></tr><tr><td colspan="6"><i>anupravaras—</i></td></tr><tr><td>Ashṭakavat,</td><td>.</td><td>.</td><td>.</td><td>297</td><td></td></tr><tr><td>Aurva,</td><td>.</td><td>.</td><td>.</td><td>294</td><td></td></tr><tr><td>Bhārgava,</td><td>.</td><td>.</td><td>.</td><td>295</td><td></td></tr><tr><td>Bhārgavavat,</td><td>.</td><td>.</td><td>.</td><td>294</td><td></td></tr><tr><td>Chyavanavat,</td><td>.</td><td>.</td><td>.</td><td>294</td><td></td></tr><tr><td>Jāmadagni,</td><td>.</td><td>.</td><td>.</td><td>294</td><td></td></tr><tr><td>Rōhitavat,</td><td>.</td><td>.</td><td>.</td><td>297</td><td></td></tr><tr><td>Viśvāmitravat,</td><td>.</td><td>.</td><td>.</td><td>294,</td><td>297</td></tr><tr><td>Anurādhapura, <i>vi.</i>,</td><td>.</td><td>331,</td><td>333 <i>n.</i>,</td><td>335, 336,</td><td>337</td></tr><tr><td>Anuruddha, <i>Aramaṇa k.</i>,</td><td>.</td><td>.</td><td>.</td><td>333</td><td></td></tr><tr><td><i>anusēnāpati</i>, <i>official</i>,</td><td>.</td><td>.</td><td>.</td><td>157</td><td></td></tr><tr><td><i>anusvāra</i>, <i>symbol</i>, 32 <i>n.</i>, 33 <i>n.</i>, 34 <i>n.</i>, 36 <i>n.</i>, 41 <i>n.</i>, 46 <i>n.</i></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td><i>anusvāra</i>, <i>unnecessary</i> insertion of—,</td><td>.</td><td>.</td><td>.</td><td>32 <i>n.</i></td><td></td></tr><tr><td><i>anusvāra</i>, replaced by guttral nasal,</td><td>.</td><td>.</td><td>.</td><td>87</td><td></td></tr></table>
 <p><i>N. B.</i>—The figures refer to pages ; <i>n.</i> after a figure, to footnotes ; and <i>add.</i> to the additions on pp. vii to x. The following other abbreviations are used :—<i>ch.</i> =chief ; <i>co.</i> =country ; <i>di.</i> =district or division ; <i>do.</i> =ditto ; <i>dy.</i> =dynasty ; <i>E.</i> =Eastern ; <i>k.</i> =king ; <i>m.</i> =man ; <i>mo.</i> =mountain ; <i>ri.</i> =river ; <i>s. a.</i> =same as ; <i>sur.</i> =surname ; <i>e.</i> =temple ; <i>vi.</i> =village or town ; <i>w.</i> =woman ; <i>W.</i> =Western.</p>
-<table><tr><th></th><th>PAGE</th><th></th></tr><tr><td>Alexander, <i>Macedonian k.</i>, . . . .</td><td>282</td><td>Ånaulundåva, <i>vi.</i>, . . . . 335</td></tr><tr><td>Alivalam, <i>vi.</i>, . . . .</td><td>119</td><td>Ånbil plates or grant (of Sundara-Chõla), 15 n., 26</td></tr><tr><td></td><td>132, 192, 164</td><td>Andais, <i>familiu</i>, . . . . 292</td></tr></table></section></div></main>
+<table><tr><th></th><th>PAGE</th><th></th></tr><tr><td>Alexander, <i>Macedonian k.</i>, . . . .</td><td>282</td><td>Ånaulundåva, <i>vi.</i>, . . . . 335</td></tr><tr><td>Alivalam, <i>vi.</i>, . . . .</td><td>119</td><td>Ånbil plates or grant (of Sundara-Chõla), 15 n., 26</td></tr><tr><td></td><td>132, 192, 164</td><td>Andais, <i>familiu</i>, . . . . 292</td></tr></table></section>
+<section class="pg pg-plate" role="tabpanel" data-i="13"><div class="page" id="plate-1">Plate 1 · PDF page 473, bound after p. 350</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p473.webp" alt="Plate 1"></figure></section>
+<section class="pg pg-plate" role="tabpanel" data-i="14"><div class="page" id="plate-2">Plate 2 · PDF page 474, bound after p. 350</div><figure><img loading="lazy" src="../../images/EpInd_XVIII/p474.webp" alt="Plate 2"></figure></section>
+<section class="pg pg-image" role="tabpanel" data-i="15"><div class="page">Image 1</div><figure id="fig-1" class="big"><img loading="lazy" src="../../images/EpInd_XVIII/p469_f1.webp" alt="Image 1"><figcaption>Image 1 (printed on p. 347)</figcaption></figure></section></div></main>
 <footer>Generated 19 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
 Feedback: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">this form</a>.</footer>
 </div>
@@ -412,6 +444,48 @@ function markHtml(text, term, mode){ // escaped text with <mark>s
   r.forEach(function(x){ out+=e(text.slice(at,x[0]))+'<mark>'+e(text.slice(x[0],x[1]))+'</mark>'; at=x[1]; });
   return out+e(text.slice(at));
 }
+
+var SEARCH_BASE=window.SEARCH_BASE||'search/', SEARCH_TEXT={};
+var SEARCH_FROM_DISK=location.protocol==='file:';
+var DISK_NOTE='The full-text search needs the page opened through a local server '
+  +'(python -m http.server in this folder, then http://localhost:8000/), not from disk.';
+function loadOne(ed){   // an edition's text: from the cache, else fetched (a missing file: none)
+  if (SEARCH_TEXT[ed]) return Promise.resolve(SEARCH_TEXT[ed]);
+  return fetch(SEARCH_BASE+ed+'.json').then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(recs){ SEARCH_TEXT[ed]=recs; return recs; }, function(){ SEARCH_TEXT[ed]=[]; return []; });
+}
+// ---- the search pop-up (user, 2026-11-19), shared by the indexes and Advanced Search: the
+// search starts on the button or Enter only, the controls are off while it runs, the pop-up
+// shows progress and Cancel, then the count with OK; a cancelled search keeps what it found
+var BUSY=null;
+function busyEls(){
+  if (BUSY) return BUSY;
+  var b=document.getElementById('busy');
+  BUSY={box:b, title:b.querySelector('h2'), msg:b.querySelector('.meta'), bar:b.querySelector('.busy-bar div'),
+        cancel:b.querySelector('.cancel'), ok:b.querySelector('.ok'), job:null, onOk:null};
+  BUSY.cancel.addEventListener('click', function(){ if (BUSY.job){ BUSY.job.cancelled=true; BUSY.msg.textContent='Stopping…'; } });
+  BUSY.ok.addEventListener('click', function(){ BUSY.box.hidden=true; if (BUSY.onOk) BUSY.onOk(); });
+  return BUSY;
+}
+function busyOpen(title){ var b=busyEls(); b.job={cancelled:false}; b.title.textContent=title; b.msg.textContent='';
+  b.bar.style.width='0'; b.cancel.hidden=false; b.ok.hidden=true; b.box.hidden=false; return b.job; }
+function busyProgress(frac, msg){ var b=busyEls(); b.bar.style.width=Math.round(Math.min(1,frac)*100)+'%'; b.msg.textContent=msg; }
+function busyDone(msg, onOk){ var b=busyEls(); b.job=null; b.title.textContent='Search finished'; b.bar.style.width='100%';
+  b.msg.textContent=msg; b.cancel.hidden=true; b.ok.hidden=false; b.onOk=onOk||null; b.ok.focus(); }
+function busyClose(){ var b=busyEls(); b.job=null; b.box.hidden=true; }
+function setControls(els, on){ els.forEach(function(el){ if (el) el.disabled=!on; }); }
+// the editions' text one at a time, with progress; cb(how many loaded, cancelled?)
+function loadWithProgress(eds, label, job, cb){
+  var k=0;
+  (function next(){
+    if (job.cancelled || k>=eds.length) return cb(k, job.cancelled);
+    busyProgress(k/eds.length, 'Loading '+label(eds[k])+' ('+(k+1)+' of '+eds.length+')…');
+    loadOne(eds[k]).then(function(){ k++; setTimeout(next, 0); });
+  })();
+}
+// Enter in the box runs the search, as the button does
+function searchOnEnter(box, run){ box.addEventListener('keydown', function(e){
+  if (e.key==='Enter'){ e.preventDefault(); if (!busyEls().job) run(); } }); }
 window.CAT_TERMS={};
 // page tabs: one page shown at a time; #plate-N / #fig-N and search matches open their tab
 var panels=Array.prototype.slice.call(document.querySelectorAll('section.pg'));
@@ -422,10 +496,12 @@ function showTab(i){
   tabBtns.forEach(function(b,k){ b.setAttribute('aria-selected', k===i ? 'true' : 'false'); });
 }
 function showFor(el){ var p=el && el.closest('section.pg'); if (p) showTab(+p.dataset.i); }
-tabBtns.forEach(function(b){ b.addEventListener('click', function(){ showTab(+b.dataset.i); window.scrollTo(0,0); }); });
+var onTab=null; // set by the search marks below: the hits bar follows the page the reader opens
+tabBtns.forEach(function(b){ b.addEventListener('click', function(){ showTab(+b.dataset.i); window.scrollTo(0,0);
+  if (onTab) onTab(+b.dataset.i); }); });
 showTab(0);
 function toHash(){ if (location.hash){ var el=document.getElementById(location.hash.slice(1));
-  if (el){ showFor(el); el.scrollIntoView({block:'start'}); } } }
+  if (el){ showFor(el); el.scrollIntoView({block:'start'}); var p=el.closest('section.pg'); if (p && onTab) onTab(+p.dataset.i); } } }
 window.addEventListener('hashchange', toHash);
 toHash();
 // footnote pop-ups: a mark opens its note beside it; a click elsewhere or Esc closes it
@@ -451,7 +527,8 @@ document.addEventListener('click', function(e){
 });
 document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop(); });
 (function(){
-  var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat');
+  var ps=new URLSearchParams(location.search), term=ps.get('q'), mode=ps.get('w')||'embedded', cat=ps.get('cat'),
+      titleOnly=ps.get('in')==='title';
   // what to mark: the search term, and the chosen category's matched words (CAT_TERMS)
   var finds=[]; if (term) finds.push([term,mode]);
   if (cat && window.CAT_TERMS && CAT_TERMS[cat]) CAT_TERMS[cat].forEach(function(t){ finds.push([t,'embedded']); });
@@ -460,7 +537,8 @@ document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop
     r.sort(function(a,b){return a[0]-b[0];}); var out=[];
     r.forEach(function(x){ if (out.length && x[0]<out[out.length-1][1]) { out[out.length-1][1]=Math.max(out[out.length-1][1],x[1]); } else out.push(x.slice()); });
     return out; }
-  var main=document.querySelector('main'), walker=document.createTreeWalker(main, NodeFilter.SHOW_TEXT), nodes=[], n;
+  // a title-only search marks the title alone, as that is all it searched
+  var main=document.querySelector('main'), root=(titleOnly && main.querySelector('.ah-title')) || main, walker=document.createTreeWalker(root, NodeFilter.SHOW_TEXT), nodes=[], n;
   while ((n=walker.nextNode())) if (!n.parentNode.closest('.hits')) nodes.push(n);
   var marks=[];
   nodes.forEach(function(node){
@@ -474,11 +552,21 @@ document.addEventListener('keydown', function(e){ if (e.key==='Escape') closePop
   var i=0, label=document.createElement('span');
   // every tab holding a match gets the yellow has-match style (as in the inscription popups)
   marks.forEach(function(m){ var p=m.closest('section.pg'); if (p && tabBtns[+p.dataset.i]) tabBtns[+p.dataset.i].classList.add('has-match'); });
-  function go(k){ if (!marks.length) return; marks[i].classList.remove('on'); i=(k+marks.length)%marks.length;
-    showFor(marks[i]); marks[i].classList.add('on'); marks[i].scrollIntoView({block:'center'});
-    label.textContent=' '+(i+1)+' of '+marks.length+' ';}
+  // between: the reader opened a page with no match; i is then the first match after it
+  var between=false, tabOf=function(m){ var p=m.closest('section.pg'); return p ? +p.dataset.i : -1; };
+  function setOn(k){ marks[i].classList.remove('on'); i=k; between=false; marks[i].classList.add('on');
+    label.textContent=' '+(i+1)+' of '+marks.length+' '; }
+  function go(k){ if (!marks.length) return; setOn((k+marks.length)%marks.length);
+    showFor(marks[i]); marks[i].scrollIntoView({block:'center'}); }
   var prev=document.createElement('button'); prev.textContent='◀ previous'; prev.onclick=function(){go(i-1);};
-  var next=document.createElement('button'); next.textContent='next ▶'; next.onclick=function(){go(i+1);};
+  var next=document.createElement('button'); next.textContent='next ▶'; next.onclick=function(){go(between?i:i+1);};
+  onTab=function(t){ if (!marks.length) return;
+    var j=-1; marks.some(function(m,k){ if (tabOf(m)===t){ j=k; return true; } return false; });
+    if (j>=0) return setOn(j);   // the page's first match; the reader is at its top, so no scroll
+    marks[i].classList.remove('on');
+    var after=-1; marks.some(function(m,k){ if (tabOf(m)>t){ after=k; return true; } return false; });
+    i=after>=0 ? after : 0; between=true;
+    label.textContent=' – of '+marks.length+' (none on this page) '; };
   bar.appendChild(document.createTextNode((term?'"'+term+'"':'')+(term&&cat?' + ':'')+(cat?'category '+cat:'')+': ')); bar.appendChild(prev); bar.appendChild(label); bar.appendChild(next);
   main.insertBefore(bar, main.firstChild);
   if (marks.length) go(0); else label.textContent=' no match on this page ';
