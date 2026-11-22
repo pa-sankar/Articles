@@ -1,5 +1,11 @@
 [
-{"edition": "EpInd_003", "bytes": 1376733, "corpus": "EpInd", "designation": "III", "sort": 3.0, "year": ""},
-{"edition": "EpInd_005", "bytes": 1058416, "corpus": "EpInd", "designation": "V", "sort": 5.0, "year": ""},
-{"edition": "EpInd_018", "bytes": 1335584, "corpus": "EpInd", "designation": "XVIII", "sort": 18.0, "year": "1925"}
+{"edition": "EpInd_003", "bytes": 1376642, "corpus": "EpInd", "designation": "III", "sort": 3.0, "year": ""},
+{"edition": "EpInd_004", "bytes": 1388395, "corpus": "EpInd", "designation": "IV", "sort": 4.0, "year": ""},
+{"edition": "EpInd_005", "bytes": 1058417, "corpus": "EpInd", "designation": "V", "sort": 5.0, "year": ""},
+{"edition": "EpInd_006", "bytes": 1488730, "corpus": "EpInd", "designation": "VI", "sort": 6.0, "year": ""},
+{"edition": "EpInd_007", "bytes": 900694, "corpus": "EpInd", "designation": "VII", "sort": 7.0, "year": ""},
+{"edition": "EpInd_008", "bytes": 1254295, "corpus": "EpInd", "designation": "VIII", "sort": 8.0, "year": ""},
+{"edition": "EpInd_009", "bytes": 1345604, "corpus": "EpInd", "designation": "IX", "sort": 9.0, "year": ""},
+{"edition": "EpInd_010", "bytes": 551602, "corpus": "EpInd", "designation": "X", "sort": 10.0, "year": ""},
+{"edition": "EpInd_018", "bytes": 1335108, "corpus": "EpInd", "designation": "XVIII", "sort": 18.0, "year": "1925"}
 ]
