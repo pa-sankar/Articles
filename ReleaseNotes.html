@@ -212,27 +212,54 @@ mark.current { background: #ffb347; outline: 2px solid #e08a00; }
 .hits { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: .4rem 0;
   font-size: .9rem; z-index: 1; }
 .hits button { font: inherit; }
-.tabs { display: flex; flex-wrap: wrap; gap: .3rem; margin: 1rem 0 .4rem; position: sticky; top: 0;
-  background: var(--bg); padding: .3rem 0; z-index: 1; border-bottom: 1px solid var(--line); }
-.tab { font: inherit; font-size: .85rem; padding: .15rem .55rem; border: 1px solid var(--line);
-  border-radius: 4px; background: transparent; color: var(--fg); cursor: pointer; }
-.tab[aria-selected=true] { border-color: var(--accent); color: var(--accent); font-weight: bold; }
-.tg { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted);
-  align-self: center; margin-right: .1rem; }
-.tsep { width: .8rem; }
-.tab.t-plate { border-color: #c98d5c; background: #f7e7d8; color: #7d431c; }
-.tab.t-image { border-color: #8fae88; background: #e4eee0; color: #3f5a3c; }
-  .tab.t-image { background: #243021; color: #a9c6a1; border-color: #4d6448; } }
-.tab.t-plate[aria-selected=true], .tab.t-image[aria-selected=true] { border-width: 2px; }
 .plate-note { font-size: .85rem; color: var(--muted); font-style: italic; }
-figure.big img { max-height: 85vh; }
-.tab.has-match { background: #fff3a0; color: #000; }
 sup.fn a { text-decoration: none; padding: 0 .15em; }
 .fn-pop { position: absolute; z-index: 20; max-width: min(28rem, 90vw); background: var(--note);
   border: 1px solid var(--line); border-radius: 4px; padding: .3rem .7rem; font-size: .85rem;
   box-shadow: 0 2px 8px rgba(0,0,0,.2); }
 .fn-pop p { margin: .2rem 0; }
-.hits ~ .tabs, .hits + .art .tabs { top: 2.4rem; }
+.fn-pop .fn-back, .fn-pop .fn-at { display: none; }
+/* one flow per article (user, 2026-11-26): a page break is an invisible anchor (.pgm) that the
+   floating badge reads; plates stand at a paragraph's end; footnotes are gathered at the end */
+.pgm, figure, .notes sup[id] { scroll-margin-top: 3rem; }
+figure.plate { margin: 1.4rem 0; padding: .6rem; background: var(--note); border-radius: 4px; }
+figure.plate img { max-height: 85vh; }
+figure.plate figcaption { margin-top: .3rem; }
+.plate-nav { display: flex; justify-content: space-between; gap: .6rem; font: 13px/1.3 'Segoe UI', system-ui, sans-serif;
+  margin-top: .5rem; padding-top: .4rem; border-top: 1px solid var(--line); }
+.plate-nav a { text-decoration: none; } .plate-nav .off { color: var(--muted); opacity: .5; }
+.g-hint { font-size: .85rem; color: var(--muted); margin: -.3rem 0 .8rem; }
+.endnotes, .gallery { margin-top: 2.5rem; border-top: 1px solid var(--line); padding-top: .4rem; }
+.endnotes h2, .gallery h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+a.fn-back { text-decoration: none; font-size: .8rem; margin: 0 .2rem; }
+.fn-at { color: var(--muted); font-size: .75rem; }
+.notes sup[id]:target { background: var(--mark); }
+.g-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); gap: .8rem; }
+.g-grid a { display: block; text-decoration: none; font-size: .8rem; color: var(--muted); text-align: center; }
+.g-grid img, .g-grid .g-none { width: 100%; height: 9rem; object-fit: contain; background: var(--note);
+  border: 1px solid var(--line); box-sizing: border-box; }
+.g-grid .g-none { display: flex; align-items: center; justify-content: center; }
+details.howto { font-size: .85rem; color: var(--muted); background: var(--note); border-radius: 4px;
+  padding: .4rem .8rem; margin: 0 0 1.2rem; }
+details.howto summary { cursor: pointer; color: var(--fg); }
+details.howto p { margin: .35rem 0; }
+.pgtools { position: fixed; right: 16px; bottom: 16px; z-index: 30; display: flex; flex-direction: column;
+  align-items: flex-end; gap: .4rem; font: 14px/1.3 'Segoe UI', system-ui, sans-serif; }
+.pgtools button { font: inherit; cursor: pointer; border: 1px solid var(--line); background: var(--surface);
+  color: var(--fg); border-radius: 999px; padding: .35rem .8rem; box-shadow: var(--shadow); }
+.pgtools button:hover { border-color: var(--accent); }
+.pgtools [hidden] { display: none !important; }
+.pgpanel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow);
+  padding: .6rem .8rem; width: min(17rem, calc(100vw - 32px)); box-sizing: border-box; }
+.pgpanel fieldset { border: 0; padding: 0; margin: 0 0 .5rem; }
+.pgpanel legend { font-weight: 600; font-size: .8rem; margin-bottom: .2rem; }
+.pgpanel label { margin-right: .6rem; font-size: .85rem; white-space: nowrap; }
+.pgpanel .jrow { display: flex; gap: .4rem; margin-top: .3rem; }
+.pgpanel input[type=text] { flex: 1; min-width: 0; font: inherit; padding: .25rem .4rem; border: 1px solid var(--line);
+  border-radius: 4px; background: var(--bg); color: var(--fg); }
+.pgpanel .pgpanel-go { border-radius: 4px; box-shadow: none; padding: .25rem .7rem; }
+.jmsg { font-size: .8rem; color: var(--muted); margin-top: .3rem; }
+.jmsg.err { color: #b3261e; }
   .wrap { max-width: 72rem; margin: 0 auto; }
   .wrap.narrow { max-width: 50rem; }
   body { padding: 1.5rem 1rem 4rem; }
@@ -292,9 +319,8 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <div class="wrap narrow">
 <div class="brand">Project InscriptionSearch: Articles</div>
 <div class="titlebar"><h1><a href="./" class="home-link" title="Home"><img src="images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> Evolution</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
-<main><p class="about">What has changed on the Articles site, newest first.</p><h2>Coming soon</h2><div class="card soon"><h3>Mysore Archaeological Reports <span class="badge">Coming soon</span></h3><p>The yearly reports of the Mysore Archaeological Department: monuments, numismatics, manuscripts and the copper-plate grants discussed each year. Being added to the site.</p><p class="src"><a href="Sources.html#mar">The scans being read</a></p></div>
-<div class="card soon"><h3>Corpus Inscriptionum Indicarum <span class="badge">Coming soon</span></h3><p>The Archaeological Survey of India's corpus series: Aśoka, the Kharoshthi and Bhārhut inscriptions, the Guptas, the Kalachuri-Chedi era and more, each volume with its editor's introduction and every inscription edited in full. Being added to the site.</p><p class="src"><a href="Sources.html#cii">The scans being read</a></p></div><h2>19 November 2026: search, sources and how it was made</h2><ul><li><strong>Advanced Search</strong> searches every article on the site at once; it can search the <strong>titles only</strong>, and a click anywhere on a result opens the article.</li><li>In an article opened from a search, the match counter follows the page you open.</li><li><strong>Sources</strong>: every scanned volume, linked to its page on archive.org; each article links its own scan too.</li><li><strong>How were the volumes processed?</strong>: the steps from scan to article, with every AI step marked.</li></ul><h2>18 November 2026: details pop-up</h2><ul><li>The AI tab is now called <strong>Extracted from article</strong> and lists the values only.</li><li>A category filter now carries into the article: <strong>Read the article</strong> opens it with the category's words marked and the pages holding them flagged in yellow.</li></ul><h2>18 November 2026: Vols. III and V added</h2><ul><li><strong>Epigraphia Indica, Vol. III</strong> (1894-95): 48 articles, and <strong>Vol. V</strong> (1898-99): 26 articles, in full text with their plates and figures, searchable together with Vol. XVIII.</li><li>Their details pop-ups carry the dynasty, king, date, place, language and script picked out by AI from each article's introduction, with the editor's own words.</li><li>Vol. III No. 13 begins on printed p. 76: pp. 74-75 are missing from our scan.</li></ul><h2>18 November 2026: Vol. XVIII completed</h2><ul><li><strong>Footnotes open where they are marked</strong>: click a footnote number in the text to read the note beside it.</li><li><strong>Click a row for the article's details</strong>: pages, plates, images, categories, and the dynasty, king, date, place, language and script picked out by AI from its introduction, each with the editor's own words. The table keeps the main columns only.</li><li><strong>Filter lists</strong> for volume, author, dynasty, king, century, place, language and script, as on the Inscriptions site: include or exclude, narrowing each other, with a line saying what is applied. A filter adds its column to the table.</li><li>No. 28 now opens on its first page, printed pp. 260-261, which our scan lacks; it was read from another copy of the volume. The same leaf completes No. 27.</li><li>Nine plates that had been shown as text pages are now shown as plates, and every page carries its printed number.</li></ul><h2>18 November 2026</h2><p>The Articles site opens, as the twin of Project InscriptionSearch.</p><ul><li><strong>Epigraphia Indica, Vol. XVIII</strong> (1925): 343 articles in full text, with their plates and figures, each printed page on its own tab with its footnotes.</li><li>Full-text search with three match widths, accents and capitals optional, and the Inscriptions site's categories (hero-stones, Bhairava, Rāmānuja and others) as a filter.</li></ul></main>
-<footer>Generated 22 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
+<main><p class="about">What has changed on the Articles site, newest first.</p><h2>26 November 2026: articles read as one text</h2><ul><li><strong>No more page tabs</strong>: every article, and every Mysore report, reads as one continuous text; a paragraph broken by a page turn is whole again.</li><li>A <strong>page badge</strong> at the bottom right shows the printed page, the PDF page or both as you scroll, and <strong>jumps to a page</strong>; <strong>&#8593; Top</strong> goes back to the start.</li><li><strong>Footnotes</strong> are numbered through the article and gathered at its end; click a number to read the note in place.</li><li><strong>Plates</strong> stand at the end of the paragraph they interrupt, and an <strong>All plates</strong> gallery at the end shows them together.</li></ul><h2>Launch: four series</h2><ul><li>Four series, each with its own searchable index: <strong>Epigraphia Indica</strong>, <strong>Corpus Inscriptionum Indicarum</strong>, the <strong>Mysore Archaeological Reports</strong> and the <strong>Tamilian Antiquary</strong> (1907-1914).</li><li><strong>Advanced Search</strong> covers all four.</li></ul><h2>19 November 2026: search, sources and how it was made</h2><ul><li><strong>Advanced Search</strong> searches every article on the site at once; it can search the <strong>titles only</strong>, and a click anywhere on a result opens the article.</li><li>In an article opened from a search, the match counter follows the page you open.</li><li><strong>Volume Finder</strong>: every scanned volume, linked to its page on archive.org; each article links its own scan too.</li><li><strong>How were the volumes processed?</strong>: the steps from scan to article, with every AI step marked.</li></ul><h2>18 November 2026: details pop-up</h2><ul><li>The AI tab is now called <strong>Extracted from article</strong> and lists the values only.</li></ul><h2>18 November 2026: Vols. III and V added</h2><ul><li><strong>Epigraphia Indica, Vol. III</strong> (1894-95): 48 articles, and <strong>Vol. V</strong> (1898-99): 26 articles, in full text with their plates and figures, searchable together with Vol. XVIII.</li><li>Their details pop-ups carry the dynasty, king, date, place, language and script picked out by AI from each article's introduction, with the editor's own words.</li><li>Vol. III No. 13 begins on printed p. 76: pp. 74-75 are missing from our scan.</li></ul><h2>18 November 2026: Vol. XVIII completed</h2><ul><li><strong>Footnotes open where they are marked</strong>: click a footnote number in the text to read the note beside it.</li><li><strong>Click a row for the article's details</strong>: pages, plates, images, and the dynasty, king, date, place, language and script picked out by AI from its introduction, each with the editor's own words. The table keeps the main columns only.</li><li><strong>Filter lists</strong> for volume, author, dynasty, king, century, place, language and script, as on the Inscriptions site: include or exclude, narrowing each other, with a line saying what is applied. A filter adds its column to the table.</li><li>No. 28 now opens on its first page, printed pp. 260-261, which our scan lacks; it was read from another copy of the volume. The same leaf completes No. 27.</li><li>Nine plates that had been shown as text pages are now shown as plates, and every page carries its printed number.</li></ul><h2>18 November 2026</h2><p>The Articles site opens, as the twin of Project InscriptionSearch.</p><ul><li><strong>Epigraphia Indica, Vol. XVIII</strong> (1925): 845 articles in full text, with their plates and figures, each printed page on its own tab with its footnotes.</li><li>Full-text search with three match widths, accents and capitals optional.</li></ul></main>
+<footer>Generated 26 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
 Feedback: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">this form</a>.</footer>
 </div>
 <script>var s=document.getElementById('subscribeLink'); if (s) s.addEventListener('click', function(){ if (typeof gtag==='function') gtag('event','subscribe_click'); });</script>

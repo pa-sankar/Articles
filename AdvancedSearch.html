@@ -212,27 +212,54 @@ mark.current { background: #ffb347; outline: 2px solid #e08a00; }
 .hits { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: .4rem 0;
   font-size: .9rem; z-index: 1; }
 .hits button { font: inherit; }
-.tabs { display: flex; flex-wrap: wrap; gap: .3rem; margin: 1rem 0 .4rem; position: sticky; top: 0;
-  background: var(--bg); padding: .3rem 0; z-index: 1; border-bottom: 1px solid var(--line); }
-.tab { font: inherit; font-size: .85rem; padding: .15rem .55rem; border: 1px solid var(--line);
-  border-radius: 4px; background: transparent; color: var(--fg); cursor: pointer; }
-.tab[aria-selected=true] { border-color: var(--accent); color: var(--accent); font-weight: bold; }
-.tg { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted);
-  align-self: center; margin-right: .1rem; }
-.tsep { width: .8rem; }
-.tab.t-plate { border-color: #c98d5c; background: #f7e7d8; color: #7d431c; }
-.tab.t-image { border-color: #8fae88; background: #e4eee0; color: #3f5a3c; }
-  .tab.t-image { background: #243021; color: #a9c6a1; border-color: #4d6448; } }
-.tab.t-plate[aria-selected=true], .tab.t-image[aria-selected=true] { border-width: 2px; }
 .plate-note { font-size: .85rem; color: var(--muted); font-style: italic; }
-figure.big img { max-height: 85vh; }
-.tab.has-match { background: #fff3a0; color: #000; }
 sup.fn a { text-decoration: none; padding: 0 .15em; }
 .fn-pop { position: absolute; z-index: 20; max-width: min(28rem, 90vw); background: var(--note);
   border: 1px solid var(--line); border-radius: 4px; padding: .3rem .7rem; font-size: .85rem;
   box-shadow: 0 2px 8px rgba(0,0,0,.2); }
 .fn-pop p { margin: .2rem 0; }
-.hits ~ .tabs, .hits + .art .tabs { top: 2.4rem; }
+.fn-pop .fn-back, .fn-pop .fn-at { display: none; }
+/* one flow per article (user, 2026-11-26): a page break is an invisible anchor (.pgm) that the
+   floating badge reads; plates stand at a paragraph's end; footnotes are gathered at the end */
+.pgm, figure, .notes sup[id] { scroll-margin-top: 3rem; }
+figure.plate { margin: 1.4rem 0; padding: .6rem; background: var(--note); border-radius: 4px; }
+figure.plate img { max-height: 85vh; }
+figure.plate figcaption { margin-top: .3rem; }
+.plate-nav { display: flex; justify-content: space-between; gap: .6rem; font: 13px/1.3 'Segoe UI', system-ui, sans-serif;
+  margin-top: .5rem; padding-top: .4rem; border-top: 1px solid var(--line); }
+.plate-nav a { text-decoration: none; } .plate-nav .off { color: var(--muted); opacity: .5; }
+.g-hint { font-size: .85rem; color: var(--muted); margin: -.3rem 0 .8rem; }
+.endnotes, .gallery { margin-top: 2.5rem; border-top: 1px solid var(--line); padding-top: .4rem; }
+.endnotes h2, .gallery h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+a.fn-back { text-decoration: none; font-size: .8rem; margin: 0 .2rem; }
+.fn-at { color: var(--muted); font-size: .75rem; }
+.notes sup[id]:target { background: var(--mark); }
+.g-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); gap: .8rem; }
+.g-grid a { display: block; text-decoration: none; font-size: .8rem; color: var(--muted); text-align: center; }
+.g-grid img, .g-grid .g-none { width: 100%; height: 9rem; object-fit: contain; background: var(--note);
+  border: 1px solid var(--line); box-sizing: border-box; }
+.g-grid .g-none { display: flex; align-items: center; justify-content: center; }
+details.howto { font-size: .85rem; color: var(--muted); background: var(--note); border-radius: 4px;
+  padding: .4rem .8rem; margin: 0 0 1.2rem; }
+details.howto summary { cursor: pointer; color: var(--fg); }
+details.howto p { margin: .35rem 0; }
+.pgtools { position: fixed; right: 16px; bottom: 16px; z-index: 30; display: flex; flex-direction: column;
+  align-items: flex-end; gap: .4rem; font: 14px/1.3 'Segoe UI', system-ui, sans-serif; }
+.pgtools button { font: inherit; cursor: pointer; border: 1px solid var(--line); background: var(--surface);
+  color: var(--fg); border-radius: 999px; padding: .35rem .8rem; box-shadow: var(--shadow); }
+.pgtools button:hover { border-color: var(--accent); }
+.pgtools [hidden] { display: none !important; }
+.pgpanel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow);
+  padding: .6rem .8rem; width: min(17rem, calc(100vw - 32px)); box-sizing: border-box; }
+.pgpanel fieldset { border: 0; padding: 0; margin: 0 0 .5rem; }
+.pgpanel legend { font-weight: 600; font-size: .8rem; margin-bottom: .2rem; }
+.pgpanel label { margin-right: .6rem; font-size: .85rem; white-space: nowrap; }
+.pgpanel .jrow { display: flex; gap: .4rem; margin-top: .3rem; }
+.pgpanel input[type=text] { flex: 1; min-width: 0; font: inherit; padding: .25rem .4rem; border: 1px solid var(--line);
+  border-radius: 4px; background: var(--bg); color: var(--fg); }
+.pgpanel .pgpanel-go { border-radius: 4px; box-shadow: none; padding: .25rem .7rem; }
+.jmsg { font-size: .8rem; color: var(--muted); margin-top: .3rem; }
+.jmsg.err { color: #b3261e; }
   .wrap { max-width: 72rem; margin: 0 auto; }
   .wrap.narrow { max-width: 50rem; }
   body { padding: 1.5rem 1rem 4rem; }
@@ -303,8 +330,16 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 .res td.n { text-align: right; white-space: nowrap; }
 .res tr.go-row { cursor: pointer; }
 .res tr.go-row:hover td { background: var(--surface-2); }
-</style><h1>Advanced Search</h1><p class="meta">Searches the full text of every article, and its title, citation and author. Accents and capitals are optional. Narrow the volumes with the lists, type a word and press Search (or Enter); a result opens the article at the match.</p><div class="adv-bar"><input type="search" id="q" placeholder="Search the articles" aria-label="Search the articles"><button type="button" id="go" class="go">Search</button><select id="w" aria-label="Match"><option value="embedded">anywhere in a word</option><option value="partial">at the start of a word</option><option value="full">whole word</option></select><select id="in" aria-label="Search in"><option value="all">in the text, title, author and citation</option><option value="title">in the title only</option></select></div><div id="partial" class="partial" hidden></div><div class="count"><span id="info" class="meta"></span><span id="pager" class="pager" hidden><button type="button" class="prev">&larr; Prev</button><span></span><button type="button" class="next">Next &rarr;</button></span></div><div class="dd-bar" id="dds"></div><div class="scroll"><table class="idx res" id="res"><thead><tr><th>Corpus</th><th>Volume</th><th>Article</th><th>Author</th><th>Matches in text</th></tr></thead><tbody></tbody></table></div><div id="busy" class="busy" hidden role="dialog" aria-modal="true" aria-live="polite"><div class="busy-box"><h2></h2><div class="busy-bar"><div></div></div><div class="meta"></div><div class="busy-actions"><button type="button" class="cancel">Cancel</button><button type="button" class="ok" hidden>OK</button></div></div></div></main>
-<footer>Generated 22 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
+/* what this search applies, in one line, as on the Inscriptions Advanced Search (user, 2026-11-26) */
+.applied { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 13px; margin: .2rem 0 .6rem; }
+.applied[hidden] { display: none; }
+.applied .lab { color: var(--text-dim); }
+.applied-chip { border: 1px solid var(--accent); background: var(--surface); color: var(--accent-strong);
+  border-radius: 999px; padding: 2px 10px; cursor: pointer; font: inherit; font-size: 12.5px; }
+.applied-chip:hover { background: var(--accent); color: #fff; }
+.applied a { font-size: 12.5px; }
+</style><h1>Advanced Search</h1><p class="meta">Searches the full text of every article, and its title, citation and author. Accents and capitals are optional. Narrow the volumes with the lists, type a word and press Search (or Enter); a result opens the article at the match.</p><div class="adv-bar"><input type="search" id="q" placeholder="Search the articles" aria-label="Search the articles"><button type="button" id="go" class="go">Search</button><select id="w" aria-label="Match"><option value="embedded">anywhere in a word</option><option value="partial">at the start of a word</option><option value="full">whole word</option></select><select id="in" aria-label="Search in"><option value="all">in the text, title, author and citation</option><option value="title">in the title only</option></select></div><div id="applied" class="applied" hidden aria-live="polite"></div><div id="partial" class="partial" hidden></div><div class="count"><span id="info" class="meta"></span><span id="pager" class="pager" hidden><button type="button" class="prev">&larr; Prev</button><span></span><button type="button" class="next">Next &rarr;</button></span></div><div class="dd-bar" id="dds"></div><div class="scroll"><table class="idx res" id="res"><thead><tr><th>Corpus</th><th>Volume</th><th>Article</th><th>Author</th><th>Matches in text</th></tr></thead><tbody></tbody></table></div><div id="busy" class="busy" hidden role="dialog" aria-modal="true" aria-live="polite"><div class="busy-box"><h2></h2><div class="busy-bar"><div></div></div><div class="meta"></div><div class="busy-actions"><button type="button" class="cancel">Cancel</button><button type="button" class="ok" hidden>OK</button></div></div></div></main>
+<footer>Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
 Feedback: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">this form</a>.</footer>
 </div>
 <script>
@@ -379,7 +414,7 @@ function loadWithProgress(eds, label, job, cb){
 // Enter in the box runs the search, as the button does
 function searchOnEnter(box, run){ box.addEventListener('keydown', function(e){
   if (e.key==='Enter'){ e.preventDefault(); if (!busyEls().job) run(); } }); }
-window.PAGE_PREFIX={"EpInd": "articles/", "CII": "articles/", "MAR": "articles/"};window.CORPUS_NAMES={"EpInd": "Epigraphia Indica", "CII": "Corpus Inscriptionum Indicarum", "MAR": "Mysore Archaeological Reports"};
+window.PAGE_PREFIX={"EpInd": "articles/", "CII": "articles/", "MAR": "articles/", "TamAnt": "articles/"};window.CORPUS_NAMES={"EpInd": "Epigraphia Indica", "CII": "Corpus Inscriptionum Indicarum", "MAR": "Mysore Archaeological Reports", "TamAnt": "Tamilian Antiquary"};
 var q=document.getElementById('q'), w=document.getElementById('w'), info=document.getElementById('info'),
     tb=document.querySelector('#res tbody'), pager=document.getElementById('pager'), PAGES=window.PAGE_PREFIX||{},
     goBtn=document.getElementById('go'), partial=document.getElementById('partial');
@@ -431,7 +466,31 @@ function hideAbsent(d){ var gone=0;
 function scopeNote(){ if (last) return; var r=recsInScope(), eds={}; r.forEach(function(x){ eds[x.ed]=1; });
   info.textContent=r.length+' article'+(r.length!==1?'s':'')+' in '+Object.keys(eds).length+' volume'
     +(Object.keys(eds).length!==1?'s':'')+' to search. Type a word, then Search.'; }
-function onListChange(){ counts(); scopeNote();
+function optLabel(key, v){ var o=dd(key) && [].slice.call(dd(key).querySelectorAll('.filter-dd-opt input')).filter(function(c){ return c.value===v; })[0];
+  return o ? o.parentNode.querySelector('span').textContent : v; }
+function paintApplied(){
+  var box=document.getElementById('applied'), st=states(), chips=[];
+  st.forEach(function(s, i){ if (!s.vals.length) return;
+    chips.push('<button type="button" class="applied-chip" data-key="'+s.key+'" title="Remove this filter">'
+      +esc(KEYS[i][1]+(s.exclude?' is not ':' is ')+s.vals.map(function(v){ return optLabel(s.key, v); }).join(' or '))+' \u00d7</button>'); });
+  if (last) chips.push('<button type="button" class="applied-chip" data-key="__text" title="Clear the search">'
+      +esc((last.inn==='title'?'Title':'Text')+' contains “'+last.term+'” ('+w.querySelector('option[value='+last.mode+']').textContent+')')+' \u00d7</button>');
+  box.hidden=!chips.length;
+  box.innerHTML=chips.length ? '<span class="lab">Applied:</span>'+chips.join('')+' <a href="#" class="applied-clear">Clear all</a>' : '';
+}
+function clearList(key){ var d=dd(key); if (!d) return;
+  d.querySelectorAll('.filter-dd-options input:checked').forEach(function(c){ c.checked=false; });
+  d.querySelector('.filter-dd-mode input[value=include]').checked=true; }
+function clearText(){ last=null; results=[]; q.value=''; partial.hidden=true; draw(); info.textContent=''; }
+document.getElementById('applied').addEventListener('click', function(e){
+  var b=e.target.closest('.applied-chip'), all=e.target.closest('.applied-clear'); if (!b && !all) return;
+  e.preventDefault();
+  if (all){ KEYS.forEach(function(k){ clearList(k[0]); }); clearText(); }
+  else if (b.dataset.key==='__text') clearText();
+  else { clearList(b.dataset.key); if (last){ counts(); paintApplied(); return search(); } }
+  onListChange();
+});
+function onListChange(){ counts(); scopeNote(); paintApplied();
   if (last) partial.hidden=false, partial.textContent='The lists changed since this search: press Search to apply them.'; }
 function wireDropdowns(){
   document.querySelectorAll('.filter-dd').forEach(function(d){
@@ -469,7 +528,7 @@ function search(){
   function finish(){
     controls(true);
     last={term:term, mode:mode, inn:inn, done:k, total:eds.length, cancelled:job.cancelled};
-    results=found; page=1; draw(); counts();
+    results=found; page=1; draw(); counts(); paintApplied();
     if (job.cancelled) return busyClose();
     busyDone(found.length+' result'+(found.length!==1?'s':'')+' in '+eds.length+' volume'+(eds.length!==1?'s':'')+'.',
              function(){ goBtn.focus(); });

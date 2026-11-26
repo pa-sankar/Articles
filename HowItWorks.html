@@ -212,27 +212,54 @@ mark.current { background: #ffb347; outline: 2px solid #e08a00; }
 .hits { position: sticky; top: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: .4rem 0;
   font-size: .9rem; z-index: 1; }
 .hits button { font: inherit; }
-.tabs { display: flex; flex-wrap: wrap; gap: .3rem; margin: 1rem 0 .4rem; position: sticky; top: 0;
-  background: var(--bg); padding: .3rem 0; z-index: 1; border-bottom: 1px solid var(--line); }
-.tab { font: inherit; font-size: .85rem; padding: .15rem .55rem; border: 1px solid var(--line);
-  border-radius: 4px; background: transparent; color: var(--fg); cursor: pointer; }
-.tab[aria-selected=true] { border-color: var(--accent); color: var(--accent); font-weight: bold; }
-.tg { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted);
-  align-self: center; margin-right: .1rem; }
-.tsep { width: .8rem; }
-.tab.t-plate { border-color: #c98d5c; background: #f7e7d8; color: #7d431c; }
-.tab.t-image { border-color: #8fae88; background: #e4eee0; color: #3f5a3c; }
-  .tab.t-image { background: #243021; color: #a9c6a1; border-color: #4d6448; } }
-.tab.t-plate[aria-selected=true], .tab.t-image[aria-selected=true] { border-width: 2px; }
 .plate-note { font-size: .85rem; color: var(--muted); font-style: italic; }
-figure.big img { max-height: 85vh; }
-.tab.has-match { background: #fff3a0; color: #000; }
 sup.fn a { text-decoration: none; padding: 0 .15em; }
 .fn-pop { position: absolute; z-index: 20; max-width: min(28rem, 90vw); background: var(--note);
   border: 1px solid var(--line); border-radius: 4px; padding: .3rem .7rem; font-size: .85rem;
   box-shadow: 0 2px 8px rgba(0,0,0,.2); }
 .fn-pop p { margin: .2rem 0; }
-.hits ~ .tabs, .hits + .art .tabs { top: 2.4rem; }
+.fn-pop .fn-back, .fn-pop .fn-at { display: none; }
+/* one flow per article (user, 2026-11-26): a page break is an invisible anchor (.pgm) that the
+   floating badge reads; plates stand at a paragraph's end; footnotes are gathered at the end */
+.pgm, figure, .notes sup[id] { scroll-margin-top: 3rem; }
+figure.plate { margin: 1.4rem 0; padding: .6rem; background: var(--note); border-radius: 4px; }
+figure.plate img { max-height: 85vh; }
+figure.plate figcaption { margin-top: .3rem; }
+.plate-nav { display: flex; justify-content: space-between; gap: .6rem; font: 13px/1.3 'Segoe UI', system-ui, sans-serif;
+  margin-top: .5rem; padding-top: .4rem; border-top: 1px solid var(--line); }
+.plate-nav a { text-decoration: none; } .plate-nav .off { color: var(--muted); opacity: .5; }
+.g-hint { font-size: .85rem; color: var(--muted); margin: -.3rem 0 .8rem; }
+.endnotes, .gallery { margin-top: 2.5rem; border-top: 1px solid var(--line); padding-top: .4rem; }
+.endnotes h2, .gallery h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+a.fn-back { text-decoration: none; font-size: .8rem; margin: 0 .2rem; }
+.fn-at { color: var(--muted); font-size: .75rem; }
+.notes sup[id]:target { background: var(--mark); }
+.g-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); gap: .8rem; }
+.g-grid a { display: block; text-decoration: none; font-size: .8rem; color: var(--muted); text-align: center; }
+.g-grid img, .g-grid .g-none { width: 100%; height: 9rem; object-fit: contain; background: var(--note);
+  border: 1px solid var(--line); box-sizing: border-box; }
+.g-grid .g-none { display: flex; align-items: center; justify-content: center; }
+details.howto { font-size: .85rem; color: var(--muted); background: var(--note); border-radius: 4px;
+  padding: .4rem .8rem; margin: 0 0 1.2rem; }
+details.howto summary { cursor: pointer; color: var(--fg); }
+details.howto p { margin: .35rem 0; }
+.pgtools { position: fixed; right: 16px; bottom: 16px; z-index: 30; display: flex; flex-direction: column;
+  align-items: flex-end; gap: .4rem; font: 14px/1.3 'Segoe UI', system-ui, sans-serif; }
+.pgtools button { font: inherit; cursor: pointer; border: 1px solid var(--line); background: var(--surface);
+  color: var(--fg); border-radius: 999px; padding: .35rem .8rem; box-shadow: var(--shadow); }
+.pgtools button:hover { border-color: var(--accent); }
+.pgtools [hidden] { display: none !important; }
+.pgpanel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow);
+  padding: .6rem .8rem; width: min(17rem, calc(100vw - 32px)); box-sizing: border-box; }
+.pgpanel fieldset { border: 0; padding: 0; margin: 0 0 .5rem; }
+.pgpanel legend { font-weight: 600; font-size: .8rem; margin-bottom: .2rem; }
+.pgpanel label { margin-right: .6rem; font-size: .85rem; white-space: nowrap; }
+.pgpanel .jrow { display: flex; gap: .4rem; margin-top: .3rem; }
+.pgpanel input[type=text] { flex: 1; min-width: 0; font: inherit; padding: .25rem .4rem; border: 1px solid var(--line);
+  border-radius: 4px; background: var(--bg); color: var(--fg); }
+.pgpanel .pgpanel-go { border-radius: 4px; box-shadow: none; padding: .25rem .7rem; }
+.jmsg { font-size: .8rem; color: var(--muted); margin-top: .3rem; }
+.jmsg.err { color: #b3261e; }
   .wrap { max-width: 72rem; margin: 0 auto; }
   .wrap.narrow { max-width: 50rem; }
   body { padding: 1.5rem 1rem 4rem; }
@@ -292,8 +319,8 @@ sup.fn a { text-decoration: none; padding: 0 .15em; }
 <div class="wrap narrow">
 <div class="brand">Project InscriptionSearch: Articles</div>
 <div class="titlebar"><h1><a href="./" class="home-link" title="Home"><img src="images/home-icon.webp" alt="Home" width="36" height="36" style="vertical-align:middle;border-radius:50%"></a> How were the volumes processed?</h1><a href="https://forms.gle/wBaX1GV6FXheZdQU8" target="_blank" rel="noopener" class="subscribe-btn" id="subscribeLink">Subscribe</a></div>
-<main><p class="about">How the printed volumes became the searchable articles on this site. <span class="ai-badge">AI</span> marks a step done by an AI model, <span class="badge">Machine</span> one done by a script following fixed rules.</p><div class="source-notice" role="note"><strong>Please verify before you quote.</strong> These articles were read from the scanned volumes by machine (OCR) and put back together page by page. Mistakes may remain, most of all in Devanagari and other Indic script, and in the small footnote numbers. Please check the printed volume before using the text.</div><ol class="how"><li><h3>Finding the scans </h3><p>Each volume was found on archive.org. Where several copies exist, the highest-resolution complete one was picked; a page missing from it is read from another copy and the article says so. The <a href="Sources.html">Sources</a> page links every scan.</p></li><li><h3>Profiling every page <span class="badge">Machine</span></h3><p>A script measures each page: text, plate, blank or cover; one or two columns; its resolution. Plates stay page images from here on, never read as text.</p></li><li><h3>Cutting columns <span class="badge">Machine</span></h3><p>A two-column page is cut along its gutter, band by band, so the reading order (left column before right) is fixed before any text is read.</p></li><li><h3>Reading the text <span class="ai-badge">AI</span></h3><p>Pages are read by <strong>Surya</strong>, an open-source machine-learning OCR model, on a rented GPU. It keeps diacritics (ā, ṭ, ś) that older OCR drops. A few CII pages were read by Google's <strong>Gemini</strong> instead, where Surya had no reading.</p></li><li><h3>Checking the reading <span class="ai-badge">AI</span></h3><p><strong>Claude</strong> (Anthropic's AI model) reads a sample of pages against the scans for each volume and flags dropped lines and misread characters. A page that fails is read again; a recurring misreading (an <em>!</em> for <em>ḷ</em> at a word's end) is corrected by rule and logged for review.</p></li><li><h3>Putting the articles together <span class="badge">Machine</span></h3><p>The volume's own table of contents is the master list: number, title, author, first page. Each article runs from its heading to the next one; running heads are dropped; footnotes are attached to the page they print on, numbered by their marks in the text. Every page keeps its printed number and its PDF page.</p></li><li><h3>Plates and figures <span class="badge">Machine</span></h3><p>Plates are kept as images of the whole page, each on its own tab. Drawings inside the text are cut out and shown where they print. Web copies are compressed.</p></li><li><h3>Categories <span class="badge">Machine</span></h3><p>The Inscriptions site's term lists (hero-stones, Bhairava, Rāmānuja and others) are matched against each article, the same way as for the inscriptions.</p></li><li><h3>Dynasty, king, date, place, language, script <span class="ai-badge">AI</span></h3><p>Gemini reads each article's introduction, the part where the editor states these facts in plain English, and returns each value with the sentence it came from. A value whose sentence is not in the article is rejected. The century is computed from the date, not asked. These values carry the <span class="ai-badge">AI</span> badge on the site.</p></li><li><h3>Mysore Archaeological Reports <span class="badge">Machine</span></h3><p>Each year's report is one article, by the Director who signed it. Its sections (Part, district, village, monument) come from the report's own contents and are found in the text by their headings and printed pages.</p></li></ol><p class="meta">Questions or corrections: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">the feedback form</a>.</p></main>
-<footer>Generated 22 November 2026. Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
+<main><p class="about">How the printed volumes became the searchable articles on this site. <span class="ai-badge">AI</span> marks a step done by an AI model, <span class="badge">Machine</span> one done by a script following fixed rules.</p><div class="source-notice" role="note"><strong>Please verify before you quote.</strong> These articles were read from the scanned volumes by machine (OCR) and put back together page by page. Mistakes may remain, most of all in Devanagari and other Indic script, and in the small footnote numbers. Please check the printed volume before using the text.</div><ol class="how"><li><h3>Finding the scans </h3><p>Each volume was found on archive.org. Where several copies exist, the highest-resolution complete one was picked; a page missing from it is read from another copy and the article says so. The <a href="Sources.html">Volume Finder</a> links every scan.</p></li><li><h3>Profiling every page <span class="badge">Machine</span></h3><p>A script measures each page: text, plate, blank or cover; one or two columns; its resolution. Plates stay page images from here on, never read as text.</p></li><li><h3>Cutting columns <span class="badge">Machine</span></h3><p>A two-column page is cut along its gutter, band by band, so the reading order (left column before right) is fixed before any text is read.</p></li><li><h3>Reading the text <span class="ai-badge">AI</span></h3><p>Pages are read by <strong>Surya</strong>, an open-source machine-learning OCR model, on a rented GPU. It keeps diacritics (ā, ṭ, ś) that older OCR drops. A few CII pages were read by Google's <strong>Gemini</strong> instead, where Surya had no reading.</p></li><li><h3>Checking the reading <span class="ai-badge">AI</span></h3><p><strong>Claude</strong> (Anthropic's AI model) reads a sample of pages against the scans for each volume and flags dropped lines and misread characters. A page that fails is read again; a recurring misreading (an <em>!</em> for <em>ḷ</em> at a word's end) is corrected by rule and logged for review.</p></li><li><h3>Putting the articles together <span class="badge">Machine</span></h3><p>The volume's own table of contents is the master list: number, title, author, first page. Each article runs from its heading to the next one; running heads are dropped; footnotes are attached to the page they print on, numbered by their marks in the text. Every page keeps its printed number and its PDF page.</p></li><li><h3>Plates and figures <span class="badge">Machine</span></h3><p>Plates are kept as images of the whole page, placed at the end of the paragraph they interrupt and gathered again at the article's end. Drawings inside the text are cut out and shown where they print. Web copies are compressed.</p></li><li><h3>Dynasty, king, date, place, language, script <span class="ai-badge">AI</span></h3><p>Gemini reads each article's introduction, the part where the editor states these facts in plain English, and returns each value with the sentence it came from. A value whose sentence is not in the article is rejected. The century is computed from the date, not asked. These values carry the <span class="ai-badge">AI</span> badge on the site.</p></li><li><h3>Mysore Archaeological Reports <span class="badge">Machine</span></h3><p>Each year's report is one article, by the Director who signed it. Its sections (Part, district, village, monument) come from the report's own contents and are found in the text by their headings and printed pages.</p></li></ol><p class="meta">Questions or corrections: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">the feedback form</a>.</p></main>
+<footer>Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
 Feedback: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">this form</a>.</footer>
 </div>
 <script>var s=document.getElementById('subscribeLink'); if (s) s.addEventListener('click', function(){ if (typeof gtag==='function') gtag('event','subscribe_click'); });</script>
