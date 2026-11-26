@@ -338,7 +338,26 @@ details.howto p { margin: .35rem 0; }
   border-radius: 999px; padding: 2px 10px; cursor: pointer; font: inherit; font-size: 12.5px; }
 .applied-chip:hover { background: var(--accent); color: #fff; }
 .applied a { font-size: 12.5px; }
-</style><h1>Advanced Search</h1><p class="meta">Searches the full text of every article, and its title, citation and author. Accents and capitals are optional. Narrow the volumes with the lists, type a word and press Search (or Enter); a result opens the article at the match.</p><div class="adv-bar"><input type="search" id="q" placeholder="Search the articles" aria-label="Search the articles"><button type="button" id="go" class="go">Search</button><select id="w" aria-label="Match"><option value="embedded">anywhere in a word</option><option value="partial">at the start of a word</option><option value="full">whole word</option></select><select id="in" aria-label="Search in"><option value="all">in the text, title, author and citation</option><option value="title">in the title only</option></select></div><div id="applied" class="applied" hidden aria-live="polite"></div><div id="partial" class="partial" hidden></div><div class="count"><span id="info" class="meta"></span><span id="pager" class="pager" hidden><button type="button" class="prev">&larr; Prev</button><span></span><button type="button" class="next">Next &rarr;</button></span></div><div class="dd-bar" id="dds"></div><div class="scroll"><table class="idx res" id="res"><thead><tr><th>Corpus</th><th>Volume</th><th>Article</th><th>Author</th><th>Matches in text</th></tr></thead><tbody></tbody></table></div><div id="busy" class="busy" hidden role="dialog" aria-modal="true" aria-live="polite"><div class="busy-box"><h2></h2><div class="busy-bar"><div></div></div><div class="meta"></div><div class="busy-actions"><button type="button" class="cancel">Cancel</button><button type="button" class="ok" hidden>OK</button></div></div></div></main>
+/* saved searches and links, as on the Inscriptions Advanced Search (user, 2026-11-26) */
+.save-bar { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: -.3rem 0 .6rem; }
+.save-btn { padding: 5px 12px; border-radius: 7px; border: 1px solid var(--accent-strong); background: var(--surface);
+  color: var(--accent-strong); cursor: pointer; font: inherit; font-size: 13px; }
+.save-btn:hover { background: var(--surface-2); }
+.save-btn[hidden] { display: none; }
+.saved-note { font-size: 12.5px; color: var(--text-dim); }
+.saved-box { max-width: 38rem; display: flex; flex-direction: column; gap: .6rem; }
+.saved-box h2 { margin: 0; font-size: 1.1rem; }
+.saved-box .hint { font-size: 12px; color: var(--text-dim); line-height: 1.35; }
+.saved-list { max-height: 55vh; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+.saved-item { display: flex; gap: .6rem; align-items: center; justify-content: space-between; flex-wrap: wrap;
+  border: 1px solid var(--border); border-radius: 7px; padding: 7px 10px; }
+.saved-item .saved-name { font-weight: 600; overflow-wrap: anywhere; }
+.saved-item .saved-meta { font-size: 12px; color: var(--text-dim); }
+.saved-acts { display: flex; gap: .4rem; }
+.saved-item button, .saved-acts button { padding: 4px 11px; border-radius: 7px; border: 1px solid var(--border);
+  background: none; color: var(--text); cursor: pointer; font: inherit; font-size: 12.5px; }
+.saved-item button.saved-open { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+</style><h1>Advanced Search</h1><p class="meta">Searches the full text of every article, and its title, citation and author. Accents and capitals are optional. Narrow the volumes with the lists, type a word and press Search (or Enter); a result opens the article at the match. <b>Save search</b> keeps a search and its results in this browser; <b>Copy link</b> gives an address that opens the same search.</p><div class="adv-bar"><input type="search" id="q" placeholder="Search the articles" aria-label="Search the articles"><button type="button" id="go" class="go">Search</button><select id="w" aria-label="Match"><option value="embedded">anywhere in a word</option><option value="partial">at the start of a word</option><option value="full">whole word</option></select><select id="in" aria-label="Search in"><option value="all">in the text, title, author and citation</option><option value="title">in the title only</option></select></div><div class="save-bar"><button type="button" class="save-btn" id="saveSearchBtn" title="Keep this search and its results in this browser">Save search</button><button type="button" class="save-btn" id="savedListBtn" title="Open a search saved in this browser">Saved searches</button><button type="button" class="save-btn" id="copyLinkBtn" title="Copy a link that opens this search">Copy link</button><span class="saved-note" id="savedNote" role="status"></span></div><div id="applied" class="applied" hidden aria-live="polite"></div><div id="partial" class="partial" hidden></div><div class="count"><span id="info" class="meta"></span><span id="pager" class="pager" hidden><button type="button" class="prev">&larr; Prev</button><span></span><button type="button" class="next">Next &rarr;</button></span></div><div class="dd-bar" id="dds"></div><div class="scroll"><table class="idx res" id="res"><thead><tr><th>Corpus</th><th>Volume</th><th>Article</th><th>Author</th><th>Matches in text</th></tr></thead><tbody></tbody></table></div><div class="remarks-modal-overlay" id="savedModal" hidden><div class="remarks-modal-box saved-box" role="dialog" aria-labelledby="savedTitle"><button type="button" class="remarks-modal-close" id="savedClose" aria-label="Close">&times;</button><h2 id="savedTitle">Saved searches</h2><div class="hint">Kept in this browser on this computer only; clearing the browser&rsquo;s site data removes them. Export writes them to a file that Import reads in another browser or computer.</div><div class="saved-list" id="savedList"></div><div class="saved-acts"><button type="button" id="savedExport">Export</button><button type="button" id="savedImport">Import</button><input type="file" id="savedImportFile" accept=".json,application/json" hidden></div></div></div><div id="busy" class="busy" hidden role="dialog" aria-modal="true" aria-live="polite"><div class="busy-box"><h2></h2><div class="busy-bar"><div></div></div><div class="meta"></div><div class="busy-actions"><button type="button" class="cancel">Cancel</button><button type="button" class="ok" hidden>OK</button></div></div></div></main>
 <footer>Twin of <a href="https://pa-sankar.github.io/Inscriptions/" target="_blank" rel="noopener">Project InscriptionSearch</a>.
 Feedback: <a href="https://forms.gle/qfXGVHuK1emDwzNe8" target="_blank" rel="noopener">this form</a>.</footer>
 </div>
@@ -447,7 +466,7 @@ function recsInScope(){ var st=states(); return REC.filter(function(r){ return p
 // counts: each list counts what passes every OTHER list (and, after a search, only the results);
 // a value at 0 leaves the list, a ticked one stays (as on the indexes)
 function counts(){
-  var st=states(), pool=last ? results.map(function(x){ return x.rec; }) : REC;
+  var st=states(), pool=last ? results.map(function(x){ return {f:x.f}; }) : REC;
   KEYS.forEach(function(k, i){ var d=dd(k[0]); if (!d) return; var c={};
     pool.forEach(function(r){ if (passRec(r, st, i)) (r.f[k[0]]||[]).forEach(function(v){ c[v]=(c[v]||0)+1; }); });
     d.querySelectorAll('.filter-dd-opt').forEach(function(o){ o.querySelector('.n').textContent=c[o.querySelector('input').value]||0; });
@@ -488,7 +507,7 @@ document.getElementById('applied').addEventListener('click', function(e){
   if (all){ KEYS.forEach(function(k){ clearList(k[0]); }); clearText(); }
   else if (b.dataset.key==='__text') clearText();
   else { clearList(b.dataset.key); if (last){ counts(); paintApplied(); return search(); } }
-  onListChange();
+  onListChange(); syncUrl();
 });
 function onListChange(){ counts(); scopeNote(); paintApplied();
   if (last) partial.hidden=false, partial.textContent='The lists changed since this search: press Search to apply them.'; }
@@ -528,6 +547,7 @@ function search(){
   function finish(){
     controls(true);
     last={term:term, mode:mode, inn:inn, done:k, total:eds.length, cancelled:job.cancelled};
+    lastQuery=specQuery(); stamps={}; eds.forEach(function(e){ stamps[e.edition]=e.bytes; }); syncUrl();
     results=found; page=1; draw(); counts(); paintApplied();
     if (job.cancelled) return busyClose();
     busyDone(found.length+' result'+(found.length!==1?'s':'')+' in '+eds.length+' volume'+(eds.length!==1?'s':'')+'.',
@@ -544,7 +564,7 @@ function search(){
         for (var end=Math.min(at+CHUNK, recs.length); at<end; at++){
           var r=recs[at], rec=here[r.id], hits=0; if (!rec) continue;     // left out by a list
           fields.forEach(function(f){ if (r[f]) hits+=findAll(r[f],term,mode).length; });
-          if (hits) found.push({r:r, e:e, rec:rec, n:inn==='title' ? 0 : findAll(r.text||'',term,mode).length}); }
+          if (hits) found.push({r:r, des:e.designation, ed:e.edition, f:rec.f, n:inn==='title' ? 0 : findAll(r.text||'',term,mode).length}); }
         busyProgress((k+(recs.length ? at/recs.length : 1))/eds.length,
                      'Searching '+name+' ('+(k+1)+' of '+eds.length+') · '+found.length+' found so far');
         if (at<recs.length) setTimeout(step, 0); else { k++; setTimeout(next, 0); }
@@ -555,6 +575,8 @@ function search(){
 function snippet(text, term, mode){ var h=findAll(text,term,mode); if (!h.length) return '';
   var a=Math.max(0,h[0][0]-90), b=Math.min(text.length,h[0][1]+90);
   return (a?'… ':'')+markHtml(text.slice(a,b),term,mode)+(b<text.length?' …':''); }
+function snipOf(x, term, mode, inn){ if (x.snip!=null) return x.snip;   // a saved snapshot
+  return inn==='title' ? 'Match in the title' : x.n ? snippet(x.r.text,term,mode) : 'Match in the title, author or citation'; }
 function draw(){
   // marks and links follow the search that made these results, not what is typed now
   var term=last?last.term:'', mode=last?last.mode:w.value, inn=last?last.inn:'all', pages=Math.max(1,Math.ceil(results.length/SIZE));
@@ -562,12 +584,12 @@ function draw(){
   // a title-only search marks the title alone: that is all it looked at
   var m=function(s){ return markHtml(String(s||''),term,mode); }, mo=inn==='title' ? esc : m;
   tb.innerHTML=results.slice((page-1)*SIZE, page*SIZE).map(function(x){
-    var r=x.r, f=x.rec.f, href=hrefOf(r,term,mode,inn);
+    var r=x.r, f=x.f, href=hrefOf(r,term,mode,inn);
     var facts=['dynasty','king','century','place'].map(function(k){ return (f[k]||[]).join(', '); }).filter(Boolean).join(' · ');
-    return '<tr class="go-row" data-href="'+esc(href)+'"><td>'+esc(r.corpus)+'</td><td>'+esc(x.e.designation)+'</td><td><a href="'+esc(href)+'">'+m(r.title)+'</a>'
+    return '<tr class="go-row" data-href="'+esc(href)+'"><td>'+esc(r.corpus)+'</td><td>'+esc(x.des)+'</td><td><a href="'+esc(href)+'">'+m(r.title)+'</a>'
       +(r.path?'<span class="where">'+mo(r.path)+'</span>':'')
       +'<span class="where">'+mo(r.cite)+' · '+mo(r.k)+(facts?' · '+esc(facts):'')+'</span>'
-      +'<span class="snip">'+(inn==='title' ? 'Match in the title' : x.n ? snippet(r.text,term,mode) : 'Match in the title, author or citation')+'</span></td>'
+      +'<span class="snip">'+snipOf(x, term, mode, inn)+'</span></td>'
       +'<td>'+mo(r.author)+'</td><td class="n">'+x.n+'</td></tr>'; }).join('');
   if (last){
     info.textContent=results.length+' result'+(results.length!==1?'s':'')+' for “'+last.term+'” in '
@@ -612,8 +634,140 @@ Promise.all([getJson('editions.json'), getJson('filters.json').catch(function(){
       .map(function(v){ return [v, key==='corpus' ? (names[v]||v) : v]; });
     return opts.length ? ddHtml(key, k[1], opts) : '';
   }).join('');
-  wireDropdowns(); counts(); scopeNote();
+  wireDropdowns();
+  var p=new URLSearchParams(location.search); applyUrl(p);
+  if (p.get('q')) search(); else onListChange();
 }).catch(function(){ info.textContent=SEARCH_FROM_DISK ? DISK_NOTE : 'The list of volumes (search/editions.json) could not be read.'; });
+// ---- links and saved searches (user, 2026-11-26), as on the Inscriptions Advanced Search: the
+// address holds the search (q, w, in, and each list as key=a|b or key=not:a|b); Save keeps it in
+// this browser's IndexedDB with up to SNAPSHOT_MAX results, which then open without a search
+var lastQuery='', stamps={}, SNAPSHOT_MAX=5000;
+function specQuery(){ var p=new URLSearchParams(), t=q.value.trim();
+  if (t) p.set('q', t);
+  if (w.value!=='embedded') p.set('w', w.value);
+  if (where.value==='title') p.set('in', 'title');
+  states().forEach(function(s){ if (s.vals.length) p.set(s.key, (s.exclude?'not:':'')+s.vals.join('|')); });
+  return p.toString(); }
+function syncUrl(){ var s=specQuery(); history.replaceState(null, '', location.pathname+(s?'?'+s:'')); }
+function applyUrl(p){
+  q.value=p.get('q')||'';
+  if (p.get('w') && w.querySelector('option[value='+p.get('w')+']')) w.value=p.get('w');
+  where.value=p.get('in')==='title' ? 'title' : 'all';
+  KEYS.forEach(function(k){ var d=dd(k[0]), v=p.get(k[0]); if (!d) return; clearList(k[0]); if (!v) return;
+    var ex=v.indexOf('not:')===0, vals=(ex ? v.slice(4) : v).split('|');
+    d.querySelector('.filter-dd-mode input[value='+(ex?'exclude':'include')+']').checked=true;
+    d.querySelectorAll('.filter-dd-options input').forEach(function(c){ if (vals.indexOf(c.value)>=0) c.checked=true; }); }); }
+var savedDb=(function(){
+  var dbp=null;
+  function open(){ if (!dbp) dbp=new Promise(function(res, rej){
+      var r=indexedDB.open('advsearch-saved:'+location.pathname, 1);
+      r.onupgradeneeded=function(){ r.result.createObjectStore('searches', {keyPath:'id', autoIncrement:true}); };
+      r.onsuccess=function(){ res(r.result); };
+      r.onerror=function(){ dbp=null; rej(r.error); }; });
+    return dbp; }
+  function tx(mode, fn){ return open().then(function(db){ return new Promise(function(res, rej){
+    var t=db.transaction('searches', mode), req=fn(t.objectStore('searches'));
+    t.oncomplete=function(){ res(req && req.result); }; t.onerror=function(){ rej(t.error); }; t.onabort=function(){ rej(t.error); }; }); }); }
+  return {all:function(){ return tx('readonly', function(s){ return s.getAll(); }); },
+          get:function(id){ return tx('readonly', function(s){ return s.get(id); }); },
+          put:function(r){ return tx('readwrite', function(s){ return s.put(r); }); },
+          del:function(id){ return tx('readwrite', function(s){ return s.delete(id); }); }};
+})();
+// a private window or blocked site data: links still work, saving does not
+if (!window.indexedDB) ['saveSearchBtn','savedListBtn'].forEach(function(id){ document.getElementById(id).hidden=true; });
+var savedNoteEl=document.getElementById('savedNote'), savedNoteT=null;
+function noteSaved(msg){ savedNoteEl.textContent=msg; clearTimeout(savedNoteT);
+  savedNoteT=setTimeout(function(){ savedNoteEl.textContent=''; }, 6000); }
+function savedDate(iso){ return new Date(iso).toLocaleDateString(undefined, {day:'numeric', month:'short', year:'numeric'}); }
+// a snapshot row: the record without its full text, the snippet already drawn
+function slim(x){ var r=x.r;
+  return {r:{k:r.k, corpus:r.corpus, title:r.title, cite:r.cite, author:r.author, path:r.path},
+          des:x.des, ed:x.ed, f:x.f, n:x.n, snip:snipOf(x, last.term, last.mode, last.inn)}; }
+document.getElementById('saveSearchBtn').addEventListener('click', function(){
+  if (!last){ noteSaved('Run a search first.'); return; }
+  if (busyEls().job){ noteSaved('Wait for the search to finish, or Cancel it.'); return; }
+  var name=prompt('Name this search:', '“'+last.term+'”'+(states().some(function(s){ return s.vals.length; }) ? ' with lists' : ''));
+  if (name===null) return;
+  var rec={name:name.trim()||'Untitled search', savedAt:new Date().toISOString(), query:lastQuery, last:last,
+           count:results.length, partial:!!last.cancelled, stamps:stamps,
+           rows:results.length<=SNAPSHOT_MAX ? results.map(slim) : null};
+  savedDb.put(rec).then(function(){
+    noteSaved(rec.rows ? 'Saved “'+rec.name+'” with its '+rec.count+' result(s).'
+      : 'Saved “'+rec.name+'”. Over '+SNAPSHOT_MAX+' results: it searches again when opened.');
+  }, function(err){
+    if (!rec.rows){ noteSaved('Could not save: '+err.message); return; }
+    rec.rows=null;   // the browser's storage is full: keep the search alone
+    savedDb.put(rec).then(function(){ noteSaved('Saved “'+rec.name+'” without its results (no room left): it searches again when opened.'); },
+                          function(e2){ noteSaved('Could not save: '+e2.message); });
+  });
+});
+function copyText(text){
+  if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
+  var ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select(); var ok=document.execCommand('copy'); document.body.removeChild(ta);
+  return ok ? Promise.resolve() : Promise.reject(new Error('copy failed')); }
+document.getElementById('copyLinkBtn').addEventListener('click', function(){
+  var s=specQuery(), url=location.origin+location.pathname+(s?'?'+s:'');   // the controls as they stand
+  copyText(url).then(function(){ noteSaved('Link copied.'); }, function(){ prompt('Copy this link:', url); });
+});
+var savedModal=document.getElementById('savedModal'), savedList=document.getElementById('savedList');
+function paintSavedList(){
+  savedDb.all().then(function(recs){
+    if (!recs.length){ savedList.innerHTML='<div class="hint">Nothing saved yet. Run a search, then <b>Save search</b>.</div>'; return; }
+    recs.sort(function(a,b){ return b.savedAt.localeCompare(a.savedAt); });
+    savedList.innerHTML=recs.map(function(r){
+      return '<div class="saved-item" data-id="'+r.id+'"><div><div class="saved-name">'+esc(r.name)+'</div>'
+        +'<div class="saved-meta">'+savedDate(r.savedAt)+' · '+r.count+' result(s)'+(r.partial?' (cancelled early)':'')
+        +(r.rows?'':' · searches again when opened')+'</div></div>'
+        +'<div class="saved-acts"><button type="button" class="saved-open">Open</button>'
+        +'<button type="button" class="saved-rename">Rename</button><button type="button" class="saved-del">Delete</button></div></div>'; }).join('');
+  }, function(err){ savedList.textContent='Saved searches are not available in this browser: '+err.message; });
+}
+function closeSaved(){ savedModal.hidden=true; }
+document.getElementById('savedListBtn').addEventListener('click', function(){ savedModal.hidden=false; paintSavedList(); });
+document.getElementById('savedClose').addEventListener('click', closeSaved);
+savedModal.addEventListener('click', function(e){ if (e.target===savedModal) closeSaved(); });
+document.addEventListener('keydown', function(e){ if (e.key==='Escape') closeSaved(); });
+savedList.addEventListener('click', function(e){
+  var item=e.target.closest('.saved-item'); if (!item) return; var id=+item.dataset.id;
+  if (e.target.closest('.saved-open')) return openSaved(id);
+  if (e.target.closest('.saved-rename')) savedDb.get(id).then(function(rec){ if (!rec) return;
+    var name=prompt('Rename this search:', rec.name); if (name===null || !name.trim()) return;
+    rec.name=name.trim(); return savedDb.put(rec).then(paintSavedList); });
+  else if (e.target.closest('.saved-del') && confirm('Delete this saved search?')) savedDb.del(id).then(paintSavedList);
+});
+function openSaved(id){
+  if (busyEls().job){ noteSaved('Wait for the search to finish, or Cancel it.'); return; }
+  savedDb.get(id).then(function(rec){ if (!rec) return;
+    closeSaved();
+    applyUrl(new URLSearchParams(rec.query));
+    history.replaceState(null, '', location.pathname+(rec.query?'?'+rec.query:''));
+    if (!rec.rows || !rec.last){ last=null; onListChange(); return search(); }
+    last=rec.last; lastQuery=rec.query; stamps=rec.stamps||{}; results=rec.rows; page=1;
+    draw(); counts(); paintApplied();
+    // a volume rebuilt since (its search file's size changed) may give other results now
+    var newer=Object.keys(stamps).filter(function(ed){ return ED[ed] && ED[ed].bytes!==stamps[ed]; })
+      .map(function(ed){ return ED[ed].corpus+' '+ED[ed].designation; });
+    info.textContent='Saved search “'+rec.name+'”, '+savedDate(rec.savedAt)+': '+info.textContent+'.'
+      +(newer.length ? ' Updated since it was saved: '+newer.join(', ')+'. Search again for the current results.' : '');
+  });
+}
+document.getElementById('savedExport').addEventListener('click', function(){
+  savedDb.all().then(function(recs){
+    var blob=new Blob([JSON.stringify({format:'articles-search-saved', page:location.pathname, searches:recs})], {type:'application/json'});
+    var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='saved-article-searches.json';
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000); });
+});
+var importFile=document.getElementById('savedImportFile');
+document.getElementById('savedImport').addEventListener('click', function(){ importFile.click(); });
+importFile.addEventListener('change', function(){
+  var f=importFile.files[0]; importFile.value=''; if (!f) return;
+  f.text().then(function(t){ var data=JSON.parse(t);
+    if (data.format!=='articles-search-saved' || !Array.isArray(data.searches)) throw new Error('not a saved article-searches file');
+    return data.searches.filter(function(r){ return typeof r.query==='string' && r.name; })
+      .reduce(function(p, r){ delete r.id; return p.then(function(){ return savedDb.put(r); }); }, Promise.resolve());   // a new place in this list
+  }).then(paintSavedList, function(err){ alert('Could not import: '+err.message); });
+});
 </script><script>var s=document.getElementById('subscribeLink'); if (s) s.addEventListener('click', function(){ if (typeof gtag==='function') gtag('event','subscribe_click'); });</script>
 </body>
 </html>
