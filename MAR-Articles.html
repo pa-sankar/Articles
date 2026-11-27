@@ -314,7 +314,7 @@ details.howto p { margin: .35rem 0; }
   .art { font: 17px/1.65 Georgia, "Noto Serif", serif; }
   .art h1 { font-size: 1.45rem; line-height: 1.3; }
 </style>
-<script src="search_data.js?v=a360790104"></script></head>
+<script src="search_data.js?v=a40271939b"></script></head>
 <body>
 <div class="wrap">
 <div class="brand">Project InscriptionSearch: Articles</div>
@@ -665,5 +665,23 @@ back.addEventListener('click', function(e){ if (e.target===back || e.target.clos
 document.addEventListener('keydown', function(e){ if (e.key==='Escape' && !back.hidden) closeDetail(); });
 apply();
 </script><script>var s=document.getElementById('subscribeLink'); if (s) s.addEventListener('click', function(){ if (typeof gtag==='function') gtag('event','subscribe_click'); });</script>
+<button type="button" id="backToTop" aria-label="Back to top" title="Back to top">&#8593;</button>
+<style>
+  #backToTop { position: fixed; right: 18px; bottom: 18px; z-index: 900; width: 44px; height: 44px;
+    border-radius: 50%; border: 1px solid rgba(0,0,0,.15); background: #3f5a3c; color: #fff;
+    font-size: 22px; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    opacity: 0; pointer-events: none; transition: opacity .2s; }
+  #backToTop.show { opacity: .9; pointer-events: auto; }
+  #backToTop:hover, #backToTop:focus-visible { opacity: 1; }
+  @media print { #backToTop { display: none; } }
+</style>
+<script>
+(function () {
+  var b = document.getElementById('backToTop');
+  function upd() { b.classList.toggle('show', window.scrollY > window.innerHeight); }
+  window.addEventListener('scroll', upd, {passive: true}); upd();
+  b.addEventListener('click', function () { window.scrollTo({top: 0, behavior: 'smooth'}); });
+})();
+</script>
 </body>
 </html>
